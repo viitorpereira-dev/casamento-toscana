@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#f4efe5">
   <meta name="description" content="Convite de casamento de Gabriela e Vitor na Casa Olivetto.">
@@ -1020,7 +1021,7 @@
       border: 1px solid rgba(244, 239, 229, 0.72);
       border-radius: 50%;
       color: var(--paper);
-      content: "â";
+      content: "\2197 ";
       font-size: 1rem;
       font-weight: 400;
       opacity: 0;
@@ -2312,6 +2313,36 @@
       transform: none;
     }
 
+    .gift-item__add:disabled {
+      color: var(--muted);
+      cursor: not-allowed;
+      opacity: 0.72;
+    }
+
+    .gift-item__status {
+      margin: 0 18px 18px;
+      padding: 10px 12px;
+      border-left: 2px solid var(--sun);
+      color: var(--muted);
+      background: rgba(232, 174, 99, 0.13);
+      font-size: 0.68rem;
+      line-height: 1.45;
+    }
+
+    .gift-item[data-gift-status="confirmed"] .gift-item__status {
+      border-color: var(--olive-dark);
+      color: var(--olive-dark);
+      background: rgba(215, 226, 219, 0.6);
+    }
+
+    .gift-catalog-empty {
+      grid-column: 1 / -1;
+      margin: 0;
+      padding: 30px 0;
+      color: var(--muted);
+      font: italic 1.4rem/1.1 var(--serif);
+    }
+
     .cart-drawer-backdrop {
       position: fixed;
       z-index: 80;
@@ -2736,6 +2767,74 @@
       color: var(--olive-dark);
     }
 
+    .payment-result {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+      padding: 16px;
+      border: 1px solid rgba(38, 52, 45, 0.14);
+      color: var(--olive-dark);
+      background: rgba(215, 226, 219, 0.58);
+    }
+
+    .payment-result[hidden] {
+      display: none;
+    }
+
+    .payment-result__title {
+      margin: 0;
+      font: 500 1.65rem/0.9 var(--serif);
+    }
+
+    .payment-result__text {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.72rem;
+      line-height: 1.55;
+    }
+
+    .payment-result__code {
+      width: 100%;
+      min-height: 76px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      color: var(--ink);
+      background: rgba(255, 253, 248, 0.8);
+      font-size: 0.68rem;
+      line-height: 1.4;
+      resize: vertical;
+    }
+
+    .payment-result__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .payment-result__actions button,
+    .payment-result__actions a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 9px 12px;
+      border: 1px solid var(--olive-dark);
+      color: var(--paper);
+      background: var(--olive-dark);
+      font-size: 0.64rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .payment-result__actions button:hover,
+    .payment-result__actions button:focus-visible,
+    .payment-result__actions a:hover,
+    .payment-result__actions a:focus-visible {
+      border-color: var(--terracotta);
+      background: var(--terracotta);
+    }
+
     .rsvp-section {
       background: var(--terracotta);
       color: var(--paper);
@@ -2803,7 +2902,8 @@
       text-transform: uppercase;
     }
 
-    .field input {
+    .field input,
+    .field select {
       width: 100%;
       padding: 14px 0;
       border: 0;
@@ -2814,12 +2914,103 @@
       transition: border-color 250ms ease;
     }
 
+    .field select {
+      color-scheme: dark;
+    }
+
     .field input::placeholder {
       color: rgba(244, 239, 229, 0.55);
     }
 
-    .field input:focus {
+    .field input:focus,
+    .field select:focus {
       border-color: var(--sun);
+    }
+
+    .field-help {
+      margin: -2px 0 0;
+      color: rgba(244, 239, 229, 0.64);
+      font-size: 0.7rem;
+      line-height: 1.45;
+    }
+
+    .companion-fields {
+      display: grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .companion-fields[hidden] {
+      display: none;
+    }
+
+    .companion-fields input,
+    .dietary-other input {
+      width: 100%;
+      padding: 11px 0;
+      border: 0;
+      border-bottom: 1px solid rgba(244, 239, 229, 0.35);
+      outline: 0;
+      color: var(--paper);
+      background: transparent;
+    }
+
+    .companion-fields input::placeholder,
+    .dietary-other input::placeholder {
+      color: rgba(244, 239, 229, 0.48);
+    }
+
+    .dietary-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .dietary-option {
+      position: relative;
+    }
+
+    .dietary-option input {
+      position: absolute;
+      opacity: 0;
+    }
+
+    .dietary-option span {
+      display: block;
+      padding: 9px 11px;
+      border: 1px solid rgba(244, 239, 229, 0.35);
+      color: rgba(244, 239, 229, 0.78);
+      font-size: 0.7rem;
+      transition: color 220ms ease, border-color 220ms ease, background 220ms ease;
+    }
+
+    .dietary-option input:checked + span,
+    .dietary-option span:hover {
+      border-color: var(--sun);
+      color: var(--ink);
+      background: var(--sun);
+    }
+
+    .dietary-other {
+      margin-top: 8px;
+    }
+
+    .consent-field {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      color: rgba(244, 239, 229, 0.72);
+      font-size: 0.7rem;
+      line-height: 1.5;
+    }
+
+    .consent-field input {
+      width: 17px;
+      height: 17px;
+      flex: 0 0 auto;
+      margin-top: 1px;
+      accent-color: var(--sun);
     }
 
     .attendance {
@@ -3765,10 +3956,10 @@
   <div class="floating-leaves" aria-hidden="true"></div>
 
   <header class="hero" id="topo">
-    <nav class="site-nav" aria-label="NavegaÃ§Ã£o principal">
+    <nav class="site-nav" aria-label="Navega&#xe7;&#xe3;o principal">
       <a class="brand" href="#topo" aria-label="Gabriela e Vitor, voltar ao topo">G<span class="cypress-mark" aria-hidden="true"></span>V</a>
       <div class="nav-links">
-        <a href="#historia">A histÃ³ria</a>
+        <a href="#historia">A hist&#xf3;ria</a>
         <a href="#dia">O dia</a>
         <a href="#presentes">Presentes</a>
         <a href="#rsvp">Confirmar</a>
@@ -3776,11 +3967,11 @@
     </nav>
 
     <div class="hero__content">
-      <p class="eyebrow">25 abril 2027 Â· Casa Olivetto</p>
+      <p class="eyebrow">25 abril 2027 &#xb7; Casa Olivetto</p>
       <h1>Gabriela <span>&amp;</span><br>Vitor</h1>
-      <p class="hero__intro">Um sim entre ciprestes, oliveiras e o sol dourado que sÃ³ a Toscana sabe guardar.</p>
+      <p class="hero__intro">Um sim entre ciprestes, oliveiras e o sol dourado que s&#xf3; a Toscana sabe guardar.</p>
       <div class="hero__stamp">ci vediamo<br>sob o sol</div>
-      <div class="hero__meta">uma celebraÃ§Ã£o para guardar</div>
+      <div class="hero__meta">uma celebra&#xe7;&#xe3;o para guardar</div>
     </div>
 
     <a class="scroll-cue" href="#historia"><i></i><span>deslize</span></a>
@@ -3793,7 +3984,7 @@
       </div>
       <div class="intro-copy">
         <h2>De todos os lugares do mundo, escolhemos <em>um ao outro.</em></h2>
-        <p>Agora queremos celebrar essa escolha em um lugar que parece feito para desacelerar: estradas cercadas de ciprestes, mesas compridas, vinho na taÃ§a e as pessoas que fazem parte da nossa histÃ³ria.</p>
+        <p>Agora queremos celebrar essa escolha em um lugar que parece feito para desacelerar: estradas cercadas de ciprestes, mesas compridas, vinho na ta&#xe7;a e as pessoas que fazem parte da nossa hist&#xf3;ria.</p>
       </div>
       <div class="olive-branch" aria-hidden="true">
         <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
@@ -3804,14 +3995,14 @@
       <div class="story-grid">
         <figure class="image-frame image-frame--watercolor reveal reveal-delay-1">
           <div class="image-frame__visual">
-            <img src="image.png" alt="IlustraÃ§Ã£o em aquarela da Casa Olivetto, espaÃ§o do casamento" loading="lazy">
+            <img src="image.png" alt="Ilustra&#xe7;&#xe3;o em aquarela da Casa Olivetto, espa&#xe7;o do casamento" loading="lazy">
           </div>
           <figcaption class="image-frame__caption">Casa Di Pietra - Villa Toscana</figcaption>
         </figure>
         <div class="story-copy reveal reveal-delay-2">
-          <span class="section-label">Um capÃ­tulo novo</span>
+          <span class="section-label">Um cap&#xed;tulo novo</span>
           <h2>Entre uma viagem e outra, encontramos <span>casa.</span></h2>
-          <p>Nosso casamento Ã© um convite para estar perto, brindar sem pressa e colecionar mais uma paisagem juntos. A Casa Olivetto serÃ¡ o cenÃ¡rio, mas a melhor parte serÃ¡ dividir o dia com vocÃªs.</p>
+          <p>Nosso casamento &#xe9; um convite para estar perto, brindar sem pressa e colecionar mais uma paisagem juntos. A Casa Olivetto ser&#xe1; o cen&#xe1;rio, mas a melhor parte ser&#xe1; dividir o dia com voc&#xea;s.</p>
           <span class="signature">com carinho, G &amp; V</span>
         </div>
       </div>
@@ -3820,19 +4011,19 @@
     <section class="gallery-section" id="viagens" data-gallery-style="scrapbook">
       <div class="section">
         <div class="gallery-heading reveal">
-          <span class="section-label">DiÃ¡rio de estrada</span>
+          <span class="section-label">Di&#xe1;rio de estrada</span>
           <div class="gallery-heading__copy">
             <h2>Seis lugares que guardamos <em>com a gente.</em></h2>
-            <p>Uma prÃ©via do Ã¡lbum para receber as fotos das nossas viagens, dos desvios e das pequenas cenas que merecem voltar sempre.</p>
+            <p>Uma pr&#xe9;via do &#xe1;lbum para receber as fotos das nossas viagens, dos desvios e das pequenas cenas que merecem voltar sempre.</p>
             <div class="gallery-actions">
               <label class="gallery-upload" for="gallery-upload-input"><span aria-hidden="true">+</span>Adicionar fotos
                 <input id="gallery-upload-input" type="file" accept="image/*" multiple>
               </label>
               <div class="gallery-status feedback-message is-visible" id="gallery-status" role="status" aria-live="polite">
-                <span class="feedback-message__icon" aria-hidden="true">â¦</span>
+                <span class="feedback-message__icon" aria-hidden="true">&#x2726;</span>
                 <span class="feedback-message__copy">
-                  <strong class="feedback-message__title">PrÃ©via pronta</strong>
-                  <span class="feedback-message__text">Escolha imagens para deixar o Ã¡lbum com a cara de vocÃªs.</span>
+                  <strong class="feedback-message__title">Pr&#xe9;via pronta</strong>
+                  <span class="feedback-message__text">Escolha imagens para deixar o &#xe1;lbum com a cara de voc&#xea;s.</span>
                 </span>
               </div>
             </div>
@@ -3840,29 +4031,29 @@
         </div>
 
         <div class="gallery-carousel" id="gallery-carousel" aria-label="Carrossel de fotos das viagens">
-          <button class="gallery-item reveal reveal-delay-1" type="button" data-location="Asciano Â· Toscana" data-title="Fim de tarde" aria-label="Abrir foto: Fim de tarde em Asciano">
+          <button class="gallery-item reveal reveal-delay-1" type="button" data-location="Asciano &#xb7; Toscana" data-title="Fim de tarde" aria-label="Abrir foto: Fim de tarde em Asciano">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Cypress_tree_alley_at_sunset_in_Asciano%2C_Tuscany.jpg/1280px-Cypress_tree_alley_at_sunset_in_Asciano%2C_Tuscany.jpg" alt="Estrada cercada por ciprestes em Asciano, na Toscana" loading="lazy">
-            <span class="gallery-item__caption"><span class="gallery-item__location">Asciano Â· Toscana</span><strong class="gallery-item__title">Fim de tarde</strong></span>
+            <span class="gallery-item__caption"><span class="gallery-item__location">Asciano &#xb7; Toscana</span><strong class="gallery-item__title">Fim de tarde</strong></span>
           </button>
-          <button class="gallery-item reveal reveal-delay-2" type="button" data-location="Pitigliano Â· Toscana" data-title="Pedra antiga" aria-label="Abrir foto: Pedra antiga em Pitigliano">
+          <button class="gallery-item reveal reveal-delay-2" type="button" data-location="Pitigliano &#xb7; Toscana" data-title="Pedra antiga" aria-label="Abrir foto: Pedra antiga em Pitigliano">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/01665_ITA_Tuscany_Pitigliano_S_from_viewpoint_V-P.jpg/1280px-01665_ITA_Tuscany_Pitigliano_S_from_viewpoint_V-P.jpg" alt="Vila de pedra de Pitigliano vista de longe" loading="lazy">
-            <span class="gallery-item__caption"><span class="gallery-item__location">Pitigliano Â· Toscana</span><strong class="gallery-item__title">Pedra antiga</strong></span>
+            <span class="gallery-item__caption"><span class="gallery-item__location">Pitigliano &#xb7; Toscana</span><strong class="gallery-item__title">Pedra antiga</strong></span>
           </button>
-          <button class="gallery-item reveal reveal-delay-3" type="button" data-location="San Gimignano Â· Toscana" data-title="Entre vinhedos" aria-label="Abrir foto: Entre vinhedos em San Gimignano">
+          <button class="gallery-item reveal reveal-delay-3" type="button" data-location="San Gimignano &#xb7; Toscana" data-title="Entre vinhedos" aria-label="Abrir foto: Entre vinhedos em San Gimignano">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Grape_vines_and_cypress_trees_in_Tuscany.jpg/1280px-Grape_vines_and_cypress_trees_in_Tuscany.jpg" alt="Vinhedos e ciprestes em San Gimignano" loading="lazy">
-            <span class="gallery-item__caption"><span class="gallery-item__location">San Gimignano Â· Toscana</span><strong class="gallery-item__title">Entre vinhedos</strong></span>
+            <span class="gallery-item__caption"><span class="gallery-item__location">San Gimignano &#xb7; Toscana</span><strong class="gallery-item__title">Entre vinhedos</strong></span>
           </button>
-          <button class="gallery-item reveal reveal-delay-1" type="button" data-location="Val d'Orcia Â· Toscana" data-title="Um desvio bonito" aria-label="Abrir foto: Um desvio bonito no Val d'Orcia">
+          <button class="gallery-item reveal reveal-delay-1" type="button" data-location="Val d'Orcia &#xb7; Toscana" data-title="Um desvio bonito" aria-label="Abrir foto: Um desvio bonito no Val d'Orcia">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Ridge_of_Cypress_Trees.jpg/1280px-Ridge_of_Cypress_Trees.jpg" alt="Colina com uma linha de ciprestes no Val d'Orcia" loading="lazy">
-            <span class="gallery-item__caption"><span class="gallery-item__location">Val d'Orcia Â· Toscana</span><strong class="gallery-item__title">Um desvio bonito</strong></span>
+            <span class="gallery-item__caption"><span class="gallery-item__location">Val d'Orcia &#xb7; Toscana</span><strong class="gallery-item__title">Um desvio bonito</strong></span>
           </button>
-          <button class="gallery-item reveal reveal-delay-2" type="button" data-location="Toscana Â· ItÃ¡lia" data-title="ManhÃ£ lenta" aria-label="Abrir foto: ManhÃ£ lenta na Toscana">
+          <button class="gallery-item reveal reveal-delay-2" type="button" data-location="Toscana &#xb7; It&#xe1;lia" data-title="Manh&#xe3; lenta" aria-label="Abrir foto: Manh&#xe3; lenta na Toscana">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Twin_cypresses_in_foggy_landscape_-_Tuscany.jpg/1280px-Twin_cypresses_in_foggy_landscape_-_Tuscany.jpg" alt="Dois ciprestes em uma paisagem com neblina na Toscana" loading="lazy">
-            <span class="gallery-item__caption"><span class="gallery-item__location">Toscana Â· ItÃ¡lia</span><strong class="gallery-item__title">ManhÃ£ lenta</strong></span>
+            <span class="gallery-item__caption"><span class="gallery-item__location">Toscana &#xb7; It&#xe1;lia</span><strong class="gallery-item__title">Manh&#xe3; lenta</strong></span>
           </button>
-          <button class="gallery-item reveal reveal-delay-3" type="button" data-location="Toscana Â· ItÃ¡lia" data-title="Onde a gente chegar" aria-label="Abrir foto: Onde a gente chegar na Toscana">
+          <button class="gallery-item reveal reveal-delay-3" type="button" data-location="Toscana &#xb7; It&#xe1;lia" data-title="Onde a gente chegar" aria-label="Abrir foto: Onde a gente chegar na Toscana">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Landscape_of_Tuscany_2.jpg/1280px-Landscape_of_Tuscany_2.jpg" alt="Paisagem ampla das colinas da Toscana" loading="lazy">
-            <span class="gallery-item__caption"><span class="gallery-item__location">Toscana Â· ItÃ¡lia</span><strong class="gallery-item__title">Onde a gente chegar</strong></span>
+            <span class="gallery-item__caption"><span class="gallery-item__location">Toscana &#xb7; It&#xe1;lia</span><strong class="gallery-item__title">Onde a gente chegar</strong></span>
           </button>
         </div>
         <div class="gallery-carousel-controls" aria-label="Controles da galeria">
@@ -3875,16 +4066,16 @@
             <button class="carousel-dot" type="button" role="tab" aria-label="Foto 5 de 6" aria-selected="false"></button>
             <button class="carousel-dot" type="button" role="tab" aria-label="Foto 6 de 6" aria-selected="false"></button>
           </div>
-          <button class="carousel-arrow" type="button" id="gallery-next" aria-label="PrÃ³xima foto">&#8594;</button>
+          <button class="carousel-arrow" type="button" id="gallery-next" aria-label="Pr&#xf3;xima foto">&#8594;</button>
           <span class="carousel-count" id="gallery-count" aria-live="polite">01 / 06</span>
         </div>
       </div>
     </section>
 
-    <section class="landscape-band reveal" aria-label="Mensagem sobre a celebraÃ§Ã£o">
+    <section class="landscape-band reveal" aria-label="Mensagem sobre a celebra&#xe7;&#xe3;o">
       <div class="landscape-band__content">
-        <h2>Um dia com gosto de <em>verÃ£o.</em></h2>
-        <p class="landscape-band__note">Aperitivo ao ar livre, flores do campo, mÃºsica no jardim e aquela luz bonita que faz tudo parecer cena de filme.</p>
+        <h2>Um dia com gosto de <em>ver&#xe3;o.</em></h2>
+        <p class="landscape-band__note">Aperitivo ao ar livre, flores do campo, m&#xfa;sica no jardim e aquela luz bonita que faz tudo parecer cena de filme.</p>
       </div>
     </section>
 
@@ -3892,17 +4083,17 @@
       <div class="event-heading reveal">
         <div>
           <span class="section-label">O nosso 25.04.27</span>
-          <h2>O dia comeÃ§a calmo e termina <em>danÃ§ando.</em></h2>
+          <h2>O dia come&#xe7;a calmo e termina <em>dan&#xe7;ando.</em></h2>
         </div>
         <div class="event-location">
-          <a class="event-date event-date--link" href="https://share.google/blsDGhpf1G3Ecewe8" target="_blank" rel="noopener noreferrer" aria-label="Abrir o endereÃ§o da Casa Olivetto no Google Maps">Casa Olivetto <span aria-hidden="true">â</span></a>
+          <a class="event-date event-date--link" href="https://share.google/blsDGhpf1G3Ecewe8" target="_blank" rel="noopener noreferrer" aria-label="Abrir o endere&#xe7;o da Casa Olivetto no Google Maps">Casa Olivetto <span aria-hidden="true">&#x2197;</span></a>
         </div>
       </div>
 
       <div class="event-list">
         <article class="event-item reveal reveal-delay-1">
           <span class="event-time">16:00</span>
-          <h3 class="event-name">CerimÃ´nia</h3>
+          <h3 class="event-name">Cerim&#xf4;nia</h3>
           <p class="event-place">No jardim, sob a sombra dos ciprestes</p>
         </article>
         <article class="event-item reveal reveal-delay-2">
@@ -3923,7 +4114,7 @@
         <div class="details-heading reveal">
           <span class="section-label">Pequenos detalhes</span>
           <div>
-            <h2>Para entrar no clima, pense em <em>trÃªs coisas.</em></h2>
+            <h2>Para entrar no clima, pense em <em>tr&#xea;s coisas.</em></h2>
             <p>Uma paleta de verde oliva, terracota e amarelo-sol. O resto a gente deixa por conta da paisagem.</p>
           </div>
         </div>
@@ -3932,19 +4123,19 @@
           <article class="detail-card reveal reveal-delay-1">
             <span class="detail-card__number">01 / OLIVEIRA</span>
             <h3>Leveza que fica</h3>
-            <p>Texturas naturais, ramos verdes e aquele ar de almoÃ§o demorado no campo.</p>
+            <p>Texturas naturais, ramos verdes e aquele ar de almo&#xe7;o demorado no campo.</p>
             <span class="detail-card__shape detail-card__shape--olive" aria-hidden="true"></span>
           </article>
           <article class="detail-card reveal reveal-delay-2">
             <span class="detail-card__number">02 / LUZ</span>
-            <h3>Sol atÃ© tarde</h3>
-            <p>Uma celebraÃ§Ã£o aberta, quente e com espaÃ§o para respirar entre um brinde e outro.</p>
+            <h3>Sol at&#xe9; tarde</h3>
+            <p>Uma celebra&#xe7;&#xe3;o aberta, quente e com espa&#xe7;o para respirar entre um brinde e outro.</p>
             <span class="detail-card__shape detail-card__shape--sun" aria-hidden="true"></span>
           </article>
           <article class="detail-card reveal reveal-delay-3">
             <span class="detail-card__number">03 / CIPRESTE</span>
             <h3>Um caminho junto</h3>
-            <p>Linhas simples, horizonte amplo e a sensaÃ§Ã£o boa de estar exatamente onde deverÃ­amos.</p>
+            <p>Linhas simples, horizonte amplo e a sensa&#xe7;&#xe3;o boa de estar exatamente onde dever&#xed;amos.</p>
             <span class="detail-card__shape detail-card__shape--cypress" aria-hidden="true"></span>
           </article>
         </div>
@@ -3956,8 +4147,8 @@
         <div class="gifts-heading reveal">
           <span class="section-label">Lista de presentes</span>
           <div>
-            <h2>PeÃ§as para a casa que vamos <em>construir.</em></h2>
-            <p>Uma seleÃ§Ã£o de objetos para o nosso primeiro lar: cerÃ¢mica, linho, luz quente e tudo que deixa um espaÃ§o com cara de casa.</p>
+            <h2>Pe&#xe7;as para a casa que vamos <em>construir.</em></h2>
+            <p>Uma sele&#xe7;&#xe3;o de objetos para o nosso primeiro lar: cer&#xe2;mica, linho, luz quente e tudo que deixa um espa&#xe7;o com cara de casa.</p>
             <div class="gift-toolbar">
               <div class="gift-toolbar__top">
                 <p class="gift-toolbar__note">curadoria para o nosso lar</p>
@@ -3977,8 +4168,8 @@
                 </div>
                 <select class="gift-sort" id="gift-sort" aria-label="Ordenar presentes">
                   <option value="featured">Em destaque</option>
-                  <option value="price-low">Menor preÃ§o</option>
-                  <option value="price-high">Maior preÃ§o</option>
+                  <option value="price-low">Menor pre&#xe7;o</option>
+                  <option value="price-high">Maior pre&#xe7;o</option>
                 </select>
                 <p class="gift-results-count" id="gift-results-count">8 produtos</p>
               </div>
@@ -3988,43 +4179,43 @@
 
         <div class="gift-list" id="gift-list">
           <article class="gift-item" data-category="cozinha" data-featured="1" data-gift-id="panelas" data-gift-name="Jogo de panelas em ferro esmaltado" data-gift-price="1290">
-            <div class="gift-item__media"><img src="https://images.unsplash.com/photo-1556912167-f556f1f39fdf?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Cozinha clara com utensÃ­lios e panelas" loading="lazy"><span class="gift-item__badge">mais pedido</span><span class="gift-item__number">01</span></div>
+            <div class="gift-item__media"><img src="https://images.unsplash.com/photo-1556912167-f556f1f39fdf?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Cozinha clara com utens&#xed;lios e panelas" loading="lazy"><span class="gift-item__badge">mais pedido</span><span class="gift-item__number">01</span></div>
             <div class="gift-item__content"><h3>Jogo de panelas em ferro esmaltado</h3><p>Para cozinhar receitas de domingo e transformar a cozinha no lugar mais vivo da casa.</p><span class="gift-item__price">R$ 1.290</span></div>
             <button class="gift-item__add" type="button"><span>Adicionar ao carrinho</span><b>+</b></button>
           </article>
-          <article class="gift-item" data-category="mesa" data-featured="2" data-gift-id="ceramica" data-gift-name="Aparelho de jantar em cerÃ¢mica" data-gift-price="680">
-            <div class="gift-item__media"><img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="PeÃ§as de cerÃ¢mica artesanal para mesa posta" loading="lazy"><span class="gift-item__badge">artesanal</span><span class="gift-item__number">02</span></div>
-            <div class="gift-item__content"><h3>Aparelho de jantar em cerÃ¢mica</h3><p>PeÃ§as imperfeitas e bonitas para as mesas que ainda vamos inventar.</p><span class="gift-item__price">R$ 680</span></div>
+          <article class="gift-item" data-category="mesa" data-featured="2" data-gift-id="ceramica" data-gift-name="Aparelho de jantar em cer&#xe2;mica" data-gift-price="680">
+            <div class="gift-item__media"><img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Pe&#xe7;as de cer&#xe2;mica artesanal para mesa posta" loading="lazy"><span class="gift-item__badge">artesanal</span><span class="gift-item__number">02</span></div>
+            <div class="gift-item__content"><h3>Aparelho de jantar em cer&#xe2;mica</h3><p>Pe&#xe7;as imperfeitas e bonitas para as mesas que ainda vamos inventar.</p><span class="gift-item__price">R$ 680</span></div>
             <button class="gift-item__add" type="button"><span>Adicionar ao carrinho</span><b>+</b></button>
           </article>
-          <article class="gift-item" data-category="mesa" data-featured="3" data-gift-id="tacas" data-gift-name="Jogo de taÃ§as de vinho" data-gift-price="340">
-            <div class="gift-item__media"><img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="TaÃ§as de vinho em uma mesa iluminada" loading="lazy"><span class="gift-item__number">03</span></div>
-            <div class="gift-item__content"><h3>Jogo de taÃ§as de vinho</h3><p>Para brindar as pequenas vitÃ³rias, as visitas e as noites que comeÃ§am sem hora para acabar.</p><span class="gift-item__price">R$ 340</span></div>
+          <article class="gift-item" data-category="mesa" data-featured="3" data-gift-id="tacas" data-gift-name="Jogo de ta&#xe7;as de vinho" data-gift-price="340">
+            <div class="gift-item__media"><img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Ta&#xe7;as de vinho em uma mesa iluminada" loading="lazy"><span class="gift-item__number">03</span></div>
+            <div class="gift-item__content"><h3>Jogo de ta&#xe7;as de vinho</h3><p>Para brindar as pequenas vit&#xf3;rias, as visitas e as noites que come&#xe7;am sem hora para acabar.</p><span class="gift-item__price">R$ 340</span></div>
             <button class="gift-item__add" type="button"><span>Adicionar ao carrinho</span><b>+</b></button>
           </article>
           <article class="gift-item" data-category="cozinha" data-featured="4" data-gift-id="cafeteira" data-gift-name="Cafeteira italiana para dois" data-gift-price="280">
-            <div class="gift-item__media"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="CafÃ© servido em uma mesa pela manhÃ£" loading="lazy"><span class="gift-item__number">04</span></div>
-            <div class="gift-item__content"><h3>Cafeteira italiana para dois</h3><p>O ritual da manhÃ£, com cafÃ© forte e tempo para contar os sonhos.</p><span class="gift-item__price">R$ 280</span></div>
+            <div class="gift-item__media"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Caf&#xe9; servido em uma mesa pela manh&#xe3;" loading="lazy"><span class="gift-item__number">04</span></div>
+            <div class="gift-item__content"><h3>Cafeteira italiana para dois</h3><p>O ritual da manh&#xe3;, com caf&#xe9; forte e tempo para contar os sonhos.</p><span class="gift-item__price">R$ 280</span></div>
             <button class="gift-item__add" type="button"><span>Adicionar ao carrinho</span><b>+</b></button>
           </article>
           <article class="gift-item" data-category="quarto" data-featured="5" data-gift-id="linho" data-gift-name="Jogo de cama em linho" data-gift-price="760">
             <div class="gift-item__media"><img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Quarto claro com cama e roupas de linho" loading="lazy"><span class="gift-item__badge">para o lar</span><span class="gift-item__number">05</span></div>
-            <div class="gift-item__content"><h3>Jogo de cama em linho</h3><p>Textura leve para deixar o quarto com cara de manhÃ£ demorada.</p><span class="gift-item__price">R$ 760</span></div>
+            <div class="gift-item__content"><h3>Jogo de cama em linho</h3><p>Textura leve para deixar o quarto com cara de manh&#xe3; demorada.</p><span class="gift-item__price">R$ 760</span></div>
             <button class="gift-item__add" type="button"><span>Adicionar ao carrinho</span><b>+</b></button>
           </article>
-          <article class="gift-item" data-category="sala" data-featured="6" data-gift-id="luminaria" data-gift-name="LuminÃ¡ria de mesa em cerÃ¢mica" data-gift-price="520">
-            <div class="gift-item__media"><img src="https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="LuminÃ¡ria acesa em um ambiente acolhedor" loading="lazy"><span class="gift-item__number">06</span></div>
-            <div class="gift-item__content"><h3>LuminÃ¡ria de mesa em cerÃ¢mica</h3><p>Uma luz quente para as leituras, conversas e noites de vinho.</p><span class="gift-item__price">R$ 520</span></div>
+          <article class="gift-item" data-category="sala" data-featured="6" data-gift-id="luminaria" data-gift-name="Lumin&#xe1;ria de mesa em cer&#xe2;mica" data-gift-price="520">
+            <div class="gift-item__media"><img src="https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Lumin&#xe1;ria acesa em um ambiente acolhedor" loading="lazy"><span class="gift-item__number">06</span></div>
+            <div class="gift-item__content"><h3>Lumin&#xe1;ria de mesa em cer&#xe2;mica</h3><p>Uma luz quente para as leituras, conversas e noites de vinho.</p><span class="gift-item__price">R$ 520</span></div>
             <button class="gift-item__add" type="button"><span>Adicionar ao carrinho</span><b>+</b></button>
           </article>
-          <article class="gift-item" data-category="sala" data-featured="7" data-gift-id="manta" data-gift-name="Manta de linho para o sofÃ¡" data-gift-price="420">
-            <div class="gift-item__media"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Sala com sofÃ¡ e texturas naturais" loading="lazy"><span class="gift-item__number">07</span></div>
-            <div class="gift-item__content"><h3>Manta de linho para o sofÃ¡</h3><p>Para as tardes de filme, o friozinho e as visitas que ficam atÃ© tarde.</p><span class="gift-item__price">R$ 420</span></div>
+          <article class="gift-item" data-category="sala" data-featured="7" data-gift-id="manta" data-gift-name="Manta de linho para o sof&#xe1;" data-gift-price="420">
+            <div class="gift-item__media"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Sala com sof&#xe1; e texturas naturais" loading="lazy"><span class="gift-item__number">07</span></div>
+            <div class="gift-item__content"><h3>Manta de linho para o sof&#xe1;</h3><p>Para as tardes de filme, o friozinho e as visitas que ficam at&#xe9; tarde.</p><span class="gift-item__price">R$ 420</span></div>
             <button class="gift-item__add" type="button"><span>Adicionar ao carrinho</span><b>+</b></button>
           </article>
           <article class="gift-item" data-category="quarto" data-featured="8" data-gift-id="toalhas" data-gift-name="Kit de toalhas de banho" data-gift-price="380">
             <div class="gift-item__media"><img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Toalhas claras em um banheiro elegante" loading="lazy"><span class="gift-item__number">08</span></div>
-            <div class="gift-item__content"><h3>Kit de toalhas de banho</h3><p>Um detalhe simples que faz a casa nova comeÃ§ar com cuidado.</p><span class="gift-item__price">R$ 380</span></div>
+            <div class="gift-item__content"><h3>Kit de toalhas de banho</h3><p>Um detalhe simples que faz a casa nova come&#xe7;ar com cuidado.</p><span class="gift-item__price">R$ 380</span></div>
             <button class="gift-item__add" type="button"><span>Adicionar ao carrinho</span><b>+</b></button>
           </article>
         </div>
@@ -4034,40 +4225,69 @@
     <section class="rsvp-section" id="rsvp">
       <div class="section">
         <div class="rsvp-copy reveal">
-          <span class="section-label">PresenÃ§a confirmada?</span>
+          <span class="section-label">Presen&#xe7;a confirmada?</span>
           <h2>Vem viver esse dia com a gente.</h2>
-          <p>Conte para nÃ³s se vocÃª estarÃ¡ na Casa Olivetto para brindar, abraÃ§ar e danÃ§ar atÃ© a Ãºltima mÃºsica.</p>
+          <p>Conte para n&#xf3;s se voc&#xea; estar&#xe1; na Casa Olivetto para brindar, abra&#xe7;ar e dan&#xe7;ar at&#xe9; a &#xfa;ltima m&#xfa;sica.</p>
         </div>
 
         <form class="rsvp-form reveal reveal-delay-1" id="rsvp-form">
           <div class="rsvp-fields" id="rsvp-fields">
             <div class="field">
               <label for="name">Seu nome</label>
-              <input id="name" name="name" type="text" placeholder="Como devemos chamar vocÃª?" required>
+              <input id="name" name="name" type="text" placeholder="Como devemos chamar voc&#xea;?" required>
             </div>
             <div class="field">
               <label for="email">Seu e-mail</label>
-              <input id="email" name="email" type="email" placeholder="Para receber os prÃ³ximos detalhes" required>
+              <input id="email" name="email" type="email" placeholder="Para receber os pr&#xf3;ximos detalhes" required>
             </div>
             <div class="field">
-              <label>VocÃª vem?</label>
+              <label>Voc&#xea; vem?</label>
               <div class="attendance">
-                <label><input type="radio" name="attendance" value="sim" required><span>Sim, estarei lÃ¡</span></label>
-                <label><input type="radio" name="attendance" value="nao"><span>NÃ£o vou conseguir</span></label>
+                <label><input type="radio" name="attendance" value="sim" required><span>Sim, estarei l&#xe1;</span></label>
+                <label><input type="radio" name="attendance" value="nao"><span>N&#xe3;o vou conseguir</span></label>
               </div>
             </div>
+            <div class="field">
+              <label for="companion-count">Acompanhantes</label>
+              <select id="companion-count" name="companion-count">
+                <option value="0">Nenhum acompanhante</option>
+                <option value="1">1 acompanhante</option>
+                <option value="2">2 acompanhantes</option>
+                <option value="3">3 acompanhantes</option>
+                <option value="4">4 acompanhantes</option>
+              </select>
+              <div class="companion-fields" id="companion-fields" hidden>
+                <input type="text" data-companion-index="0" placeholder="Nome do acompanhante 1" maxlength="80">
+                <input type="text" data-companion-index="1" placeholder="Nome do acompanhante 2" maxlength="80" hidden>
+                <input type="text" data-companion-index="2" placeholder="Nome do acompanhante 3" maxlength="80" hidden>
+                <input type="text" data-companion-index="3" placeholder="Nome do acompanhante 4" maxlength="80" hidden>
+              </div>
+            </div>
+            <div class="field">
+              <label>Restri&#xe7;&#xf5;es alimentares</label>
+              <div class="dietary-options">
+                <label class="dietary-option"><input type="checkbox" name="dietary" value="sem-restricoes"><span>Sem restri&#xe7;&#xf5;es</span></label>
+                <label class="dietary-option"><input type="checkbox" name="dietary" value="vegetariano"><span>Vegetariano</span></label>
+                <label class="dietary-option"><input type="checkbox" name="dietary" value="vegano"><span>Vegano</span></label>
+                <label class="dietary-option"><input type="checkbox" name="dietary" value="alergia"><span>Alergia</span></label>
+                <label class="dietary-option"><input id="dietary-other-toggle" type="checkbox" name="dietary" value="outro"><span>Outro</span></label>
+              </div>
+              <div class="dietary-other" id="dietary-other" hidden><input id="dietary-other-text" type="text" maxlength="240" placeholder="Conte um pouco mais, se quiser"></div>
+            </div>
+            <label class="consent-field"><input id="rsvp-consent" type="checkbox" required><span>Autorizo o uso desses dados para organizar a confirma&#xe7;&#xe3;o do casamento. As informa&#xe7;&#xf5;es ser&#xe3;o exclu&#xed;das ap&#xf3;s o per&#xed;odo de organiza&#xe7;&#xe3;o.</span></label>
+            <input id="rsvp-edit-token" type="hidden">
           </div>
-          <button class="submit-button" id="rsvp-submit" type="submit"><span>Enviar confirmaÃ§Ã£o</span><b>â</b></button>
+          <button class="submit-button" id="rsvp-submit" type="submit"><span>Enviar confirma&#xe7;&#xe3;o</span><b>&#x2197;</b></button>
           <div class="rsvp-loading" id="rsvp-loading" role="status" aria-live="polite" hidden>
             <span class="rsvp-loading__spinner" aria-hidden="true"></span>
             <span class="rsvp-loading__copy">
               <strong class="rsvp-loading__title">Guardando sua resposta<span class="rsvp-loading__dots" aria-hidden="true">...</span></strong>
-              <span class="rsvp-loading__text">Um instante: estamos preparando uma mensagem especial para vocÃªs.</span>
+              <span class="rsvp-loading__text">Um instante: estamos preparando uma mensagem especial para voc&#xea;s.</span>
             </span>
           </div>
           <div class="form-message feedback-message" id="form-message" role="status" aria-live="polite" tabindex="-1" hidden>
-            <span class="form-message__stamp">25.04.27 Â· RSVP</span>
-            <span class="feedback-message__icon" aria-hidden="true">â¦</span>
+            <span class="form-message__stamp">25.04.27 &#xb7; RSVP</span>
+            <span class="feedback-message__icon" aria-hidden="true">&#x2726;</span>
             <span class="feedback-message__copy">
               <span class="form-message__eyebrow">Resposta recebida</span>
               <strong class="feedback-message__title"></strong>
@@ -4088,7 +4308,7 @@
     <div class="footer__bottom">
       <span>Gabriela &amp; Vitor</span>
       <span>feito com amore</span>
-      <span class="footer__credit">Fotos: <a href="https://commons.wikimedia.org/wiki/File:Cypress_tree_alley_at_sunset_in_Asciano,_Tuscany.jpg">Eric Kilby</a>, <a href="https://commons.wikimedia.org/wiki/File:Grape_vines_and_cypress_trees_in_Tuscany.jpg">Ian McKellar</a> e <a href="https://commons.wikimedia.org/wiki/File:01665_ITA_Tuscany_Pitigliano_S_from_viewpoint_V-P.jpg">Virtual-Pano</a> Â· CC BY-SA 2.0 / 4.0</span>
+      <span class="footer__credit">Fotos: <a href="https://commons.wikimedia.org/wiki/File:Cypress_tree_alley_at_sunset_in_Asciano,_Tuscany.jpg">Eric Kilby</a>, <a href="https://commons.wikimedia.org/wiki/File:Grape_vines_and_cypress_trees_in_Tuscany.jpg">Ian McKellar</a> e <a href="https://commons.wikimedia.org/wiki/File:01665_ITA_Tuscany_Pitigliano_S_from_viewpoint_V-P.jpg">Virtual-Pano</a> &#xb7; CC BY-SA 2.0 / 4.0</span>
     </div>
   </footer>
 
@@ -4104,40 +4324,49 @@
     <div class="cart-drawer__body">
       <div class="cart-view" id="cart-view">
         <div class="cart-items" id="cart-items"></div>
-        <p class="cart-empty" id="cart-empty">Seu carrinho estÃ¡ vazio. Escolha uma experiÃªncia para comeÃ§ar.</p>
+        <p class="cart-empty" id="cart-empty">Seu carrinho est&#xe1; vazio. Escolha uma experi&#xea;ncia para come&#xe7;ar.</p>
         <div class="cart-summary">
           <div class="cart-summary__row"><span>Itens</span><span id="cart-summary-items">0</span></div>
           <div class="cart-summary__row cart-summary__row--total"><span>Total</span><span id="cart-total">R$ 0</span></div>
-          <button class="cart-checkout-button" type="button" id="go-checkout" disabled><span>Continuar para pagamento</span><b>â</b></button>
+          <button class="cart-checkout-button" type="button" id="go-checkout" disabled><span>Continuar para pagamento</span><b>&#x2197;</b></button>
         </div>
       </div>
 
       <form class="checkout-view" id="fake-checkout" hidden>
         <button class="checkout-back" type="button" id="back-to-cart">&#8592; Voltar ao carrinho</button>
-        <h3>Finalizar presente</h3>
-        <p class="checkout-view__intro">Este Ã© um checkout de demonstraÃ§Ã£o. Nenhum pagamento real serÃ¡ processado.</p>
-        <p class="fake-payment-note">IntegraÃ§Ã£o fake ativa Â· use qualquer dado de teste para experimentar o fluxo.</p>
+        <h3>Escolher presente</h3>
+        <p class="checkout-view__intro">Registre sua escolha, abra o pagamento e avise quando concluir. O casal confirma manualmente cada recebimento.</p>
+        <p class="fake-payment-note" id="checkout-note">A reserva fica ativa por 24 horas. Os links reais podem ser configurados depois no painel dos noivos.</p>
         <div class="checkout-fields">
           <div class="checkout-field"><label for="checkout-name">Seu nome</label><input id="checkout-name" type="text" placeholder="Nome de quem presenteia" required></div>
-          <div class="checkout-field"><label for="checkout-email">Seu e-mail</label><input id="checkout-email" type="email" placeholder="Para receber a confirmaÃ§Ã£o" required></div>
+          <div class="checkout-field"><label for="checkout-email">Seu e-mail</label><input id="checkout-email" type="email" placeholder="Para receber a confirma&#xe7;&#xe3;o" required></div>
           <div class="checkout-field">
             <label>Forma de pagamento</label>
             <div class="payment-methods">
               <label class="payment-method"><input type="radio" name="payment-method" value="pix" checked><span>Pix</span></label>
-              <label class="payment-method"><input type="radio" name="payment-method" value="card"><span>CartÃ£o</span></label>
+              <label class="payment-method"><input type="radio" name="payment-method" value="mercado-pago"><span>Mercado Pago</span></label>
             </div>
           </div>
+          <div class="checkout-field"><label for="payment-note">Observa&#xe7;&#xe3;o opcional</label><input id="payment-note" type="text" maxlength="240" placeholder="C&#xf3;digo ou detalhe para ajudar na confer&#xea;ncia"></div>
           <div class="fake-pix-box" id="fake-pix-box">
             <span class="fake-pix-code" aria-hidden="true">PIX</span>
-            <p>QR Code demonstrativo<br><button type="button" id="copy-fake-pix">Copiar cÃ³digo Pix</button></p>
+            <p id="pix-box-text"><span id="pix-box-label">O Pix ser&#xe1; configurado em breve.</span><br><button type="button" id="copy-fake-pix">Copiar chave Pix</button></p>
           </div>
-          <div class="checkout-field" id="card-number-field" hidden><label for="card-number">NÃºmero do cartÃ£o</label><input id="card-number" type="text" inputmode="numeric" placeholder="0000 0000 0000 0000"></div>
-          <div class="checkout-field" id="card-name-field" hidden><label for="card-name">Nome no cartÃ£o</label><input id="card-name" type="text" placeholder="Nome completo"></div>
         </div>
         <div class="checkout-total"><span>Total do presente</span><span id="checkout-total">R$ 0</span></div>
-        <button class="fake-payment-button" type="submit"><span>Simular pagamento</span><b>â</b></button>
+        <button class="fake-payment-button" id="reserve-gift-button" type="submit"><span>Reservar presente</span><b>&#x2197;</b></button>
+        <div class="payment-result" id="payment-result" hidden>
+          <h4 class="payment-result__title" id="payment-result-title">Reserva criada</h4>
+          <p class="payment-result__text" id="payment-result-text"></p>
+          <textarea class="payment-result__code" id="payment-result-code" readonly hidden></textarea>
+          <div class="payment-result__actions">
+            <a id="open-payment-link" href="#" target="_blank" rel="noopener noreferrer" hidden>Ir para o Mercado Pago</a>
+            <button id="copy-payment-code" type="button" hidden>Copiar Pix</button>
+            <button id="report-payment-button" type="button">Avisei que paguei</button>
+          </div>
+        </div>
         <div class="fake-payment-message feedback-message" id="fake-payment-message" role="status" aria-live="polite" hidden>
-          <span class="feedback-message__icon" aria-hidden="true">â</span>
+          <span class="feedback-message__icon" aria-hidden="true">&#x2713;</span>
           <span class="feedback-message__copy">
             <strong class="feedback-message__title"></strong>
             <span class="feedback-message__text"></span>
@@ -4182,7 +4411,7 @@
     const galleryUploadInput = document.querySelector('#gallery-upload-input');
     const galleryStatus = document.querySelector('#gallery-status');
     const scrapbookPages = document.querySelector('#scrapbook-pages');
-    const giftRows = [...document.querySelectorAll('.gift-item')];
+    let giftRows = [...document.querySelectorAll('.gift-item')];
     const giftList = document.querySelector('#gift-list');
     const giftFilters = [...document.querySelectorAll('.gift-filter')];
     const giftSort = document.querySelector('#gift-sort');
@@ -4204,21 +4433,38 @@
     const checkoutTotal = document.querySelector('#checkout-total');
     const fakePaymentMessage = document.querySelector('#fake-payment-message');
     const fakePixBox = document.querySelector('#fake-pix-box');
-    const cardNumberField = document.querySelector('#card-number-field');
-    const cardNameField = document.querySelector('#card-name-field');
-    const cardNumberInput = document.querySelector('#card-number');
-    const cardNameInput = document.querySelector('#card-name');
     const copyFakePixButton = document.querySelector('#copy-fake-pix');
+    const pixBoxText = document.querySelector('#pix-box-text');
+    const pixBoxLabel = document.querySelector('#pix-box-label');
+    const reserveGiftButton = document.querySelector('#reserve-gift-button');
+    const paymentResult = document.querySelector('#payment-result');
+    const paymentResultTitle = document.querySelector('#payment-result-title');
+    const paymentResultText = document.querySelector('#payment-result-text');
+    const paymentResultCode = document.querySelector('#payment-result-code');
+    const openPaymentLink = document.querySelector('#open-payment-link');
+    const copyPaymentCode = document.querySelector('#copy-payment-code');
+    const reportPaymentButton = document.querySelector('#report-payment-button');
     const rsvpForm = document.querySelector('#rsvp-form');
     const rsvpFields = document.querySelector('#rsvp-fields');
     const rsvpSubmitButton = document.querySelector('#rsvp-submit');
     const rsvpLoading = document.querySelector('#rsvp-loading');
+    const companionCount = document.querySelector('#companion-count');
+    const companionFields = document.querySelector('#companion-fields');
+    const companionInputs = [...document.querySelectorAll('[data-companion-index]')];
+    const dietaryOtherToggle = document.querySelector('#dietary-other-toggle');
+    const dietaryOther = document.querySelector('#dietary-other');
+    const dietaryOtherText = document.querySelector('#dietary-other-text');
+    const rsvpConsent = document.querySelector('#rsvp-consent');
+    const rsvpEditToken = document.querySelector('#rsvp-edit-token');
     const cartState = new Map();
     let lastCartTrigger;
     let galleryCurrentIndex = 0;
     let isProgrammaticCarouselScroll = false;
     let carouselScrollTimer;
     let isRsvpProcessing = false;
+    let currentGiftCatalog = [];
+    let currentClaimToken = '';
+    let currentPayment = null;
     const showFeedback = (element, { icon, title, text }) => {
       element.querySelector('.feedback-message__icon').textContent = icon;
       element.querySelector('.feedback-message__title').textContent = title;
@@ -4233,146 +4479,161 @@
       element.hidden = true;
     };
 
+    const escapeHtml = (value) => String(value ?? '').replace(/[&<>'"]/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[character]));
+
+    const apiRequest = async (path, options = {}) => {
+      const response = await fetch(path, {
+        ...options,
+        headers: {
+          'Content-Type': 'application/json',
+          ...(options.headers || {})
+        }
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(data.error || 'Nao foi possivel concluir a operacao.');
+      return data;
+    };
+
     const travelPhotos = [
       {
         src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Cypress_tree_alley_at_sunset_in_Asciano%2C_Tuscany.jpg/1280px-Cypress_tree_alley_at_sunset_in_Asciano%2C_Tuscany.jpg',
         alt: 'Estrada cercada por ciprestes em Asciano, na Toscana',
-        location: 'Asciano Â· Toscana',
+        location: 'Asciano \u00b7 Toscana',
         title: 'Fim de tarde',
         note: 'A estrada mais bonita costuma aparecer quando a gente erra o caminho.'
       },
       {
         src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/01665_ITA_Tuscany_Pitigliano_S_from_viewpoint_V-P.jpg/1280px-01665_ITA_Tuscany_Pitigliano_S_from_viewpoint_V-P.jpg',
         alt: 'Vila de pedra de Pitigliano vista de longe',
-        location: 'Pitigliano Â· Toscana',
+        location: 'Pitigliano \u00b7 Toscana',
         title: 'Pedra antiga',
         note: 'Casas de pedra, janelas abertas e tempo para olhar tudo.'
       },
       {
         src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Grape_vines_and_cypress_trees_in_Tuscany.jpg/1280px-Grape_vines_and_cypress_trees_in_Tuscany.jpg',
         alt: 'Vinhedos e ciprestes em San Gimignano',
-        location: 'San Gimignano Â· Toscana',
+        location: 'San Gimignano \u00b7 Toscana',
         title: 'Entre vinhedos',
-        note: 'Um almoÃ§o longo, uma taÃ§a cheia e nenhuma pressa.'
+        note: 'Um almo\u00e7o longo, uma ta\u00e7a cheia e nenhuma pressa.'
       },
       {
         src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Ridge_of_Cypress_Trees.jpg/1280px-Ridge_of_Cypress_Trees.jpg',
         alt: 'Colina com uma linha de ciprestes no Val d\'Orcia',
-        location: 'Val d\'Orcia Â· Toscana',
+        location: 'Val d\'Orcia \u00b7 Toscana',
         title: 'Um desvio bonito',
-        note: 'Algumas paisagens parecem ter sido desenhadas para nÃ³s.'
+        note: 'Algumas paisagens parecem ter sido desenhadas para n\u00f3s.'
       },
       {
         src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Twin_cypresses_in_foggy_landscape_-_Tuscany.jpg/1280px-Twin_cypresses_in_foggy_landscape_-_Tuscany.jpg',
         alt: 'Dois ciprestes em uma paisagem com neblina na Toscana',
-        location: 'Toscana Â· ItÃ¡lia',
-        title: 'ManhÃ£ lenta',
-        note: 'Acordar cedo sÃ³ para ver a neblina desaparecer.'
+        location: 'Toscana \u00b7 It\u00e1lia',
+        title: 'Manh\u00e3 lenta',
+        note: 'Acordar cedo s\u00f3 para ver a neblina desaparecer.'
       },
       {
         src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Landscape_of_Tuscany_2.jpg/1280px-Landscape_of_Tuscany_2.jpg',
         alt: 'Paisagem ampla das colinas da Toscana',
-        location: 'Toscana Â· ItÃ¡lia',
+        location: 'Toscana \u00b7 It\u00e1lia',
         title: 'Onde a gente chegar',
         note: 'O horizonte sempre parece maior quando estamos juntos.'
       },
       {
         src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/MontorsaioCampagnaticoPanorama3.jpg/1280px-MontorsaioCampagnaticoPanorama3.jpg',
         alt: 'Panorama das colinas de Montorsaio, na Toscana',
-        location: 'Montorsaio Â· Toscana',
+        location: 'Montorsaio \u00b7 Toscana',
         title: 'Vista de cima',
         note: 'Subimos sem saber o que encontrar e encontramos tudo.'
       },
       {
         src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Lari_Panorama_1.jpg/1280px-Lari_Panorama_1.jpg',
         alt: 'Panorama de Lari, na Toscana',
-        location: 'Lari Â· Toscana',
+        location: 'Lari \u00b7 Toscana',
         title: 'Uma vila qualquer',
-        note: 'Para nÃ³s, nenhum lugar bonito Ã© realmente qualquer.'
+        note: 'Para n\u00f3s, nenhum lugar bonito \u00e9 realmente qualquer.'
       },
       {
         src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Stribugliano.JPG/1280px-Stribugliano.JPG',
         alt: 'Paisagem rural de Stribugliano, na Toscana',
-        location: 'Stribugliano Â· Toscana',
+        location: 'Stribugliano \u00b7 Toscana',
         title: 'Campo aberto',
-        note: 'SilÃªncio tambÃ©m Ã© uma forma de conversa.'
+        note: 'Sil\u00eancio tamb\u00e9m \u00e9 uma forma de conversa.'
       },
       {
         src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Stribugliano_2.jpg/1280px-Stribugliano_2.jpg',
         alt: 'Colinas e casas de Stribugliano, na Toscana',
-        location: 'Stribugliano Â· Toscana',
+        location: 'Stribugliano \u00b7 Toscana',
         title: 'Depois da curva',
-        note: 'Sempre existe uma curva guardando outra histÃ³ria.'
+        note: 'Sempre existe uma curva guardando outra hist\u00f3ria.'
       },
       {
         src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Stribugliano_Arcidosso_3.jpg/1280px-Stribugliano_Arcidosso_3.jpg',
         alt: 'Paisagem de Stribugliano e Arcidosso, na Toscana',
-        location: 'Arcidosso Â· Toscana',
+        location: 'Arcidosso \u00b7 Toscana',
         title: 'Dias de sol',
         note: 'A luz muda, mas a vontade de ficar continua.'
       },
       {
         src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Stribugliano_fattoria_dei_marchesi_La_Greca.jpg/1280px-Stribugliano_fattoria_dei_marchesi_La_Greca.jpg',
-        alt: 'Fazenda histÃ³rica em Stribugliano, na Toscana',
-        location: 'Stribugliano Â· Toscana',
+        alt: 'Fazenda hist\u00f3rica em Stribugliano, na Toscana',
+        location: 'Stribugliano \u00b7 Toscana',
         title: 'Casa no campo',
         note: 'Toda viagem boa deixa vontade de morar um pouco ali.'
       },
       {
         src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Stribugliano_palazzo_dei_marchesi_La_Greca.jpg/1280px-Stribugliano_palazzo_dei_marchesi_La_Greca.jpg',
-        alt: 'PalÃ¡cio histÃ³rico de Stribugliano, na Toscana',
-        location: 'Stribugliano Â· Toscana',
-        title: 'Parede com histÃ³ria',
+        alt: 'Pal\u00e1cio hist\u00f3rico de Stribugliano, na Toscana',
+        location: 'Stribugliano \u00b7 Toscana',
+        title: 'Parede com hist\u00f3ria',
         note: 'Alguns lugares parecem lembrar de pessoas que ainda nem chegaram.'
       },
       {
         src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/P.S.Stefano_panorama.jpg/1280px-P.S.Stefano_panorama.jpg',
         alt: 'Panorama de Porto Santo Stefano, na Toscana',
-        location: 'Porto Santo Stefano Â· ItÃ¡lia',
+        location: 'Porto Santo Stefano \u00b7 It\u00e1lia',
         title: 'O azul do mapa',
         note: 'Mudamos de estrada e o mar apareceu sem avisar.'
       },
       {
         src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Porto_Santo_Stefano_-_Hafen.jpg/1280px-Porto_Santo_Stefano_-_Hafen.jpg',
-        alt: 'Porto de Porto Santo Stefano, na ItÃ¡lia',
-        location: 'Porto Santo Stefano Â· ItÃ¡lia',
+        alt: 'Porto de Porto Santo Stefano, na It\u00e1lia',
+        location: 'Porto Santo Stefano \u00b7 It\u00e1lia',
         title: 'Fim de porto',
-        note: 'Chegar tambÃ©m pode ser uma aventura.'
+        note: 'Chegar tamb\u00e9m pode ser uma aventura.'
       },
       {
         src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Porto_Santo_Stefano_-_Vista_Mare_2.JPG/1280px-Porto_Santo_Stefano_-_Vista_Mare_2.JPG',
-        alt: 'Vista do mar em Porto Santo Stefano, na ItÃ¡lia',
-        location: 'Porto Santo Stefano Â· ItÃ¡lia',
+        alt: 'Vista do mar em Porto Santo Stefano, na It\u00e1lia',
+        location: 'Porto Santo Stefano \u00b7 It\u00e1lia',
         title: 'Mar aberto',
         note: 'Um mergulho, duas risadas e o dia inteiro pela frente.'
       },
       {
         src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Porto_Santo_Stefano_-_Vista_dalla_giannella.JPG/1280px-Porto_Santo_Stefano_-_Vista_dalla_giannella.JPG',
         alt: 'Vista costeira a partir de Giannella, na Toscana',
-        location: 'Giannella Â· Toscana',
-        title: 'Entre marÃ©s',
-        note: 'A melhor parte da viagem foi nÃ£o saber o prÃ³ximo lugar.'
+        location: 'Giannella \u00b7 Toscana',
+        title: 'Entre mar\u00e9s',
+        note: 'A melhor parte da viagem foi n\u00e3o saber o pr\u00f3ximo lugar.'
       },
       {
         src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Porto_santo_stefano%2C_veduta_05.jpg/1280px-Porto_santo_stefano%2C_veduta_05.jpg',
         alt: 'Vista de Porto Santo Stefano, na Toscana',
-        location: 'Porto Santo Stefano Â· ItÃ¡lia',
-        title: 'CartÃ£o-postal',
+        location: 'Porto Santo Stefano \u00b7 It\u00e1lia',
+        title: 'Cart\u00e3o-postal',
         note: 'Guardamos algumas paisagens como quem guarda bilhetes.'
       },
       {
         src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Panorama_Montorsaio_%28GR%29.jpg/1280px-Panorama_Montorsaio_%28GR%29.jpg',
-        alt: 'Panorama de Montorsaio, na provÃ­ncia de Grosseto',
-        location: 'Grosseto Â· Toscana',
+        alt: 'Panorama de Montorsaio, na prov\u00edncia de Grosseto',
+        location: 'Grosseto \u00b7 Toscana',
         title: 'O caminho de volta',
         note: 'Voltar para casa fica mais bonito depois de viajar.'
       },
       {
         src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Tuscany_-_Cypress_Trees_%285698663059%29.jpg/1280px-Tuscany_-_Cypress_Trees_%285698663059%29.jpg',
         alt: 'Ciprestes em uma paisagem da Toscana',
-        location: 'Toscana Â· ItÃ¡lia',
+        location: 'Toscana \u00b7 It\u00e1lia',
         title: 'Ainda temos estrada',
-        note: 'A prÃ³xima pÃ¡gina Ã© sempre a nossa preferida.'
+        note: 'A pr\u00f3xima p\u00e1gina \u00e9 sempre a nossa preferida.'
       }
     ];
 
@@ -4542,9 +4803,50 @@
       maximumFractionDigits: 0
     });
 
+    const giftStatusLabel = {
+      available: 'Disponivel',
+      reserved: 'Reservado por 24 horas',
+      payment_reported: 'Pagamento em conferencia',
+      confirmed: 'Presente confirmado'
+    };
+
+    const renderGiftCatalog = (gifts) => {
+      if (!Array.isArray(gifts)) return;
+      currentGiftCatalog = gifts;
+      if (!gifts.length) {
+        giftList.innerHTML = '<p class="gift-catalog-empty">A lista de presentes sera atualizada em breve.</p>';
+        giftRows = [];
+        applyGiftCatalog();
+        renderCart();
+        return;
+      }
+      giftList.innerHTML = gifts.map((gift) => {
+        const status = gift.status || 'available';
+        const isAvailable = status === 'available';
+        const buttonLabel = isAvailable ? 'Presentear' : giftStatusLabel[status] || 'Indisponivel';
+        return `<article class="gift-item" data-category="${escapeHtml(gift.category)}" data-featured="${Number(gift.featured) || 99}" data-gift-id="${escapeHtml(gift.id)}" data-gift-name="${escapeHtml(gift.name)}" data-gift-price="${Number(gift.price) || 0}" data-gift-status="${escapeHtml(status)}" data-payment-url="${escapeHtml(gift.paymentUrl || '')}" data-pix-key="${escapeHtml(gift.pixKey || '')}" data-pix-payload="${escapeHtml(gift.pixPayload || '')}" data-expires-at="${escapeHtml(gift.expiresAt || '')}">
+          <div class="gift-item__media"><img src="${escapeHtml(gift.imageUrl || 'image.png')}" alt="${escapeHtml(gift.name)}" loading="lazy">${gift.badge ? `<span class="gift-item__badge">${escapeHtml(gift.badge)}</span>` : ''}<span class="gift-item__number">${String(Number(gift.featured) || 0).padStart(2, '0')}</span></div>
+          <div class="gift-item__content"><h3>${escapeHtml(gift.name)}</h3><p>${escapeHtml(gift.description)}</p><span class="gift-item__price">${formatBRL(Number(gift.price) || 0)}</span></div>
+          ${isAvailable ? `<button class="gift-item__add" type="button"><span>Presentear</span><b>+</b></button>` : `<p class="gift-item__status">${escapeHtml(buttonLabel)}</p>`}
+        </article>`;
+      }).join('');
+      giftRows = [...giftList.querySelectorAll('.gift-item')];
+      applyGiftCatalog();
+      renderCart();
+    };
+
+    const loadGiftCatalog = async () => {
+      try {
+        const data = await apiRequest('/api/gifts');
+        if (data.gifts?.length) renderGiftCatalog(data.gifts);
+      } catch {
+        // Keep the static catalog visible until Supabase is configured.
+      }
+    };
+
     const getCartEntries = () => giftRows.map((row) => {
       const id = row.dataset.giftId;
-      const quantity = cartState.get(id) || 0;
+      const quantity = cartState.has(id) ? 1 : 0;
       return {
         id,
         name: row.dataset.giftName,
@@ -4573,9 +4875,7 @@
             <p class="cart-line__unit">${formatBRL(entry.price)} cada</p>
             <div class="cart-line__actions">
               <div class="quantity-control" aria-label="Quantidade de ${entry.name}">
-                <button type="button" data-cart-action="decrease" data-cart-id="${entry.id}" aria-label="Diminuir quantidade">â</button>
-                <span>${entry.quantity}</span>
-                <button type="button" data-cart-action="increase" data-cart-id="${entry.id}" aria-label="Aumentar quantidade">+</button>
+                <span>1 presente</span>
               </div>
               <button class="cart-line__remove" type="button" data-cart-action="remove" data-cart-id="${entry.id}">Remover</button>
             </div>
@@ -4618,6 +4918,7 @@
       cartDrawer.dataset.view = view;
       cartView.hidden = isCheckout;
       checkoutView.hidden = !isCheckout;
+      if (isCheckout) resetPaymentResult();
       if (!isCheckout) hideFeedback(fakePaymentMessage);
     };
 
@@ -4640,13 +4941,14 @@
       if (lastCartTrigger) lastCartTrigger.focus();
     };
 
-    giftRows.forEach((row) => {
-      const addButton = row.querySelector('.gift-item__add');
-      addButton.addEventListener('click', () => {
-        const id = row.dataset.giftId;
-        cartState.set(id, (cartState.get(id) || 0) + 1);
-        openCart(addButton);
-      });
+    giftList.addEventListener('click', (event) => {
+      const addButton = event.target.closest('.gift-item__add');
+      if (!addButton) return;
+      const row = addButton.closest('.gift-item');
+      if (!row || row.dataset.giftStatus && row.dataset.giftStatus !== 'available') return;
+      cartState.clear();
+      cartState.set(row.dataset.giftId, 1);
+      openCart(addButton);
     });
 
     cartItems.addEventListener('click', (event) => {
@@ -4656,9 +4958,7 @@
       const currentQuantity = cartState.get(id) || 0;
       const action = actionButton.dataset.cartAction;
 
-      if (action === 'increase') cartState.set(id, currentQuantity + 1);
-      if (action === 'decrease' && currentQuantity > 1) cartState.set(id, currentQuantity - 1);
-      if (action === 'remove' || (action === 'decrease' && currentQuantity <= 1)) cartState.delete(id);
+      if (action === 'remove' || action === 'decrease' || action === 'increase') cartState.delete(id);
       renderCart();
     });
 
@@ -4674,50 +4974,128 @@
       }
     });
 
-    document.querySelectorAll('input[name="payment-method"]').forEach((input) => {
-      input.addEventListener('change', () => {
-        const isCard = input.value === 'card' && input.checked;
-        fakePixBox.hidden = isCard;
-        cardNumberField.hidden = !isCard;
-        cardNameField.hidden = !isCard;
-        cardNumberInput.required = isCard;
-        cardNameInput.required = isCard;
-      });
-    });
+    const getSelectedGiftRow = () => {
+      const entry = getCartEntries()[0];
+      return entry ? giftRows.find((row) => row.dataset.giftId === entry.id) : null;
+    };
+
+    const updatePaymentPreview = () => {
+      const row = getSelectedGiftRow();
+      const paymentMethod = document.querySelector('input[name="payment-method"]:checked')?.value || 'pix';
+      const isPix = paymentMethod === 'pix';
+      const pixCode = row?.dataset.pixPayload || row?.dataset.pixKey || '';
+      fakePixBox.hidden = !isPix;
+      pixBoxLabel.textContent = pixCode ? 'Pix configurado para este presente.' : 'O Pix sera configurado em breve.';
+      copyFakePixButton.disabled = !pixCode;
+      copyFakePixButton.textContent = pixCode ? 'Copiar Pix' : 'Pix em breve';
+    };
+
+    const resetPaymentResult = () => {
+      currentClaimToken = '';
+      currentPayment = null;
+      paymentResult.hidden = true;
+      paymentResultCode.hidden = true;
+      openPaymentLink.hidden = true;
+      copyPaymentCode.hidden = true;
+      reportPaymentButton.hidden = true;
+      reserveGiftButton.hidden = false;
+      reserveGiftButton.disabled = false;
+      reserveGiftButton.querySelector('span').textContent = 'Reservar presente';
+      hideFeedback(fakePaymentMessage);
+      updatePaymentPreview();
+    };
+
+    const showPaymentResult = ({ claim, payment }) => {
+      currentClaimToken = claim.claimToken;
+      currentPayment = payment;
+      reserveGiftButton.disabled = true;
+      reserveGiftButton.querySelector('span').textContent = 'Reserva criada';
+      paymentResultTitle.textContent = 'Presente reservado!';
+      paymentResultText.textContent = `A reserva fica ativa por 24 horas. Depois de pagar, avise o casal para que eles possam confirmar o recebimento.`;
+      paymentResultCode.value = payment.pixPayload || payment.pixKey || '';
+      paymentResultCode.hidden = !payment.pixPayload && !payment.pixKey;
+      copyPaymentCode.hidden = !payment.pixPayload && !payment.pixKey;
+      openPaymentLink.href = payment.paymentUrl || '#';
+      openPaymentLink.hidden = !payment.paymentUrl;
+      reportPaymentButton.hidden = false;
+      paymentResult.hidden = false;
+      fakePixBox.hidden = true;
+    };
+
+    document.querySelectorAll('input[name="payment-method"]').forEach((input) => input.addEventListener('change', updatePaymentPreview));
 
     copyFakePixButton.addEventListener('click', async () => {
-      const fakePixCode = '00020126580014BR.GOV.BCB.PIX0136gabriela.vitor.demo52040000530398654040.005802BR5925GABRIELA E VITOR6009TOSCANA62070503***6304FAKE';
+      const row = getSelectedGiftRow();
+      const code = row?.dataset.pixPayload || row?.dataset.pixKey || '';
+      if (!code) return;
       try {
-        await navigator.clipboard.writeText(fakePixCode);
-        copyFakePixButton.textContent = 'CÃ³digo copiado';
-        showFeedback(fakePaymentMessage, {
-          icon: 'â',
-          title: 'CÃ³digo Pix copiado!',
-          text: 'O cÃ³digo demonstrativo estÃ¡ pronto para vocÃª continuar a experiÃªncia.'
-        });
+        await navigator.clipboard.writeText(code);
+        showFeedback(fakePaymentMessage, { icon: '\u2713', title: 'Pix copiado!', text: 'Agora voce pode concluir o pagamento no aplicativo do seu banco.' });
       } catch {
-        copyFakePixButton.textContent = 'CÃ³digo demonstrativo pronto';
-        showFeedback(fakePaymentMessage, {
-          icon: 'â¦',
-          title: 'CÃ³digo demonstrativo pronto',
-          text: 'O cÃ³digo estÃ¡ disponÃ­vel para vocÃª copiar manualmente.'
-        });
+        showFeedback(fakePaymentMessage, { icon: '\u2726', title: 'Pix pronto', text: 'Selecione e copie o codigo exibido para concluir o pagamento.' });
       }
     });
 
-    checkoutView.addEventListener('submit', (event) => {
+    copyPaymentCode.addEventListener('click', async () => {
+      if (!paymentResultCode.value) return;
+      try {
+        await navigator.clipboard.writeText(paymentResultCode.value);
+        showFeedback(fakePaymentMessage, { icon: '\u2713', title: 'Pix copiado!', text: 'Depois do pagamento, avise o casal por aqui.' });
+      } catch {
+        paymentResultCode.focus();
+        paymentResultCode.select();
+      }
+    });
+
+    checkoutView.addEventListener('submit', async (event) => {
       event.preventDefault();
-      const name = document.querySelector('#checkout-name').value.trim();
-      const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
-      const paymentLabel = paymentMethod === 'pix' ? 'Pix' : 'cartÃ£o';
-      showFeedback(fakePaymentMessage, {
-        icon: 'â¦',
-        title: 'Presente reservado!',
-        text: `Pagamento simulado via ${paymentLabel} concluÃ­do, ${name}. Esse carinho jÃ¡ tem lugar no novo lar de Gabriela e Vitor.`
-      });
+      if (currentClaimToken) return;
+      const row = getSelectedGiftRow();
+      if (!row) return;
+      reserveGiftButton.disabled = true;
+      reserveGiftButton.querySelector('span').textContent = 'Reservando...';
+      try {
+        const data = await apiRequest('/api/gift-claims', {
+          method: 'POST',
+          body: JSON.stringify({
+            giftId: row.dataset.giftId,
+            name: document.querySelector('#checkout-name').value.trim(),
+            email: document.querySelector('#checkout-email').value.trim(),
+            paymentMethod: document.querySelector('input[name="payment-method"]:checked').value
+          })
+        });
+        showPaymentResult(data);
+        row.dataset.giftStatus = 'reserved';
+        row.querySelector('.gift-item__add')?.remove();
+        const status = document.createElement('p');
+        status.className = 'gift-item__status';
+        status.textContent = 'Reservado por 24 horas';
+        row.appendChild(status);
+      } catch (error) {
+        reserveGiftButton.disabled = false;
+        reserveGiftButton.querySelector('span').textContent = 'Reservar presente';
+        showFeedback(fakePaymentMessage, { icon: '!', title: 'Nao foi possivel reservar', text: error.message });
+      }
+    });
+
+    reportPaymentButton.addEventListener('click', async () => {
+      if (!currentClaimToken) return;
+      reportPaymentButton.disabled = true;
+      try {
+        await apiRequest('/api/gift-claims', {
+          method: 'POST',
+          body: JSON.stringify({ action: 'paid', claimToken: currentClaimToken, paymentNote: document.querySelector('#payment-note').value.trim() })
+        });
+        reportPaymentButton.textContent = 'Pagamento avisado';
+        showFeedback(fakePaymentMessage, { icon: '\u2713', title: 'Aviso recebido!', text: 'O casal vai conferir o pagamento e atualizar a lista.' });
+      } catch (error) {
+        reportPaymentButton.disabled = false;
+        showFeedback(fakePaymentMessage, { icon: '!', title: 'Nao foi possivel avisar', text: error.message });
+      }
     });
 
     renderCart();
+    loadGiftCatalog();
 
     galleryLightbox.querySelectorAll('[data-lightbox-close]').forEach((element) => {
       element.addEventListener('click', closeGalleryLightbox);
@@ -4741,62 +5119,146 @@
         const title = file.name.replace(/\.[^/.]+$/, '').replace(/[-_]+/g, ' ').trim() || `Foto de viagem ${index + 1}`;
         image.src = URL.createObjectURL(file);
         image.alt = `Foto de viagem escolhida por Gabriela e Vitor: ${title}`;
-        item.dataset.location = 'Ãlbum de vocÃªs';
+        item.dataset.location = '\u00c1lbum de voc\u00eas';
         item.dataset.title = title;
-        item.querySelector('.gallery-item__location').textContent = 'Ãlbum de vocÃªs';
+        item.querySelector('.gallery-item__location').textContent = '\u00c1lbum de voc\u00eas';
         item.querySelector('.gallery-item__title').textContent = title;
         item.setAttribute('aria-label', `Abrir foto: ${title}`);
       });
 
       if (files.length > galleryItems.length) {
         showFeedback(galleryStatus, {
-          icon: 'â¦',
-          title: 'Ãlbum atualizado',
-          text: `As primeiras ${galleryItems.length} fotos foram carregadas na prÃ©via.`
+          icon: '\u2726',
+          title: '\u00c1lbum atualizado',
+          text: `As primeiras ${galleryItems.length} fotos foram carregadas na pr\u00e9via.`
         });
       } else if (selectedFiles.length > 0) {
         showFeedback(galleryStatus, {
-          icon: 'â¦',
+          icon: '\u2726',
           title: 'Que lindo!',
-          text: `${selectedFiles.length} foto${selectedFiles.length === 1 ? '' : 's'} carregada${selectedFiles.length === 1 ? '' : 's'} na prÃ©via.`
+          text: `${selectedFiles.length} foto${selectedFiles.length === 1 ? '' : 's'} carregada${selectedFiles.length === 1 ? '' : 's'} na pr\u00e9via.`
         });
       } else if (event.target.files.length > 0) {
         showFeedback(galleryStatus, {
           icon: '!',
           title: 'Escolha uma imagem',
-          text: 'Selecione arquivos de imagem para atualizar o Ã¡lbum.'
+          text: 'Selecione arquivos de imagem para atualizar o \u00e1lbum.'
         });
       }
     });
 
-    rsvpForm.addEventListener('submit', (event) => {
+    const updateCompanionFields = () => {
+      const count = Number(companionCount.value) || 0;
+      companionFields.hidden = count === 0;
+      companionInputs.forEach((input, index) => {
+        const visible = index < count;
+        input.hidden = !visible;
+        input.required = visible;
+      });
+    };
+
+    companionCount.addEventListener('change', updateCompanionFields);
+    dietaryOtherToggle.addEventListener('change', () => {
+      dietaryOther.hidden = !dietaryOtherToggle.checked;
+      dietaryOtherText.required = dietaryOtherToggle.checked;
+    });
+    updateCompanionFields();
+
+    const populateRsvpForm = (rsvp) => {
+      document.querySelector('#name').value = rsvp.name || '';
+      document.querySelector('#email').value = rsvp.email || '';
+      const attendanceInput = document.querySelector(`input[name="attendance"][value="${rsvp.attendance}"]`);
+      if (attendanceInput) attendanceInput.checked = true;
+      companionCount.value = String(Math.min(4, rsvp.companionCount || 0));
+      companionInputs.forEach((input, index) => { input.value = rsvp.companions?.[index] || ''; });
+      document.querySelectorAll('input[name="dietary"]').forEach((input) => { input.checked = rsvp.dietaryPreferences?.includes(input.value) || false; });
+      dietaryOtherText.value = rsvp.dietaryOther || '';
+      dietaryOtherToggle.checked = rsvp.dietaryPreferences?.includes('outro') || Boolean(rsvp.dietaryOther);
+      dietaryOther.hidden = !dietaryOtherToggle.checked;
+      dietaryOtherText.required = dietaryOtherToggle.checked;
+      rsvpConsent.checked = true;
+      updateCompanionFields();
+      rsvpForm.dataset.editing = 'true';
+      rsvpSubmitButton.querySelector('span').textContent = 'Atualizar confirma\u00e7\u00e3o';
+    };
+
+    const loadRsvpForEdit = async () => {
+      const token = new URLSearchParams(window.location.search).get('rsvp_token');
+      if (!token) return;
+      try {
+        const data = await apiRequest(`/api/rsvp?token=${encodeURIComponent(token)}`);
+        populateRsvpForm(data.rsvp);
+        rsvpEditToken.value = token;
+        document.querySelector('#rsvp').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } catch {
+        // The normal RSVP form remains available if the edit link has expired or is invalid.
+      }
+    };
+
+    rsvpForm.addEventListener('submit', async (event) => {
       event.preventDefault();
       if (isRsvpProcessing) return;
 
       const name = document.querySelector('#name').value.trim();
       const attendance = document.querySelector('input[name="attendance"]:checked');
+      const companionNames = companionInputs.slice(0, Number(companionCount.value) || 0).map((input) => input.value.trim());
       const message = document.querySelector('#form-message');
-      const isAttending = attendance && attendance.value === 'sim';
+      if (companionNames.some((companion) => !companion)) {
+        showFeedback(message, { icon: '!', title: 'Falta um nome', text: 'Preencha o nome de cada acompanhante ou ajuste a quantidade.' });
+        return;
+      }
 
       isRsvpProcessing = true;
       rsvpFields.hidden = true;
       rsvpSubmitButton.hidden = true;
       rsvpLoading.hidden = false;
+      hideFeedback(message);
       window.requestAnimationFrame(() => rsvpLoading.classList.add('is-visible'));
 
-      window.setTimeout(() => {
+      try {
+        const data = await apiRequest('/api/rsvp', {
+          method: 'POST',
+          body: JSON.stringify({
+            name,
+            email: document.querySelector('#email').value.trim(),
+            attendance: attendance?.value,
+            companions: companionNames,
+            dietaryPreferences: [...document.querySelectorAll('input[name="dietary"]:checked')].map((input) => input.value),
+            dietaryOther: dietaryOtherText.value.trim(),
+            consent: rsvpConsent.checked,
+            editToken: rsvpEditToken.value
+          })
+        });
         rsvpLoading.classList.remove('is-visible');
         rsvpLoading.hidden = true;
         rsvpForm.classList.add('is-complete');
+        const isAttending = attendance?.value === 'sim';
         showFeedback(message, {
-          icon: isAttending ? 'â¦' : 'â¡',
-          title: isAttending ? 'Que alegria ter vocÃª com a gente!' : `Obrigado por avisar, ${name}.`,
-          text: isAttending ? 'Nos vemos em 25 de abril na Casa Olivetto. Vai ser inesquecÃ­vel.' : 'Vamos sentir sua falta, mas seu carinho jÃ¡ chegou atÃ© nÃ³s.'
+          icon: isAttending ? '\u2726' : '\u2661',
+          title: isAttending ? 'Que alegria ter voc\u00ea com a gente!' : `Obrigado por avisar, ${name}.`,
+          text: data.emailSent === false ? 'Sua resposta foi salva. O e-mail com o link de edi\xe7\xe3o ser\xe1 ativado quando o remetente estiver configurado.' : 'Enviamos um link para o seu e-mail caso voc\xea precise atualizar a resposta.'
         });
         event.target.reset();
+        rsvpEditToken.value = '';
+        rsvpForm.dataset.editing = 'false';
+        rsvpSubmitButton.querySelector('span').textContent = 'Enviar confirma\xe7\xe3o';
+        updateCompanionFields();
+        dietaryOther.hidden = true;
+        dietaryOtherText.required = false;
         message.focus({ preventScroll: true });
-      }, 1000);
+      } catch (error) {
+        rsvpLoading.classList.remove('is-visible');
+        rsvpLoading.hidden = true;
+        rsvpFields.hidden = false;
+        rsvpSubmitButton.hidden = false;
+        isRsvpProcessing = false;
+        showFeedback(message, { icon: '!', title: 'Nao foi possivel enviar', text: error.message });
+        return;
+      }
+      isRsvpProcessing = false;
     });
+
+    loadRsvpForEdit();
   </script>
 </body>
 </html>
