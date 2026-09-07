@@ -8,9 +8,9 @@ window.weddingPlaylist = [
   },
   {
     enabled: true,
-    title: 'Faixa provisoria 02',
-    artist: 'Substitua pelos dados da musica',
-    mp3: 'audio/02-faixa-provisoria.mp3',
+    title: 'Until I Found You',
+    artist: 'Stephen Sanchez',
+    mp3: 'files/Stephen Sanchez - Until I Found You (Official Video) (1).mp3',
     ogg: 'audio/02-faixa-provisoria.ogg'
   }
 ];
