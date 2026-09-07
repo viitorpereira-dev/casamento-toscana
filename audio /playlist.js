@@ -1,9 +1,9 @@
 window.weddingPlaylist = [
   {
     enabled: true,
-    title: 'Faixa provisoria 01',
-    artist: 'Substitua pelos dados da musica',
-    mp3: 'audio/01-faixa-provisoria.mp3',
+    title: 'Volare',
+    artist: 'Jack Jezzro',
+    mp3: 'audio/Volare - Jack Jezzro - Mauro Lucio (320k).mp3',
     ogg: 'audio/01-faixa-provisoria.ogg'
   },
   {
