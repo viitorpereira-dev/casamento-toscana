@@ -3,7 +3,7 @@ window.weddingPlaylist = [
     enabled: true,
     title: 'Volare',
     artist: 'Jack Jezzro',
-    mp3: 'file/Volare - Jack Jezzro - Mauro Lucio (320k).mp3',
+    mp3: 'files/Volare - Jack Jezzro - Mauro Lucio (320k).mp3',
     ogg: 'audio/01-faixa-provisoria.ogg'
   },
   {
