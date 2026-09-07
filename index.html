@@ -163,6 +163,130 @@
       transition: width 80ms linear;
     }
 
+    .music-player {
+      position: fixed;
+      z-index: 45;
+      right: 24px;
+      bottom: 24px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: center;
+      width: min(360px, calc(100% - 32px));
+      padding: 13px 14px;
+      border: 1px solid rgba(244, 239, 229, 0.22);
+      color: var(--paper);
+      background: rgba(38, 52, 45, 0.93);
+      box-shadow: 0 18px 45px rgba(38, 52, 45, 0.24);
+      backdrop-filter: blur(14px) saturate(1.1);
+      -webkit-backdrop-filter: blur(14px) saturate(1.1);
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 300ms ease, transform 300ms ease;
+    }
+
+    .music-player[hidden] {
+      display: none !important;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(12px);
+    }
+
+    .music-player__info {
+      min-width: 0;
+    }
+
+    .music-player__eyebrow {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--sun);
+      font-size: 0.57rem;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .music-player__track,
+    .music-player__artist {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .music-player__track {
+      color: var(--paper);
+      font: 500 1.12rem/0.95 var(--serif);
+    }
+
+    .music-player__artist {
+      margin-top: 4px;
+      color: rgba(244, 239, 229, 0.62);
+      font-size: 0.67rem;
+    }
+
+    .music-player__controls {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 5px;
+    }
+
+    .music-player__button {
+      display: grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      padding: 0;
+      border: 1px solid rgba(244, 239, 229, 0.25);
+      color: var(--paper);
+      background: transparent;
+      font-size: 0.78rem;
+      line-height: 1;
+      transition: color 180ms ease, background 180ms ease, border-color 180ms ease, transform 180ms ease;
+    }
+
+    .music-player__button:hover,
+    .music-player__button:focus-visible,
+    .music-player__button[aria-pressed="true"] {
+      border-color: var(--sun);
+      color: var(--ink);
+      background: var(--sun);
+      transform: translateY(-2px);
+    }
+
+    .music-player__button--main {
+      width: 36px;
+      height: 36px;
+      border-color: var(--sun);
+      color: var(--ink);
+      background: var(--sun);
+      font-size: 0.92rem;
+    }
+
+    .music-player__button--main:hover,
+    .music-player__button--main:focus-visible {
+      color: var(--paper);
+      background: var(--terracotta);
+      border-color: var(--terracotta);
+    }
+
+    .music-player__volume {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: rgba(244, 239, 229, 0.68);
+      font-size: 0.65rem;
+    }
+
+    .music-player__volume input {
+      width: 100%;
+      height: 3px;
+      accent-color: var(--sun);
+      cursor: pointer;
+    }
+
     .floating-leaves {
       position: fixed;
       z-index: 6;
@@ -2667,84 +2791,6 @@
       border-color: var(--terracotta);
     }
 
-    .payment-methods {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin: 4px 0 2px;
-    }
-
-    .payment-method {
-      position: relative;
-    }
-
-    .payment-method input {
-      position: absolute;
-      opacity: 0;
-    }
-
-    .payment-method span {
-      display: block;
-      padding: 12px;
-      border: 1px solid var(--line);
-      color: var(--muted);
-      font-size: 0.72rem;
-      text-align: center;
-      transition: color 220ms ease, border-color 220ms ease, background 220ms ease;
-    }
-
-    .payment-method input:checked + span,
-    .payment-method span:hover {
-      border-color: var(--olive-dark);
-      color: var(--ink);
-      background: rgba(102, 120, 92, 0.12);
-    }
-
-    .fake-pix-box {
-      display: grid;
-      grid-template-columns: 72px 1fr;
-      gap: 14px;
-      align-items: center;
-      padding: 14px;
-      background: var(--paper-deep);
-    }
-
-    .fake-pix-code {
-      display: grid;
-      place-items: center;
-      width: 72px;
-      height: 72px;
-      border: 5px solid var(--ink);
-      color: var(--ink);
-      background:
-        linear-gradient(90deg, var(--ink) 10%, transparent 10% 20%, var(--ink) 20% 33%, transparent 33% 44%, var(--ink) 44% 58%, transparent 58% 69%, var(--ink) 69% 78%, transparent 78%),
-        linear-gradient(var(--ink) 10%, transparent 10% 22%, var(--ink) 22% 34%, transparent 34% 47%, var(--ink) 47% 64%, transparent 64% 74%, var(--ink) 74%);
-      font-size: 0;
-    }
-
-    .fake-pix-box p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.71rem;
-      line-height: 1.5;
-    }
-
-    .fake-pix-box button {
-      margin-top: 6px;
-      padding: 0;
-      color: var(--terracotta);
-      background: transparent;
-      font-size: 0.64rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    .fake-pix-box button:hover,
-    .fake-pix-box button:focus-visible {
-      color: var(--olive-dark);
-    }
-
     .checkout-total {
       display: flex;
       align-items: center;
@@ -3933,6 +3979,12 @@
       .footer__phrase {
         margin-top: 35px;
       }
+
+      .music-player {
+        right: 16px;
+        bottom: 16px;
+        width: min(360px, calc(100% - 32px));
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -3954,6 +4006,25 @@
 
   <div class="scroll-progress" aria-hidden="true"></div>
   <div class="floating-leaves" aria-hidden="true"></div>
+
+  <aside class="music-player" id="music-player" aria-label="Trilha sonora" hidden>
+    <div class="music-player__info">
+      <span class="music-player__eyebrow"><span id="music-track-number">01</span> / <span id="music-track-total">00</span> · trilha do casamento</span>
+      <strong class="music-player__track" id="music-track-title">Trilha indisponivel</strong>
+      <span class="music-player__artist" id="music-track-artist">Adicione arquivos em audio/</span>
+    </div>
+    <div class="music-player__controls">
+      <button class="music-player__button" id="music-previous" type="button" aria-label="Faixa anterior">&#x23ee;</button>
+      <button class="music-player__button music-player__button--main" id="music-toggle" type="button" aria-label="Tocar trilha">&#x25b6;</button>
+      <button class="music-player__button" id="music-next" type="button" aria-label="Proxima faixa">&#x23ed;</button>
+      <button class="music-player__button" id="music-shuffle" type="button" aria-label="Ativar modo aleatorio" aria-pressed="false">&#x2921;</button>
+    </div>
+    <label class="music-player__volume" for="music-volume">
+      <span aria-hidden="true">&#x1f50a;</span>
+      <input id="music-volume" type="range" min="0" max="1" step="0.01" value="0.35" aria-label="Volume da trilha">
+    </label>
+    <audio id="music-audio" preload="metadata"></audio>
+  </aside>
 
   <header class="hero" id="topo">
     <nav class="site-nav" aria-label="Navega&#xe7;&#xe3;o principal">
@@ -4335,33 +4406,20 @@
       <form class="checkout-view" id="fake-checkout" hidden>
         <button class="checkout-back" type="button" id="back-to-cart">&#8592; Voltar ao carrinho</button>
         <h3>Escolher presente</h3>
-        <p class="checkout-view__intro">Registre sua escolha, abra o pagamento e avise quando concluir. O casal confirma manualmente cada recebimento.</p>
-        <p class="fake-payment-note" id="checkout-note">A reserva fica ativa por 24 horas. Os links reais podem ser configurados depois no painel dos noivos.</p>
+        <p class="checkout-view__intro">Registre sua escolha e siga direto para o Mercado Pago. O casal confirma manualmente cada recebimento.</p>
+        <p class="fake-payment-note" id="checkout-note">A reserva fica ativa por 24 horas. O pagamento será concluído em uma página segura do Mercado Pago.</p>
         <div class="checkout-fields">
           <div class="checkout-field"><label for="checkout-name">Seu nome</label><input id="checkout-name" type="text" placeholder="Nome de quem presenteia" required></div>
           <div class="checkout-field"><label for="checkout-email">Seu e-mail</label><input id="checkout-email" type="email" placeholder="Para receber a confirma&#xe7;&#xe3;o" required></div>
-          <div class="checkout-field">
-            <label>Forma de pagamento</label>
-            <div class="payment-methods">
-              <label class="payment-method"><input type="radio" name="payment-method" value="pix" checked><span>Pix</span></label>
-              <label class="payment-method"><input type="radio" name="payment-method" value="mercado-pago"><span>Mercado Pago</span></label>
-            </div>
-          </div>
           <div class="checkout-field"><label for="payment-note">Observa&#xe7;&#xe3;o opcional</label><input id="payment-note" type="text" maxlength="240" placeholder="C&#xf3;digo ou detalhe para ajudar na confer&#xea;ncia"></div>
-          <div class="fake-pix-box" id="fake-pix-box">
-            <span class="fake-pix-code" aria-hidden="true">PIX</span>
-            <p id="pix-box-text"><span id="pix-box-label">O Pix ser&#xe1; configurado em breve.</span><br><button type="button" id="copy-fake-pix">Copiar chave Pix</button></p>
-          </div>
         </div>
         <div class="checkout-total"><span>Total do presente</span><span id="checkout-total">R$ 0</span></div>
-        <button class="fake-payment-button" id="reserve-gift-button" type="submit"><span>Reservar presente</span><b>&#x2197;</b></button>
+        <button class="fake-payment-button" id="reserve-gift-button" type="submit"><span>Reservar e abrir Mercado Pago</span><b>&#x2197;</b></button>
         <div class="payment-result" id="payment-result" hidden>
           <h4 class="payment-result__title" id="payment-result-title">Reserva criada</h4>
           <p class="payment-result__text" id="payment-result-text"></p>
-          <textarea class="payment-result__code" id="payment-result-code" readonly hidden></textarea>
           <div class="payment-result__actions">
             <a id="open-payment-link" href="#" target="_blank" rel="noopener noreferrer" hidden>Ir para o Mercado Pago</a>
-            <button id="copy-payment-code" type="button" hidden>Copiar Pix</button>
             <button id="report-payment-button" type="button">Avisei que paguei</button>
           </div>
         </div>
@@ -4388,6 +4446,7 @@
     </div>
   </div>
 
+  <script src="audio/playlist.js"></script>
   <script>
     const progressBar = document.querySelector('.scroll-progress');
     const siteNav = document.querySelector('.site-nav');
@@ -4432,17 +4491,11 @@
     const backToCartButton = document.querySelector('#back-to-cart');
     const checkoutTotal = document.querySelector('#checkout-total');
     const fakePaymentMessage = document.querySelector('#fake-payment-message');
-    const fakePixBox = document.querySelector('#fake-pix-box');
-    const copyFakePixButton = document.querySelector('#copy-fake-pix');
-    const pixBoxText = document.querySelector('#pix-box-text');
-    const pixBoxLabel = document.querySelector('#pix-box-label');
     const reserveGiftButton = document.querySelector('#reserve-gift-button');
     const paymentResult = document.querySelector('#payment-result');
     const paymentResultTitle = document.querySelector('#payment-result-title');
     const paymentResultText = document.querySelector('#payment-result-text');
-    const paymentResultCode = document.querySelector('#payment-result-code');
     const openPaymentLink = document.querySelector('#open-payment-link');
-    const copyPaymentCode = document.querySelector('#copy-payment-code');
     const reportPaymentButton = document.querySelector('#report-payment-button');
     const rsvpForm = document.querySelector('#rsvp-form');
     const rsvpFields = document.querySelector('#rsvp-fields');
@@ -4456,6 +4509,17 @@
     const dietaryOtherText = document.querySelector('#dietary-other-text');
     const rsvpConsent = document.querySelector('#rsvp-consent');
     const rsvpEditToken = document.querySelector('#rsvp-edit-token');
+    const musicPlayer = document.querySelector('#music-player');
+    const musicAudio = document.querySelector('#music-audio');
+    const musicTrackNumber = document.querySelector('#music-track-number');
+    const musicTrackTotal = document.querySelector('#music-track-total');
+    const musicTrackTitle = document.querySelector('#music-track-title');
+    const musicTrackArtist = document.querySelector('#music-track-artist');
+    const musicPrevious = document.querySelector('#music-previous');
+    const musicToggle = document.querySelector('#music-toggle');
+    const musicNext = document.querySelector('#music-next');
+    const musicShuffle = document.querySelector('#music-shuffle');
+    const musicVolume = document.querySelector('#music-volume');
     const cartState = new Map();
     let lastCartTrigger;
     let galleryCurrentIndex = 0;
@@ -4464,7 +4528,16 @@
     let isRsvpProcessing = false;
     let currentGiftCatalog = [];
     let currentClaimToken = '';
-    let currentPayment = null;
+    let musicTracks = Array.isArray(window.weddingPlaylist)
+      ? window.weddingPlaylist.filter((track) => track && track.enabled !== false && (track.mp3 || track.ogg))
+      : [];
+    let musicIndex = 0;
+    let musicSourceIndex = 0;
+    let musicWantsToPlay = false;
+    let musicShuffleEnabled = false;
+    let musicFadeFrame;
+    let musicTransitionId = 0;
+    const MUSIC_VOLUME_KEY = 'casamento-toscana:music-volume';
     const showFeedback = (element, { icon, title, text }) => {
       element.querySelector('.feedback-message__icon').textContent = icon;
       element.querySelector('.feedback-message__title').textContent = title;
@@ -4493,6 +4566,186 @@
       if (!response.ok) throw new Error(data.error || 'Nao foi possivel concluir a operacao.');
       return data;
     };
+
+    const getStoredMusicVolume = () => {
+      try {
+        const storedVolume = Number.parseFloat(window.localStorage.getItem(MUSIC_VOLUME_KEY));
+        return Number.isFinite(storedVolume) ? Math.min(1, Math.max(0, storedVolume)) : 0.35;
+      } catch {
+        return 0.35;
+      }
+    };
+
+    let preferredMusicVolume = getStoredMusicVolume();
+
+    const getMusicSources = (track) => {
+      const sources = [];
+      if (track?.ogg && musicAudio.canPlayType('audio/ogg; codecs="vorbis"')) sources.push(track.ogg);
+      if (track?.mp3 && musicAudio.canPlayType('audio/mpeg')) sources.push(track.mp3);
+      return sources.length ? sources : [track?.mp3, track?.ogg].filter(Boolean);
+    };
+
+    const setMusicPlaybackState = (isPlaying) => {
+      musicToggle.textContent = isPlaying ? '\u23f8' : '\u25b6';
+      musicToggle.setAttribute('aria-label', isPlaying ? 'Pausar trilha' : 'Tocar trilha');
+    };
+
+    const updateMusicMeta = () => {
+      const track = musicTracks[musicIndex];
+      if (!track) return;
+      musicTrackNumber.textContent = String(musicIndex + 1).padStart(2, '0');
+      musicTrackTotal.textContent = String(musicTracks.length).padStart(2, '0');
+      musicTrackTitle.textContent = track.title || `Faixa ${musicIndex + 1}`;
+      musicTrackArtist.textContent = track.artist || 'Trilha do casamento';
+    };
+
+    const loadMusicTrack = () => {
+      const track = musicTracks[musicIndex];
+      const sources = getMusicSources(track);
+      if (!track || !sources.length) return false;
+      musicSourceIndex = Math.min(musicSourceIndex, sources.length - 1);
+      musicAudio.dataset.trackIndex = String(musicIndex);
+      musicAudio.dataset.sourceIndex = String(musicSourceIndex);
+      musicAudio.src = sources[musicSourceIndex];
+      musicAudio.volume = preferredMusicVolume;
+      musicAudio.load();
+      updateMusicMeta();
+      return true;
+    };
+
+    let musicFadeResolver;
+    const fadeMusicVolume = (targetVolume, duration) => {
+      if (musicFadeResolver) musicFadeResolver();
+      cancelAnimationFrame(musicFadeFrame);
+      if (duration <= 0) {
+        musicAudio.volume = targetVolume;
+        return Promise.resolve();
+      }
+
+      return new Promise((resolve) => {
+        musicFadeResolver = resolve;
+        const initialVolume = musicAudio.volume;
+        const startedAt = performance.now();
+        const animate = (now) => {
+          const progress = Math.min(1, (now - startedAt) / duration);
+          musicAudio.volume = initialVolume + (targetVolume - initialVolume) * progress;
+          if (progress >= 1) {
+            musicFadeResolver = null;
+            resolve();
+            return;
+          }
+          musicFadeFrame = requestAnimationFrame(animate);
+        };
+        musicFadeFrame = requestAnimationFrame(animate);
+      });
+    };
+
+    const getNextMusicIndex = () => {
+      if (musicTracks.length <= 1 || !musicShuffleEnabled) return (musicIndex + 1) % musicTracks.length;
+      const candidates = musicTracks.map((track, index) => index).filter((index) => index !== musicIndex);
+      return candidates[Math.floor(Math.random() * candidates.length)];
+    };
+
+    const getPreviousMusicIndex = () => (musicIndex - 1 + musicTracks.length) % musicTracks.length;
+
+    const playMusic = async () => {
+      if (!musicTracks.length) return;
+      musicPlayer.hidden = false;
+      musicWantsToPlay = true;
+      if (!musicAudio.src || musicAudio.dataset.trackIndex !== String(musicIndex)) loadMusicTrack();
+      try {
+        await musicAudio.play();
+        setMusicPlaybackState(true);
+      } catch {
+        setMusicPlaybackState(false);
+      }
+    };
+
+    const transitionToMusicTrack = async (nextIndex) => {
+      if (!musicTracks.length) return;
+      const transitionId = ++musicTransitionId;
+      const shouldPlay = musicWantsToPlay;
+      const fadeDuration = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 500;
+      if (shouldPlay) await fadeMusicVolume(0, fadeDuration);
+      if (transitionId !== musicTransitionId) return;
+      musicAudio.pause();
+      musicIndex = (nextIndex + musicTracks.length) % musicTracks.length;
+      musicSourceIndex = 0;
+      if (!loadMusicTrack()) return;
+      if (!shouldPlay) return;
+      musicAudio.volume = 0;
+      await playMusic();
+      if (transitionId === musicTransitionId) await fadeMusicVolume(preferredMusicVolume, fadeDuration);
+    };
+
+    const handleMusicError = () => {
+      if (!musicTracks.length) return;
+      const sources = getMusicSources(musicTracks[musicIndex]);
+      if (musicSourceIndex < sources.length - 1) {
+        musicSourceIndex += 1;
+        loadMusicTrack();
+        if (musicWantsToPlay) playMusic();
+        return;
+      }
+
+      musicTracks.splice(musicIndex, 1);
+      if (!musicTracks.length) {
+        musicWantsToPlay = false;
+        musicPlayer.hidden = true;
+        setMusicPlaybackState(false);
+        musicAudio.removeAttribute('src');
+        musicAudio.load();
+        return;
+      }
+
+      if (musicIndex >= musicTracks.length) musicIndex = 0;
+      musicSourceIndex = 0;
+      loadMusicTrack();
+      if (musicWantsToPlay) playMusic();
+    };
+
+    const initializeMusicPlayer = () => {
+      musicVolume.value = String(preferredMusicVolume);
+      musicAudio.volume = preferredMusicVolume;
+      musicPlayer.hidden = musicTracks.length === 0;
+      if (!musicTracks.length) return;
+
+      updateMusicMeta();
+      musicToggle.addEventListener('click', () => {
+        if (musicAudio.paused) {
+          playMusic();
+        } else {
+          musicWantsToPlay = false;
+          musicAudio.pause();
+          setMusicPlaybackState(false);
+        }
+      });
+      musicPrevious.addEventListener('click', () => {
+        if (musicAudio.currentTime > 3) {
+          musicAudio.currentTime = 0;
+          return;
+        }
+        transitionToMusicTrack(getPreviousMusicIndex());
+      });
+      musicNext.addEventListener('click', () => transitionToMusicTrack(getNextMusicIndex()));
+      musicShuffle.addEventListener('click', () => {
+        musicShuffleEnabled = !musicShuffleEnabled;
+        musicShuffle.setAttribute('aria-pressed', String(musicShuffleEnabled));
+        musicShuffle.setAttribute('aria-label', musicShuffleEnabled ? 'Desativar modo aleatorio' : 'Ativar modo aleatorio');
+      });
+      musicVolume.addEventListener('input', () => {
+        preferredMusicVolume = Number(musicVolume.value);
+        musicAudio.volume = preferredMusicVolume;
+        try {
+          window.localStorage.setItem(MUSIC_VOLUME_KEY, String(preferredMusicVolume));
+        } catch {
+        }
+      });
+      musicAudio.addEventListener('ended', () => transitionToMusicTrack(getNextMusicIndex()));
+      musicAudio.addEventListener('error', handleMusicError);
+    };
+
+    initializeMusicPlayer();
 
     const travelPhotos = [
       {
@@ -4824,7 +5077,7 @@
         const status = gift.status || 'available';
         const isAvailable = status === 'available';
         const buttonLabel = isAvailable ? 'Presentear' : giftStatusLabel[status] || 'Indisponivel';
-        return `<article class="gift-item" data-category="${escapeHtml(gift.category)}" data-featured="${Number(gift.featured) || 99}" data-gift-id="${escapeHtml(gift.id)}" data-gift-name="${escapeHtml(gift.name)}" data-gift-price="${Number(gift.price) || 0}" data-gift-status="${escapeHtml(status)}" data-payment-url="${escapeHtml(gift.paymentUrl || '')}" data-pix-key="${escapeHtml(gift.pixKey || '')}" data-pix-payload="${escapeHtml(gift.pixPayload || '')}" data-expires-at="${escapeHtml(gift.expiresAt || '')}">
+        return `<article class="gift-item" data-category="${escapeHtml(gift.category)}" data-featured="${Number(gift.featured) || 99}" data-gift-id="${escapeHtml(gift.id)}" data-gift-name="${escapeHtml(gift.name)}" data-gift-price="${Number(gift.price) || 0}" data-gift-status="${escapeHtml(status)}" data-payment-url="${escapeHtml(gift.paymentUrl || '')}" data-expires-at="${escapeHtml(gift.expiresAt || '')}">
           <div class="gift-item__media"><img src="${escapeHtml(gift.imageUrl || 'image.png')}" alt="${escapeHtml(gift.name)}" loading="lazy">${gift.badge ? `<span class="gift-item__badge">${escapeHtml(gift.badge)}</span>` : ''}<span class="gift-item__number">${String(Number(gift.featured) || 0).padStart(2, '0')}</span></div>
           <div class="gift-item__content"><h3>${escapeHtml(gift.name)}</h3><p>${escapeHtml(gift.description)}</p><span class="gift-item__price">${formatBRL(Number(gift.price) || 0)}</span></div>
           ${isAvailable ? `<button class="gift-item__add" type="button"><span>Presentear</span><b>+</b></button>` : `<p class="gift-item__status">${escapeHtml(buttonLabel)}</p>`}
@@ -4979,79 +5232,38 @@
       return entry ? giftRows.find((row) => row.dataset.giftId === entry.id) : null;
     };
 
-    const updatePaymentPreview = () => {
-      const row = getSelectedGiftRow();
-      const paymentMethod = document.querySelector('input[name="payment-method"]:checked')?.value || 'pix';
-      const isPix = paymentMethod === 'pix';
-      const pixCode = row?.dataset.pixPayload || row?.dataset.pixKey || '';
-      fakePixBox.hidden = !isPix;
-      pixBoxLabel.textContent = pixCode ? 'Pix configurado para este presente.' : 'O Pix sera configurado em breve.';
-      copyFakePixButton.disabled = !pixCode;
-      copyFakePixButton.textContent = pixCode ? 'Copiar Pix' : 'Pix em breve';
-    };
-
     const resetPaymentResult = () => {
       currentClaimToken = '';
-      currentPayment = null;
       paymentResult.hidden = true;
-      paymentResultCode.hidden = true;
       openPaymentLink.hidden = true;
-      copyPaymentCode.hidden = true;
       reportPaymentButton.hidden = true;
       reserveGiftButton.hidden = false;
       reserveGiftButton.disabled = false;
-      reserveGiftButton.querySelector('span').textContent = 'Reservar presente';
+      reserveGiftButton.querySelector('span').textContent = 'Reservar e abrir Mercado Pago';
       hideFeedback(fakePaymentMessage);
-      updatePaymentPreview();
     };
 
-    const showPaymentResult = ({ claim, payment }) => {
+    const showPaymentResult = ({ claim, payment }, paymentWindow) => {
       currentClaimToken = claim.claimToken;
-      currentPayment = payment;
       reserveGiftButton.disabled = true;
       reserveGiftButton.querySelector('span').textContent = 'Reserva criada';
       paymentResultTitle.textContent = 'Presente reservado!';
-      paymentResultText.textContent = `A reserva fica ativa por 24 horas. Depois de pagar, avise o casal para que eles possam confirmar o recebimento.`;
-      paymentResultCode.value = payment.pixPayload || payment.pixKey || '';
-      paymentResultCode.hidden = !payment.pixPayload && !payment.pixKey;
-      copyPaymentCode.hidden = !payment.pixPayload && !payment.pixKey;
+      paymentResultText.textContent = `A reserva fica ativa por 24 horas. O Mercado Pago foi aberto em uma nova aba. Depois de pagar, avise o casal para que eles possam confirmar o recebimento.`;
       openPaymentLink.href = payment.paymentUrl || '#';
       openPaymentLink.hidden = !payment.paymentUrl;
       reportPaymentButton.hidden = false;
       paymentResult.hidden = false;
-      fakePixBox.hidden = true;
+      if (paymentWindow && payment.paymentUrl) {
+        paymentWindow.location.href = payment.paymentUrl;
+      }
     };
-
-    document.querySelectorAll('input[name="payment-method"]').forEach((input) => input.addEventListener('change', updatePaymentPreview));
-
-    copyFakePixButton.addEventListener('click', async () => {
-      const row = getSelectedGiftRow();
-      const code = row?.dataset.pixPayload || row?.dataset.pixKey || '';
-      if (!code) return;
-      try {
-        await navigator.clipboard.writeText(code);
-        showFeedback(fakePaymentMessage, { icon: '\u2713', title: 'Pix copiado!', text: 'Agora voce pode concluir o pagamento no aplicativo do seu banco.' });
-      } catch {
-        showFeedback(fakePaymentMessage, { icon: '\u2726', title: 'Pix pronto', text: 'Selecione e copie o codigo exibido para concluir o pagamento.' });
-      }
-    });
-
-    copyPaymentCode.addEventListener('click', async () => {
-      if (!paymentResultCode.value) return;
-      try {
-        await navigator.clipboard.writeText(paymentResultCode.value);
-        showFeedback(fakePaymentMessage, { icon: '\u2713', title: 'Pix copiado!', text: 'Depois do pagamento, avise o casal por aqui.' });
-      } catch {
-        paymentResultCode.focus();
-        paymentResultCode.select();
-      }
-    });
 
     checkoutView.addEventListener('submit', async (event) => {
       event.preventDefault();
       if (currentClaimToken) return;
       const row = getSelectedGiftRow();
       if (!row) return;
+      const paymentWindow = window.open('about:blank', '_blank');
       reserveGiftButton.disabled = true;
       reserveGiftButton.querySelector('span').textContent = 'Reservando...';
       try {
@@ -5060,11 +5272,10 @@
           body: JSON.stringify({
             giftId: row.dataset.giftId,
             name: document.querySelector('#checkout-name').value.trim(),
-            email: document.querySelector('#checkout-email').value.trim(),
-            paymentMethod: document.querySelector('input[name="payment-method"]:checked').value
+            email: document.querySelector('#checkout-email').value.trim()
           })
         });
-        showPaymentResult(data);
+        showPaymentResult(data, paymentWindow);
         row.dataset.giftStatus = 'reserved';
         row.querySelector('.gift-item__add')?.remove();
         const status = document.createElement('p');
@@ -5072,8 +5283,9 @@
         status.textContent = 'Reservado por 24 horas';
         row.appendChild(status);
       } catch (error) {
+        paymentWindow?.close();
         reserveGiftButton.disabled = false;
-        reserveGiftButton.querySelector('span').textContent = 'Reservar presente';
+        reserveGiftButton.querySelector('span').textContent = 'Reservar e abrir Mercado Pago';
         showFeedback(fakePaymentMessage, { icon: '!', title: 'Nao foi possivel reservar', text: error.message });
       }
     });
