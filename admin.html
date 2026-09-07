@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Área dos noivos | Gabriela &amp; Vitor</title>
+  <style>
+    :root {
+      --paper: #f4efe5;
+      --paper-deep: #e9dfd0;
+      --ink: #26342d;
+      --muted: #6d756b;
+      --olive: #66785c;
+      --olive-dark: #354c3b;
+      --terracotta: #be7052;
+      --sun: #e8ae63;
+      --line: rgba(38, 52, 45, 0.16);
+      --danger: #a84b43;
+      --white: #fffdf8;
+      --shadow: 0 20px 50px rgba(53, 76, 59, 0.12);
+      --serif: Georgia, 'Times New Roman', serif;
+      --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: var(--sans);
+    }
+    button, input, select, textarea { font: inherit; }
+    button { border: 0; cursor: pointer; }
+    a { color: inherit; }
+    [hidden] { display: none !important; }
+
+    .admin-shell { width: min(1380px, calc(100% - 48px)); margin: 0 auto; padding: 48px 0 80px; }
+    .admin-header { display: flex; align-items: end; justify-content: space-between; gap: 28px; margin-bottom: 34px; }
+    .eyebrow { margin: 0 0 10px; color: var(--terracotta); font-size: .7rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { margin-bottom: 0; font: 500 clamp(2.8rem, 6vw, 5.8rem)/.86 var(--serif); letter-spacing: -.05em; }
+    h2 { margin-bottom: 18px; font: 500 2rem/.95 var(--serif); letter-spacing: -.04em; }
+    h3 { margin-bottom: 8px; font: 600 1.05rem/1.1 var(--serif); }
+    .muted { color: var(--muted); }
+
+    .login-card, .panel { border: 1px solid var(--line); background: rgba(255, 253, 248, .72); box-shadow: var(--shadow); }
+    .login-card { width: min(520px, 100%); margin: 12vh auto 0; padding: 38px; }
+    .login-card h1 { margin-bottom: 18px; font-size: clamp(3.4rem, 12vw, 6.5rem); }
+    .login-card p { color: var(--muted); line-height: 1.65; }
+
+    .field { display: grid; gap: 7px; margin-bottom: 16px; }
+    .field label { color: var(--muted); font-size: .7rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+    .field input, .field select, .field textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 0;
+      padding: 12px 13px;
+      color: var(--ink);
+      background: rgba(255, 253, 248, .85);
+      outline: 0;
+    }
+    .field textarea { min-height: 90px; resize: vertical; }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--olive); box-shadow: 0 0 0 3px rgba(102, 120, 92, .15); }
+    .field-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .field-row--three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .check-field { display: flex; align-items: center; gap: 9px; color: var(--ink); font-size: .86rem; }
+    .check-field input { width: 18px; height: 18px; accent-color: var(--olive-dark); }
+
+    .button-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    .button { display: inline-flex; align-items: center; justify-content: center; min-height: 42px; padding: 10px 16px; border: 1px solid var(--olive-dark); color: var(--paper); background: var(--olive-dark); font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+    .button:hover, .button:focus-visible { background: var(--terracotta); border-color: var(--terracotta); }
+    .button--quiet { color: var(--ink); background: transparent; border-color: var(--line); }
+    .button--danger { color: var(--danger); background: transparent; border-color: rgba(168, 75, 67, .38); }
+    .button--small { min-height: 34px; padding: 7px 10px; font-size: .62rem; }
+    .notice { min-height: 22px; margin: 14px 0 0; color: var(--muted); font-size: .82rem; line-height: 1.45; }
+    .notice[data-tone="error"] { color: var(--danger); }
+    .notice[data-tone="success"] { color: var(--olive-dark); }
+
+    .dashboard-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 24px; padding: 16px 18px; border: 1px solid var(--line); background: rgba(233, 223, 208, .54); }
+    .dashboard-toolbar__left { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; }
+    .dashboard-toolbar__right { display: flex; flex-wrap: wrap; gap: 8px; }
+    .toolbar-note { margin: 0; color: var(--muted); font-size: .78rem; line-height: 1.4; }
+
+    .metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-bottom: 22px; }
+    .metric { padding: 18px; border-top: 3px solid var(--olive); background: rgba(255, 253, 248, .6); }
+    .metric__label { display: block; margin-bottom: 8px; color: var(--muted); font-size: .67rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+    .metric__value { display: block; font: 500 2.6rem/.85 var(--serif); }
+
+    .dashboard-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(340px, .75fr); gap: 22px; align-items: start; }
+    .panel { padding: 24px; overflow: hidden; }
+    .panel--wide { grid-column: 1 / -1; }
+    .panel__header { display: flex; align-items: start; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+    .panel__header p { max-width: 540px; margin-bottom: 0; color: var(--muted); font-size: .82rem; line-height: 1.5; }
+
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; min-width: 760px; border-collapse: collapse; font-size: .8rem; }
+    th, td { padding: 12px 10px; border-top: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { color: var(--muted); font-size: .64rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+    td strong { display: block; margin-bottom: 3px; }
+    td small { display: block; color: var(--muted); line-height: 1.4; }
+    td .check-field { font-size: .75rem; white-space: nowrap; }
+    .empty-row { padding: 24px 10px; color: var(--muted); text-align: center; }
+    .status { display: inline-flex; align-items: center; min-height: 25px; padding: 4px 8px; border: 1px solid var(--line); color: var(--muted); font-size: .63rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+    .status[data-status="confirmed"] { border-color: rgba(53, 76, 59, .34); color: var(--olive-dark); }
+    .status[data-status="payment_reported"] { border-color: rgba(190, 112, 82, .45); color: var(--terracotta); }
+    .status[data-status="reserved"] { border-color: rgba(232, 174, 99, .6); color: #936526; }
+    .status[data-status="expired"], .status[data-status="cancelled"] { color: var(--danger); }
+
+    .gift-editor { margin-bottom: 26px; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
+    .gift-list { display: grid; gap: 10px; }
+    .gift-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 13px 0; border-bottom: 1px solid var(--line); }
+    .gift-row:last-child { border-bottom: 0; }
+    .gift-row__meta { display: flex; align-items: start; gap: 12px; min-width: 0; }
+    .gift-row__thumb { width: 56px; height: 56px; flex: 0 0 auto; object-fit: cover; background: var(--paper-deep); }
+    .gift-row__name { margin: 0 0 4px; font: 600 1.1rem/1 var(--serif); }
+    .gift-row__details { margin: 0; color: var(--muted); font-size: .75rem; line-height: 1.4; }
+    .gift-row__actions { display: flex; flex-wrap: wrap; justify-content: end; gap: 7px; }
+
+    @media (max-width: 980px) {
+      .dashboard-grid { grid-template-columns: 1fr; }
+      .panel--wide { grid-column: auto; }
+    }
+    @media (max-width: 720px) {
+      .admin-shell { width: min(100% - 28px, 1380px); padding-top: 28px; }
+      .admin-header, .dashboard-toolbar { align-items: start; flex-direction: column; }
+      .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .field-row, .field-row--three { grid-template-columns: 1fr; }
+      .login-card, .panel { padding: 20px; }
+      h1 { font-size: 3.8rem; }
+    }
+  </style>
+</head>
+<body>
+  <main class="admin-shell">
+    <section class="login-card" id="login-view">
+      <p class="eyebrow">Gabriela &amp; Vitor / área dos noivos</p>
+      <h1>O dia, por dentro.</h1>
+      <p>Use o código administrativo configurado na Cloudflare para acompanhar confirmações e organizar os presentes.</p>
+      <form id="login-form">
+        <div class="field">
+          <label for="admin-code">Código de acesso</label>
+          <input id="admin-code" name="code" type="password" autocomplete="current-password" required>
+        </div>
+        <div class="button-row"><button class="button" type="submit">Entrar no painel</button><a class="button button--quiet" href="/">Voltar ao convite</a></div>
+        <p class="notice" id="login-notice" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section id="dashboard-view" hidden>
+      <header class="admin-header">
+        <div>
+          <p class="eyebrow">Casa Olivetto / gestão privada</p>
+          <h1>O dia, por dentro.</h1>
+        </div>
+        <div class="button-row"><a class="button button--quiet" href="/">Ver convite</a><button class="button button--quiet" id="logout-button" type="button">Sair</button></div>
+      </header>
+
+      <div class="dashboard-toolbar">
+        <div class="dashboard-toolbar__left">
+          <label class="check-field"><input id="global-reopen" type="checkbox"> Reabrir novos RSVPs depois do prazo</label>
+          <p class="toolbar-note">O prazo público termina em 31/03/2027. A reabertura individual fica disponível em cada resposta.</p>
+        </div>
+        <div class="dashboard-toolbar__right"><button class="button button--small button--quiet" id="export-rsvps" type="button">Exportar CSV</button><button class="button button--small button--danger" id="delete-all-rsvps" type="button">Excluir RSVPs</button></div>
+      </div>
+
+      <div class="metrics" id="metrics"></div>
+
+      <div class="dashboard-grid">
+        <section class="panel panel--wide">
+          <div class="panel__header"><div><h2>Confirmações</h2><p>Respostas individuais, acompanhantes e restrições alimentares.</p></div></div>
+          <div class="table-wrap"><table><thead><tr><th>Convidado</th><th>Presença</th><th>Acompanhantes</th><th>Alimentação</th><th>Reabrir</th><th></th></tr></thead><tbody id="rsvp-table"></tbody></table></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel__header"><div><h2>Presentes</h2><p>Edite itens, links de pagamento, Pix e disponibilidade.</p></div></div>
+          <form class="gift-editor" id="gift-form">
+            <div class="field-row"><div class="field"><label for="gift-id">Identificador</label><input id="gift-id" required pattern="[a-z0-9-]{2,80}"></div><div class="field"><label for="gift-name">Nome</label><input id="gift-name" required></div></div>
+            <div class="field"><label for="gift-description">Descrição</label><textarea id="gift-description"></textarea></div>
+            <div class="field-row field-row--three"><div class="field"><label for="gift-category">Categoria</label><select id="gift-category"><option value="cozinha">Cozinha</option><option value="mesa">Mesa</option><option value="quarto">Quarto</option><option value="sala">Sala</option><option value="outros">Outros</option></select></div><div class="field"><label for="gift-price">Valor (R$)</label><input id="gift-price" type="number" min="0" step="0.01" required></div><div class="field"><label for="gift-featured">Ordem</label><input id="gift-featured" type="number" min="0" step="1" value="99"></div></div>
+            <div class="field"><label for="gift-image-url">Imagem</label><input id="gift-image-url" type="url" placeholder="https://..."></div>
+            <div class="field-row"><div class="field"><label for="gift-badge">Selo</label><input id="gift-badge" placeholder="mais pedido"></div><div class="field"><label for="gift-payment-url">Link Mercado Pago</label><input id="gift-payment-url" type="url" placeholder="Link em breve"></div></div>
+            <div class="field-row"><div class="field"><label for="gift-pix-key">Chave Pix</label><input id="gift-pix-key" placeholder="Configurar depois"></div><div class="field"><label for="gift-pix-payload">Pix copia e cola</label><textarea id="gift-pix-payload" placeholder="Configurar depois"></textarea></div></div>
+            <label class="check-field"><input id="gift-available" type="checkbox" checked> Mostrar este presente no convite</label>
+            <div class="button-row" style="margin-top: 16px"><button class="button button--small" type="submit">Salvar presente</button><button class="button button--small button--quiet" id="clear-gift-form" type="button">Novo presente</button></div>
+            <p class="notice" id="gift-notice" role="status" aria-live="polite"></p>
+          </form>
+          <div class="gift-list" id="gift-list"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel__header"><div><h2>Pagamentos</h2><p>O convidado avisa pelo site; vocês confirmam depois de conferir o recebimento.</p></div></div>
+          <div class="table-wrap"><table><thead><tr><th>Presente</th><th>Convidado</th><th>Status</th><th></th></tr></thead><tbody id="claim-table"></tbody></table></div>
+        </section>
+      </div>
+      <p class="notice" id="dashboard-notice" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <script>
+    const loginView = document.querySelector('#login-view');
+    const dashboardView = document.querySelector('#dashboard-view');
+    const loginForm = document.querySelector('#login-form');
+    const loginNotice = document.querySelector('#login-notice');
+    const dashboardNotice = document.querySelector('#dashboard-notice');
+    const metrics = document.querySelector('#metrics');
+    const rsvpTable = document.querySelector('#rsvp-table');
+    const claimTable = document.querySelector('#claim-table');
+    const giftList = document.querySelector('#gift-list');
+    const giftForm = document.querySelector('#gift-form');
+    const giftNotice = document.querySelector('#gift-notice');
+    const globalReopen = document.querySelector('#global-reopen');
+    let dashboardData = { rsvps: [], claims: [], gifts: [], settings: {} };
+
+    const escapeHtml = (value) => String(value ?? '').replace(/[&<>'"]/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[character]));
+    const formatBRL = (value) => Number(value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    const showNotice = (element, message, tone = '') => { element.textContent = message; element.dataset.tone = tone; };
+    const request = async (path, options = {}) => {
+      const response = await fetch(path, { ...options, headers: { 'Content-Type': 'application/json', ...(options.headers || {}) } });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(data.error || 'Nao foi possivel concluir a operacao.');
+      return data;
+    };
+
+    const renderMetrics = () => {
+      const attending = dashboardData.rsvps.filter((rsvp) => rsvp.attendance === 'sim').length;
+      const absent = dashboardData.rsvps.filter((rsvp) => rsvp.attendance === 'nao').length;
+      const claimed = dashboardData.claims.filter((claim) => ['reserved', 'payment_reported', 'confirmed'].includes(claim.status)).length;
+      metrics.innerHTML = [
+        ['RSVPs', dashboardData.rsvps.length],
+        ['Vao celebrar', attending],
+        ['Nao conseguem vir', absent],
+        ['Presentes em andamento', claimed]
+      ].map(([label, value]) => `<article class="metric"><span class="metric__label">${label}</span><strong class="metric__value">${value}</strong></article>`).join('');
+    };
+
+    const renderRsvps = () => {
+      if (!dashboardData.rsvps.length) {
+        rsvpTable.innerHTML = '<tr><td class="empty-row" colspan="6">Nenhuma resposta recebida ainda.</td></tr>';
+        return;
+      }
+      rsvpTable.innerHTML = dashboardData.rsvps.map((rsvp) => {
+        const companions = (rsvp.companions || []).join(', ') || 'Nenhum';
+        const dietary = [...(rsvp.dietary_preferences || []), rsvp.dietary_other].filter(Boolean).join(', ') || 'Nenhuma';
+        return `<tr>
+          <td><strong>${escapeHtml(rsvp.name)}</strong><small>${escapeHtml(rsvp.email)}</small></td>
+          <td><span class="status" data-status="${escapeHtml(rsvp.attendance)}">${rsvp.attendance === 'sim' ? 'Sim' : 'Nao'}</span></td>
+          <td>${escapeHtml(companions)}<small>${rsvp.companion_count || 0} acompanhante(s)</small></td>
+          <td>${escapeHtml(dietary)}</td>
+          <td><label class="check-field"><input class="rsvp-reopen" type="checkbox" data-id="${escapeHtml(rsvp.id)}" ${rsvp.reopened ? 'checked' : ''}> Sim</label></td>
+          <td><button class="button button--small button--danger delete-rsvp" type="button" data-id="${escapeHtml(rsvp.id)}">Excluir</button></td>
+        </tr>`;
+      }).join('');
+    };
+
+    const statusLabel = { reserved: 'Reservado', payment_reported: 'Pagamento avisado', confirmed: 'Confirmado', expired: 'Expirado', cancelled: 'Cancelado' };
+    const renderClaims = () => {
+      if (!dashboardData.claims.length) {
+        claimTable.innerHTML = '<tr><td class="empty-row" colspan="4">Nenhum presente escolhido ainda.</td></tr>';
+        return;
+      }
+      claimTable.innerHTML = dashboardData.claims.map((claim) => `<tr>
+        <td><strong>${escapeHtml(claim.gift_name)}</strong><small>${escapeHtml(claim.payment_method === 'pix' ? 'Pix' : 'Mercado Pago')}</small></td>
+        <td><strong>${escapeHtml(claim.guest_name)}</strong><small>${escapeHtml(claim.guest_email)}${claim.payment_note ? `<br>${escapeHtml(claim.payment_note)}` : ''}</small></td>
+        <td><select class="claim-status" data-id="${escapeHtml(claim.id)}">${Object.entries(statusLabel).map(([value, label]) => `<option value="${value}" ${claim.status === value ? 'selected' : ''}>${label}</option>`).join('')}</select></td>
+        <td><span class="status" data-status="${escapeHtml(claim.status)}">${escapeHtml(statusLabel[claim.status] || claim.status)}</span></td>
+      </tr>`).join('');
+    };
+
+    const fillGiftForm = (gift = {}) => {
+      document.querySelector('#gift-id').value = gift.id || '';
+      document.querySelector('#gift-name').value = gift.name || '';
+      document.querySelector('#gift-description').value = gift.description || '';
+      document.querySelector('#gift-category').value = gift.category || 'outros';
+      document.querySelector('#gift-price').value = gift.price ?? '';
+      document.querySelector('#gift-featured').value = gift.featured ?? 99;
+      document.querySelector('#gift-image-url').value = gift.image_url || '';
+      document.querySelector('#gift-badge').value = gift.badge || '';
+      document.querySelector('#gift-payment-url').value = gift.payment_url || '';
+      document.querySelector('#gift-pix-key').value = gift.pix_key || '';
+      document.querySelector('#gift-pix-payload').value = gift.pix_payload || '';
+      document.querySelector('#gift-available').checked = gift.available !== false;
+    };
+
+    const renderGifts = () => {
+      if (!dashboardData.gifts.length) {
+        giftList.innerHTML = '<p class="muted">Nenhum presente cadastrado.</p>';
+        return;
+      }
+      giftList.innerHTML = dashboardData.gifts.map((gift) => `<article class="gift-row">
+        <div class="gift-row__meta"><img class="gift-row__thumb" src="${escapeHtml(gift.image_url || 'image.png')}" alt=""><div><h3 class="gift-row__name">${escapeHtml(gift.name)}</h3><p class="gift-row__details">${formatBRL(gift.price)} / ${escapeHtml(gift.category)} / ${gift.available ? 'visivel' : 'oculto'}</p></div></div>
+        <div class="gift-row__actions"><button class="button button--small button--quiet edit-gift" type="button" data-id="${escapeHtml(gift.id)}">Editar</button><button class="button button--small button--danger delete-gift" type="button" data-id="${escapeHtml(gift.id)}">Excluir</button></div>
+      </article>`).join('');
+    };
+
+    const renderDashboard = () => {
+      globalReopen.checked = dashboardData.settings.rsvpGlobalReopen === true;
+      renderMetrics();
+      renderRsvps();
+      renderClaims();
+      renderGifts();
+    };
+
+    const loadDashboard = async () => {
+      dashboardData = await request('/api/admin/data');
+      loginView.hidden = true;
+      dashboardView.hidden = false;
+      renderDashboard();
+    };
+
+    loginForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      showNotice(loginNotice, 'Entrando...');
+      try {
+        await request('/api/admin/login', { method: 'POST', body: JSON.stringify({ code: document.querySelector('#admin-code').value }) });
+        loginForm.reset();
+        await loadDashboard();
+      } catch (error) {
+        showNotice(loginNotice, error.message, 'error');
+      }
+    });
+
+    document.querySelector('#logout-button').addEventListener('click', async () => {
+      await fetch('/api/admin/login', { method: 'DELETE' });
+      dashboardView.hidden = true;
+      loginView.hidden = false;
+      showNotice(loginNotice, 'Sessao encerrada.', 'success');
+    });
+
+    globalReopen.addEventListener('change', async () => {
+      try {
+        await request('/api/admin/data', { method: 'POST', body: JSON.stringify({ action: 'set-global-reopen', value: globalReopen.checked }) });
+        showNotice(dashboardNotice, 'Regra de reabertura atualizada.', 'success');
+      } catch (error) {
+        globalReopen.checked = !globalReopen.checked;
+        showNotice(dashboardNotice, error.message, 'error');
+      }
+    });
+
+    rsvpTable.addEventListener('change', async (event) => {
+      if (!event.target.matches('.rsvp-reopen')) return;
+      try {
+        await request('/api/admin/data', { method: 'POST', body: JSON.stringify({ action: 'update-rsvp', id: event.target.dataset.id, reopened: event.target.checked }) });
+        showNotice(dashboardNotice, 'Resposta atualizada.', 'success');
+      } catch (error) {
+        event.target.checked = !event.target.checked;
+        showNotice(dashboardNotice, error.message, 'error');
+      }
+    });
+
+    rsvpTable.addEventListener('click', async (event) => {
+      const button = event.target.closest('.delete-rsvp');
+      if (!button || !window.confirm('Excluir esta resposta?')) return;
+      try {
+        await request('/api/admin/data', { method: 'POST', body: JSON.stringify({ action: 'delete-rsvp', id: button.dataset.id }) });
+        await loadDashboard();
+        showNotice(dashboardNotice, 'Resposta excluida.', 'success');
+      } catch (error) { showNotice(dashboardNotice, error.message, 'error'); }
+    });
+
+    claimTable.addEventListener('change', async (event) => {
+      if (!event.target.matches('.claim-status')) return;
+      try {
+        await request('/api/admin/data', { method: 'POST', body: JSON.stringify({ action: 'update-claim', id: event.target.dataset.id, status: event.target.value }) });
+        await loadDashboard();
+        showNotice(dashboardNotice, 'Status do presente atualizado.', 'success');
+      } catch (error) { showNotice(dashboardNotice, error.message, 'error'); }
+    });
+
+    giftForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      showNotice(giftNotice, 'Salvando...');
+      const payload = {
+        action: 'upsert-gift',
+        id: document.querySelector('#gift-id').value,
+        name: document.querySelector('#gift-name').value,
+        description: document.querySelector('#gift-description').value,
+        category: document.querySelector('#gift-category').value,
+        price: document.querySelector('#gift-price').value,
+        featured: document.querySelector('#gift-featured').value,
+        imageUrl: document.querySelector('#gift-image-url').value,
+        badge: document.querySelector('#gift-badge').value,
+        paymentUrl: document.querySelector('#gift-payment-url').value,
+        pixKey: document.querySelector('#gift-pix-key').value,
+        pixPayload: document.querySelector('#gift-pix-payload').value,
+        available: document.querySelector('#gift-available').checked
+      };
+      try {
+        await request('/api/admin/data', { method: 'POST', body: JSON.stringify(payload) });
+        await loadDashboard();
+        fillGiftForm();
+        showNotice(giftNotice, 'Presente salvo.', 'success');
+      } catch (error) { showNotice(giftNotice, error.message, 'error'); }
+    });
+
+    document.querySelector('#clear-gift-form').addEventListener('click', () => { fillGiftForm(); showNotice(giftNotice, ''); });
+    giftList.addEventListener('click', async (event) => {
+      const editButton = event.target.closest('.edit-gift');
+      const deleteButton = event.target.closest('.delete-gift');
+      if (editButton) {
+        fillGiftForm(dashboardData.gifts.find((gift) => gift.id === editButton.dataset.id));
+        document.querySelector('#gift-id').focus();
+      }
+      if (deleteButton && window.confirm('Excluir este presente? O historico de pagamentos precisa estar vazio.')) {
+        try {
+          await request('/api/admin/data', { method: 'POST', body: JSON.stringify({ action: 'delete-gift', id: deleteButton.dataset.id }) });
+          await loadDashboard();
+          showNotice(giftNotice, 'Presente excluido.', 'success');
+        } catch (error) { showNotice(giftNotice, error.message, 'error'); }
+      }
+    });
+
+    document.querySelector('#export-rsvps').addEventListener('click', () => {
+      const headers = ['nome', 'email', 'presenca', 'acompanhantes', 'restricoes', 'outro', 'atualizado_em'];
+      const rows = dashboardData.rsvps.map((rsvp) => [rsvp.name, rsvp.email, rsvp.attendance, (rsvp.companions || []).join(' | '), (rsvp.dietary_preferences || []).join(' | '), rsvp.dietary_other || '', rsvp.updated_at]);
+      const csv = [headers, ...rows].map((row) => row.map((value) => `"${String(value ?? '').replace(/"/g, '""')}"`).join(';')).join('\n');
+      const url = URL.createObjectURL(new Blob([`\ufeff${csv}`], { type: 'text/csv;charset=utf-8' }));
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'rsvps-gabriela-vitor.csv';
+      link.click();
+      URL.revokeObjectURL(url);
+    });
+
+    document.querySelector('#delete-all-rsvps').addEventListener('click', async () => {
+      if (!dashboardData.rsvps.length || !window.confirm('Exluir todas as respostas? Exporte o CSV antes.')) return;
+      try {
+        await request('/api/admin/data', { method: 'POST', body: JSON.stringify({ action: 'delete-all-rsvps' }) });
+        await loadDashboard();
+        showNotice(dashboardNotice, 'Respostas excluidas.', 'success');
+      } catch (error) { showNotice(dashboardNotice, error.message, 'error'); }
+    });
+
+    loadDashboard().catch(() => {
+      loginView.hidden = false;
+      dashboardView.hidden = true;
+    });
+  </script>
+</body>
+</html>
