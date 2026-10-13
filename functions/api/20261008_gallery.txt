@@ -1,0 +1,73 @@
+-- Public gallery storage and metadata. Apply once in the Supabase SQL editor.
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values ('gallery', 'gallery', true, 10485760, array['image/jpeg', 'image/png', 'image/webp', 'image/avif'])
+on conflict (id) do update
+set public = excluded.public,
+    file_size_limit = excluded.file_size_limit,
+    allowed_mime_types = excluded.allowed_mime_types;
+
+create table if not exists public.gallery_state (
+  id smallint primary key check (id = 1),
+  is_active boolean not null default false
+);
+
+insert into public.gallery_state (id, is_active)
+values (1, false)
+on conflict (id) do nothing;
+alter table public.gallery_state enable row level security;
+revoke all on public.gallery_state from public, anon, authenticated;
+
+create table if not exists public.gallery_photos (
+  id uuid primary key default gen_random_uuid(),
+  storage_path text not null unique,
+  title text not null check (length(btrim(title)) between 1 and 140),
+  subtitle text check (subtitle is null or length(subtitle) <= 240),
+  position integer not null check (position >= 0),
+  created_at timestamptz not null default now()
+);
+
+create index if not exists gallery_photos_position_idx on public.gallery_photos (position, created_at);
+
+alter table public.gallery_photos enable row level security;
+drop policy if exists "Gallery photos are publicly readable" on public.gallery_photos;
+create policy "Gallery photos are publicly readable"
+  on public.gallery_photos for select to anon, authenticated using (true);
+
+revoke all on public.gallery_photos from public, anon, authenticated;
+grant select on public.gallery_photos to anon, authenticated;
+grant all on public.gallery_state, public.gallery_photos to service_role;
+
+drop policy if exists "Public gallery objects are readable" on storage.objects;
+create policy "Public gallery objects are readable"
+  on storage.objects for select to anon, authenticated
+  using (bucket_id = 'gallery');
+
+create or replace function public.reorder_gallery_photos(photo_ids uuid[])
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  photo_count integer;
+begin
+  select count(*) into photo_count from public.gallery_photos;
+  if photo_count <> coalesce(cardinality(photo_ids), 0)
+     or photo_count <> (select count(distinct submitted.id) from unnest(photo_ids) as submitted(id))
+     or exists (
+       select id from public.gallery_photos
+       except
+       select submitted.id from unnest(photo_ids) as submitted(id)
+     ) then
+    raise exception 'The submitted gallery order does not match the current photos';
+  end if;
+
+  update public.gallery_photos as photo
+  set position = ordered.ordinality - 1
+  from unnest(photo_ids) with ordinality as ordered(id, ordinality)
+  where photo.id = ordered.id;
+end;
+$$;
+
+revoke all on function public.reorder_gallery_photos(uuid[]) from public, anon, authenticated;
+grant execute on function public.reorder_gallery_photos(uuid[]) to service_role;
