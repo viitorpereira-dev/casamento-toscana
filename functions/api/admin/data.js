@@ -8,6 +8,7 @@ import {
   requireAdmin,
   supabaseDelete,
   supabaseGet,
+  supabaseGetAll,
   supabasePatch,
   supabasePost
 } from '../../_shared.js';
@@ -39,11 +40,12 @@ const giftPayload = (body) => {
 };
 
 const getDashboardData = async (env) => {
-  const [rsvps, claims, gifts, settings] = await Promise.all([
+  const [rsvps, claims, gifts, settings, gallery] = await Promise.all([
     supabaseGet(env, 'rsvps', '?select=id,name,email,attendance,companion_count,companions,dietary_preferences,dietary_other,reopened,consent_at,created_at,updated_at&order=updated_at.desc'),
     supabaseGet(env, 'gift_claims', '?select=id,gift_id,guest_name,guest_email,payment_method,status,payment_note,reserved_at,expires_at,payment_reported_at,confirmed_at,created_at,updated_at&order=created_at.desc'),
     supabaseGet(env, 'gifts', '?select=id,name,category,description,price,image_url,badge,featured,payment_url,available&order=featured.asc'),
-    supabaseGet(env, 'settings', '?select=key,value')
+    supabaseGet(env, 'settings', '?select=key,value'),
+    supabaseGetAll(env, 'gallery_photos', '?select=id,storage_path,title,subtitle,position,created_at&order=position.asc,created_at.asc,id.asc')
   ]);
   const giftsById = new Map(gifts.map((gift) => [gift.id, gift]));
   const globalReopenSetting = settings.find((setting) => setting.key === 'rsvp_global_reopen');
@@ -52,6 +54,10 @@ const getDashboardData = async (env) => {
     rsvps,
     claims: claims.map((claim) => ({ ...claim, gift_name: giftsById.get(claim.gift_id)?.name || claim.gift_id })),
     gifts,
+    gallery: gallery.map((photo) => ({
+      ...photo,
+      public_url: `${env.SUPABASE_URL.replace(/\/$/, '')}/storage/v1/object/public/gallery/${photo.storage_path.split('/').map(encodeURIComponent).join('/')}`
+    })),
     settings: {
       rsvpGlobalReopen: globalReopenSetting?.value === true
     }

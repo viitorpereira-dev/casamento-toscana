@@ -4084,17 +4084,14 @@
         <div class="gallery-heading reveal">
           <span class="section-label">Di&#xe1;rio de estrada</span>
           <div class="gallery-heading__copy">
-            <h2>Seis lugares que guardamos <em>com a gente.</em></h2>
-            <p>Uma pr&#xe9;via do &#xe1;lbum para receber as fotos das nossas viagens, dos desvios e das pequenas cenas que merecem voltar sempre.</p>
+            <h2>Um álbum para guardar <em>com a gente.</em></h2>
+            <p>Fotos das nossas viagens, dos desvios e das pequenas cenas que merecem voltar sempre.</p>
             <div class="gallery-actions">
-              <label class="gallery-upload" for="gallery-upload-input"><span aria-hidden="true">+</span>Adicionar fotos
-                <input id="gallery-upload-input" type="file" accept="image/*" multiple>
-              </label>
               <div class="gallery-status feedback-message is-visible" id="gallery-status" role="status" aria-live="polite">
                 <span class="feedback-message__icon" aria-hidden="true">&#x2726;</span>
                 <span class="feedback-message__copy">
-                  <strong class="feedback-message__title">Pr&#xe9;via pronta</strong>
-                  <span class="feedback-message__text">Escolha imagens para deixar o &#xe1;lbum com a cara de voc&#xea;s.</span>
+                  <strong class="feedback-message__title">Nosso álbum</strong>
+                  <span class="feedback-message__text">Um lugar para as imagens que queremos guardar.</span>
                 </span>
               </div>
             </div>
@@ -4479,13 +4476,12 @@ window.weddingPlaylist = [
     const galleryCarousel = document.querySelector('#gallery-carousel');
     const galleryPrevious = document.querySelector('#gallery-prev');
     const galleryNext = document.querySelector('#gallery-next');
-    const galleryDots = [...document.querySelectorAll('.carousel-dot')];
+    let galleryDots = [...document.querySelectorAll('.carousel-dot')];
     const galleryCount = document.querySelector('#gallery-count');
     const galleryLightbox = document.querySelector('#gallery-lightbox');
     const lightboxImage = document.querySelector('#lightbox-image');
     const lightboxLocation = document.querySelector('#lightbox-location');
     const lightboxTitle = document.querySelector('#lightbox-title');
-    const galleryUploadInput = document.querySelector('#gallery-upload-input');
     const galleryStatus = document.querySelector('#gallery-status');
     const scrapbookPages = document.querySelector('#scrapbook-pages');
     let giftRows = [...document.querySelectorAll('.gift-item')];
@@ -4937,7 +4933,7 @@ window.weddingPlaylist = [
       }
     }
 
-    const galleryItems = [...document.querySelectorAll('.gallery-item')];
+    let galleryItems = [...galleryCarousel.querySelectorAll('.gallery-item')];
     let lastFocusedGalleryItem;
 
     for (let index = 0; index < 16; index += 1) {
@@ -5018,6 +5014,10 @@ window.weddingPlaylist = [
     };
 
     const updateCarouselControls = (index) => {
+      if (!galleryItems.length) {
+        galleryCount.textContent = '00 / 00';
+        return;
+      }
       galleryCurrentIndex = index;
       galleryDots.forEach((dot, dotIndex) => {
         const isActive = dotIndex === index;
@@ -5028,6 +5028,7 @@ window.weddingPlaylist = [
     };
 
     const scrollToGalleryItem = (index) => {
+      if (!galleryItems.length) return;
       const nextIndex = (index + galleryItems.length) % galleryItems.length;
       const item = galleryItems[nextIndex];
       isProgrammaticCarouselScroll = true;
@@ -5042,16 +5043,8 @@ window.weddingPlaylist = [
       }, 750);
     };
 
-    galleryItems.forEach((item, index) => {
-      item.addEventListener('click', () => {
-        updateCarouselControls(index);
-        openGalleryLightbox(item);
-      });
-    });
-
     galleryPrevious.addEventListener('click', () => scrollToGalleryItem(galleryCurrentIndex - 1));
     galleryNext.addEventListener('click', () => scrollToGalleryItem(galleryCurrentIndex + 1));
-    galleryDots.forEach((dot, index) => dot.addEventListener('click', () => scrollToGalleryItem(index)));
 
     galleryCarousel.addEventListener('keydown', (event) => {
       if (event.key === 'ArrowLeft') scrollToGalleryItem(galleryCurrentIndex - 1);
@@ -5061,12 +5054,81 @@ window.weddingPlaylist = [
     const carouselObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting && !isProgrammaticCarouselScroll) {
-          updateCarouselControls(galleryItems.indexOf(entry.target));
+          const index = galleryItems.indexOf(entry.target);
+          if (index >= 0) updateCarouselControls(index);
         }
       });
     }, { root: galleryCarousel, threshold: 0.65 });
 
-    galleryItems.forEach((item) => carouselObserver.observe(item));
+    const bindGalleryItems = () => {
+      galleryItems = [...galleryCarousel.querySelectorAll('.gallery-item')];
+      galleryItems.forEach((item, index) => {
+        item.addEventListener('click', () => {
+          updateCarouselControls(index);
+          openGalleryLightbox(item);
+        });
+        carouselObserver.observe(item);
+      });
+      galleryDots = [...document.querySelectorAll('#gallery-dots .carousel-dot')];
+      galleryDots.forEach((dot, index) => dot.addEventListener('click', () => scrollToGalleryItem(index)));
+      const controls = document.querySelector('.gallery-carousel-controls');
+      controls.hidden = galleryItems.length <= 1;
+      updateCarouselControls(0);
+    };
+
+    const renderPublicGallery = (photos) => {
+      galleryItems.forEach((item) => carouselObserver.unobserve(item));
+      galleryCarousel.replaceChildren();
+      photos.forEach((photo, index) => {
+        const item = document.createElement('button');
+        item.className = `gallery-item reveal is-visible reveal-delay-${index % 3 + 1}`;
+        item.type = 'button';
+        item.dataset.location = photo.subtitle || '';
+        item.dataset.title = photo.title;
+        item.setAttribute('aria-label', `Abrir foto: ${photo.title}`);
+        const image = document.createElement('img');
+        image.src = photo.public_url;
+        image.alt = photo.title;
+        image.loading = 'lazy';
+        const caption = document.createElement('span');
+        caption.className = 'gallery-item__caption';
+        const subtitle = document.createElement('span');
+        subtitle.className = 'gallery-item__location';
+        subtitle.textContent = photo.subtitle || '';
+        subtitle.hidden = !photo.subtitle;
+        const title = document.createElement('strong');
+        title.className = 'gallery-item__title';
+        title.textContent = photo.title;
+        caption.append(subtitle, title);
+        item.append(image, caption);
+        galleryCarousel.appendChild(item);
+      });
+      const dots = document.querySelector('#gallery-dots');
+      dots.replaceChildren(...photos.map((photo, index) => {
+        const dot = document.createElement('button');
+        dot.className = `carousel-dot${index === 0 ? ' is-active' : ''}`;
+        dot.type = 'button';
+        dot.setAttribute('role', 'tab');
+        dot.setAttribute('aria-label', `Foto ${index + 1} de ${photos.length}`);
+        dot.setAttribute('aria-selected', String(index === 0));
+        return dot;
+      }));
+      bindGalleryItems();
+      galleryCarousel.scrollLeft = 0;
+      showFeedback(galleryStatus, {
+        icon: photos.length ? '\u2726' : '\u2661',
+        title: photos.length ? 'Álbum atualizado' : 'Álbum vazio',
+        text: photos.length ? `${photos.length} foto${photos.length === 1 ? '' : 's'} publicada${photos.length === 1 ? '' : 's'}.` : 'Novas fotos aparecerão aqui quando forem publicadas.'
+      });
+    };
+
+    bindGalleryItems();
+    fetch('/api/gallery')
+      .then((response) => response.ok ? response.json() : null)
+      .then((data) => {
+        if (data?.active === true && Array.isArray(data.photos)) renderPublicGallery(data.photos);
+      })
+      .catch(() => {});
 
     const formatBRL = (amount) => amount.toLocaleString('pt-BR', {
       style: 'currency',
@@ -5336,44 +5398,6 @@ window.weddingPlaylist = [
         closeGalleryLightbox();
       } else if (event.key === 'Escape' && cartDrawer.classList.contains('is-open')) {
         closeCart();
-      }
-    });
-
-    galleryUploadInput.addEventListener('change', (event) => {
-      const files = [...event.target.files].filter((file) => file.type.startsWith('image/'));
-      const selectedFiles = files.slice(0, galleryItems.length);
-
-      selectedFiles.forEach((file, index) => {
-        const item = galleryItems[index];
-        const image = item.querySelector('img');
-        const title = file.name.replace(/\.[^/.]+$/, '').replace(/[-_]+/g, ' ').trim() || `Foto de viagem ${index + 1}`;
-        image.src = URL.createObjectURL(file);
-        image.alt = `Foto de viagem escolhida por Gabriela e Vitor: ${title}`;
-        item.dataset.location = '\u00c1lbum de voc\u00eas';
-        item.dataset.title = title;
-        item.querySelector('.gallery-item__location').textContent = '\u00c1lbum de voc\u00eas';
-        item.querySelector('.gallery-item__title').textContent = title;
-        item.setAttribute('aria-label', `Abrir foto: ${title}`);
-      });
-
-      if (files.length > galleryItems.length) {
-        showFeedback(galleryStatus, {
-          icon: '\u2726',
-          title: '\u00c1lbum atualizado',
-          text: `As primeiras ${galleryItems.length} fotos foram carregadas na pr\u00e9via.`
-        });
-      } else if (selectedFiles.length > 0) {
-        showFeedback(galleryStatus, {
-          icon: '\u2726',
-          title: 'Que lindo!',
-          text: `${selectedFiles.length} foto${selectedFiles.length === 1 ? '' : 's'} carregada${selectedFiles.length === 1 ? '' : 's'} na pr\u00e9via.`
-        });
-      } else if (event.target.files.length > 0) {
-        showFeedback(galleryStatus, {
-          icon: '!',
-          title: 'Escolha uma imagem',
-          text: 'Selecione arquivos de imagem para atualizar o \u00e1lbum.'
-        });
       }
     });
 

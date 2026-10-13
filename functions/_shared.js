@@ -41,7 +41,7 @@ export const supabaseRequest = async (env, path, options = {}) => {
     ...options,
     headers: {
       apikey: env.SUPABASE_SERVICE_ROLE_KEY,
-      Authorization: `Bearer ${env.SUPABASE_SERVICE_ROLE_KEY}`,
+      Authorization: "Bearer " + env.SUPABASE_SERVICE_ROLE_KEY,
       'Content-Type': 'application/json',
       ...(options.headers || {})
     }
@@ -59,6 +59,20 @@ export const supabaseGet = (env, table, query = '') => supabaseRequest(env, `${t
   method: 'GET',
   headers: { Accept: 'application/json' }
 });
+
+export const supabaseGetAll = async (env, table, query = '') => {
+  const pageSize = 500;
+  const rows = [];
+  let offset = 0;
+  while (true) {
+    const separator = query.includes('?') ? '&' : '?';
+    const page = await supabaseGet(env, table, query + separator + 'limit=' + pageSize + '&offset=' + offset);
+    rows.push(...page);
+    if (page.length < pageSize) break;
+    offset += page.length;
+  }
+  return rows;
+};
 
 export const supabasePost = (env, table, payload, query = '', preferences = 'return=representation') => supabaseRequest(env, `${table}${query}`, {
   method: 'POST',
@@ -154,7 +168,7 @@ export const sendEmail = async (env, { to, subject, html, text, idempotencyKey }
     const response = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${env.RESEND_API_KEY}`,
+        Authorization: "Bearer " + env.RESEND_API_KEY,
         'Content-Type': 'application/json',
         'User-Agent': 'casamento-toscana/1.0',
         ...(idempotencyKey ? { 'Idempotency-Key': idempotencyKey } : {})
