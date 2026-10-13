@@ -1,0 +1,5518 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f4efe5">
+  <meta name="description" content="Convite de casamento de Gabriela e Vitor na Casa Olivetto.">
+  <title>Gabriela &amp; Vitor | Casa Olivetto</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #f4efe5;
+      --paper-deep: #e9dfd0;
+      --ink: #26342d;
+      --muted: #6d756b;
+      --olive: #66785c;
+      --olive-dark: #354c3b;
+      --terracotta: #be7052;
+      --sun: #e8ae63;
+      --sky: #d7e2db;
+      --line: rgba(38, 52, 45, 0.16);
+      --serif: "Cormorant Garamond", Georgia, serif;
+      --sans: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --shadow: 0 24px 60px rgba(53, 76, 59, 0.12);
+      --radius-lg: 28px;
+      --radius-md: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: var(--sans);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      position: fixed;
+      z-index: 20;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.16;
+      content: "";
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+      mix-blend-mode: multiply;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    .page-loader {
+      position: fixed;
+      z-index: 100;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      background: var(--olive-dark);
+      animation: loader-out 1s 1.15s cubic-bezier(.76, 0, .24, 1) forwards;
+    }
+
+    .page-loader__mark {
+      display: flex;
+      align-items: center;
+      color: var(--paper);
+      font: 500 4rem/1 var(--serif);
+      column-gap: 0.08em;
+      letter-spacing: 0;
+      animation: mark-breathe 1.2s ease-in-out infinite alternate;
+    }
+
+    .monogram-letter {
+      display: block;
+      flex: 0 0 auto;
+      letter-spacing: 0;
+    }
+
+    .cypress-mark {
+      position: relative;
+      display: inline-block;
+      flex: 0 0 auto;
+      width: 0.52em;
+      height: 1em;
+      margin: 0 0.06em;
+      vertical-align: -0.12em;
+    }
+
+    .cypress-mark::before {
+      position: absolute;
+      right: 0;
+      bottom: 20%;
+      left: 0;
+      height: 80%;
+      border-radius: 48% 48% 10% 10%;
+      background: linear-gradient(108deg, var(--olive-dark) 0%, var(--olive) 62%, var(--sun) 100%);
+      clip-path: polygon(50% 0, 61% 15%, 57% 15%, 76% 33%, 68% 33%, 93% 53%, 83% 53%, 100% 73%, 63% 73%, 63% 84%, 37% 84%, 37% 73%, 0 73%, 17% 53%, 7% 53%, 32% 33%, 24% 33%, 43% 15%, 39% 15%);
+      content: "";
+      filter: drop-shadow(2px 3px 0 rgba(38, 52, 45, 0.12));
+    }
+
+    .cypress-mark::after {
+      position: absolute;
+      bottom: 0;
+      left: 41%;
+      width: 18%;
+      height: 28%;
+      border-radius: 2px 2px 0 0;
+      background: var(--terracotta);
+      content: "";
+    }
+
+    .page-loader__mark .cypress-mark {
+      width: 0.45em;
+      height: 0.8em;
+      margin: 0;
+      vertical-align: 0;
+      transform: translateY(0.02em);
+    }
+
+    .page-loader__mark .cypress-mark::before {
+      background: linear-gradient(108deg, var(--paper) 0%, var(--sun) 100%);
+    }
+
+    .brand .cypress-mark {
+      width: 0.52em;
+      height: 0.9em;
+      vertical-align: -0.08em;
+    }
+
+    .scroll-progress {
+      position: fixed;
+      z-index: 50;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 4px;
+      background: var(--terracotta);
+      box-shadow: 0 0 18px rgba(190, 112, 82, 0.5);
+      transition: width 80ms linear;
+    }
+
+    .music-player {
+      position: fixed;
+      z-index: 45;
+      right: 24px;
+      bottom: 24px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: center;
+      width: min(360px, calc(100% - 32px));
+      padding: 13px 14px;
+      border: 1px solid rgba(244, 239, 229, 0.22);
+      color: var(--paper);
+      background: rgba(38, 52, 45, 0.93);
+      box-shadow: 0 18px 45px rgba(38, 52, 45, 0.24);
+      backdrop-filter: blur(14px) saturate(1.1);
+      -webkit-backdrop-filter: blur(14px) saturate(1.1);
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 300ms ease, transform 300ms ease;
+    }
+
+    .music-player[hidden] {
+      display: none !important;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(12px);
+    }
+
+    .music-player__info {
+      min-width: 0;
+    }
+
+    .music-player__eyebrow {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--sun);
+      font-size: 0.57rem;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .music-player__track,
+    .music-player__artist {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .music-player__track {
+      color: var(--paper);
+      font: 500 1.12rem/0.95 var(--serif);
+    }
+
+    .music-player__artist {
+      margin-top: 4px;
+      color: rgba(244, 239, 229, 0.62);
+      font-size: 0.67rem;
+    }
+
+    .music-player__controls {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 5px;
+    }
+
+    .music-player__button {
+      display: grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      padding: 0;
+      border: 1px solid rgba(244, 239, 229, 0.25);
+      color: var(--paper);
+      background: transparent;
+      font-size: 0.78rem;
+      line-height: 1;
+      transition: color 180ms ease, background 180ms ease, border-color 180ms ease, transform 180ms ease;
+    }
+
+    .music-player__button:hover,
+    .music-player__button:focus-visible,
+    .music-player__button[aria-pressed="true"] {
+      border-color: var(--sun);
+      color: var(--ink);
+      background: var(--sun);
+      transform: translateY(-2px);
+    }
+
+    .music-player__button--main {
+      width: 36px;
+      height: 36px;
+      border-color: var(--sun);
+      color: var(--ink);
+      background: var(--sun);
+      font-size: 0.92rem;
+    }
+
+    .music-player__button--main:hover,
+    .music-player__button--main:focus-visible {
+      color: var(--paper);
+      background: var(--terracotta);
+      border-color: var(--terracotta);
+    }
+
+    .music-player__volume {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: rgba(244, 239, 229, 0.68);
+      font-size: 0.65rem;
+    }
+
+    .music-player__volume input {
+      width: 100%;
+      height: 3px;
+      accent-color: var(--sun);
+      cursor: pointer;
+    }
+
+    .floating-leaves {
+      position: fixed;
+      z-index: 6;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .leaf {
+      position: absolute;
+      top: -8vh;
+      display: block;
+      width: 12px;
+      height: 23px;
+      border-radius: 100% 0 100% 0;
+      background: var(--olive);
+      opacity: 0;
+      transform: rotate(35deg);
+      animation: leaf-fall var(--fall-time) var(--fall-delay) linear infinite;
+    }
+
+    .leaf:nth-child(3n) {
+      width: 8px;
+      height: 16px;
+      background: var(--terracotta);
+    }
+
+    .leaf:nth-child(4n) {
+      width: 10px;
+      height: 19px;
+      background: var(--sun);
+    }
+
+    .site-nav {
+      position: fixed;
+      z-index: 40;
+      top: 0;
+      right: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: min(1240px, calc(100% - 72px));
+      margin: 0 auto;
+      padding: 28px 0;
+      color: var(--paper);
+      transition: width 450ms cubic-bezier(.22, 1, .36, 1), padding 450ms cubic-bezier(.22, 1, .36, 1), color 350ms ease, background-color 350ms ease, border-color 350ms ease, box-shadow 450ms ease, backdrop-filter 450ms ease;
+      animation: nav-in 1.3s 1.15s both cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .site-nav.is-scrolled {
+      width: min(1240px, calc(100% - 40px));
+      padding: 14px 24px;
+      border: 1px solid rgba(38, 52, 45, 0.12);
+      border-radius: 0 0 12px 12px;
+      color: var(--ink);
+      background: rgba(244, 239, 229, 0.9);
+      box-shadow: 0 14px 35px rgba(38, 52, 45, 0.12);
+      backdrop-filter: blur(16px) saturate(1.12);
+      -webkit-backdrop-filter: blur(16px) saturate(1.12);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font: 500 1.8rem/1 var(--serif);
+      letter-spacing: -0.08em;
+      transition: color 350ms ease, transform 450ms cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .site-nav.is-scrolled .brand {
+      transform: scale(0.92);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      font-size: 0.69rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .nav-links a {
+      position: relative;
+      padding: 8px 0;
+      opacity: 0.84;
+      transition: color 350ms ease, opacity 220ms ease;
+    }
+
+    .nav-links a::after {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: 1px;
+      background: currentColor;
+      content: "";
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 260ms ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      opacity: 1;
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a:focus-visible::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    .nav-links a.is-active {
+      color: var(--sun);
+      opacity: 1;
+    }
+
+    .site-nav.is-scrolled .nav-links a.is-active {
+      color: var(--terracotta);
+    }
+
+    .nav-links a.is-active::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    .hero {
+      position: relative;
+      display: grid;
+      min-height: 900px;
+      height: 100svh;
+      max-height: 1080px;
+      overflow: hidden;
+      color: var(--paper);
+      background:
+        linear-gradient(90deg, rgba(32, 48, 40, 0.76) 0%, rgba(32, 48, 40, 0.33) 48%, rgba(32, 48, 40, 0.18) 100%),
+        url("https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Cypress_tree_alley_at_sunset_in_Asciano%2C_Tuscany.jpg/1280px-Cypress_tree_alley_at_sunset_in_Asciano%2C_Tuscany.jpg") center 54% / cover;
+    }
+
+    .hero::before {
+      position: absolute;
+      right: -5vw;
+      bottom: -14vw;
+      left: -5vw;
+      height: 34vw;
+      min-height: 210px;
+      border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+      background: var(--paper);
+      content: "";
+      transform: rotate(-2deg);
+      transform-origin: center bottom;
+    }
+
+    .hero::after {
+      position: absolute;
+      right: 6%;
+      bottom: 14%;
+      width: 1px;
+      height: 25%;
+      background: linear-gradient(to top, transparent, rgba(244, 239, 229, 0.7), transparent);
+      content: "";
+      opacity: 0.7;
+    }
+
+    .hero__content {
+      position: relative;
+      z-index: 2;
+      align-self: center;
+      width: min(1240px, calc(100% - 72px));
+      margin: 54px auto 0;
+      padding-bottom: 5vh;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0 0 24px;
+      color: var(--sun);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 42px;
+      height: 1px;
+      background: currentColor;
+      content: "";
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    .hero h1 {
+      max-width: 860px;
+      margin-bottom: 26px;
+      font: 500 clamp(5rem, 12vw, 10.8rem)/0.78 var(--serif);
+      letter-spacing: -0.085em;
+    }
+
+    .hero h1 span {
+      display: inline-block;
+      color: var(--sun);
+      font-size: 0.48em;
+      font-style: italic;
+      letter-spacing: -0.04em;
+      transform: translateY(-0.12em) rotate(-9deg);
+    }
+
+    .hero__intro {
+      max-width: 390px;
+      margin: 0;
+      color: rgba(244, 239, 229, 0.85);
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    .hero__meta {
+      position: absolute;
+      right: 0;
+      bottom: 9%;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: var(--paper);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      transform: rotate(-90deg) translateX(100%);
+      transform-origin: right top;
+    }
+
+    .hero__meta::before {
+      width: 52px;
+      height: 1px;
+      background: var(--sun);
+      content: "";
+    }
+
+    .hero__stamp {
+      position: absolute;
+      right: 13%;
+      bottom: 18%;
+      display: grid;
+      place-items: center;
+      width: 132px;
+      height: 132px;
+      border: 1px solid rgba(244, 239, 229, 0.64);
+      border-radius: 50%;
+      color: var(--paper);
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-align: center;
+      text-transform: uppercase;
+      animation: stamp-float 5s ease-in-out infinite;
+    }
+
+    .hero__stamp::before {
+      position: absolute;
+      inset: 8px;
+      border: 1px dashed rgba(244, 239, 229, 0.55);
+      border-radius: inherit;
+      content: "";
+      animation: stamp-spin 22s linear infinite;
+    }
+
+    .scroll-cue {
+      position: absolute;
+      z-index: 4;
+      bottom: 34px;
+      left: 50%;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--ink);
+      font-size: 0.64rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      transform: translateX(-50%);
+    }
+
+    .scroll-cue i {
+      position: relative;
+      display: block;
+      width: 1px;
+      height: 44px;
+      overflow: hidden;
+      background: rgba(38, 52, 45, 0.2);
+    }
+
+    .scroll-cue i::after {
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background: var(--terracotta);
+      content: "";
+      animation: scroll-line 2s ease-in-out infinite;
+    }
+
+    .section {
+      position: relative;
+      width: min(1240px, calc(100% - 72px));
+      margin: 0 auto;
+      padding: 150px 0;
+    }
+
+    #historia,
+    #dia,
+    #presentes,
+    #rsvp {
+      scroll-margin-top: 100px;
+    }
+
+    .section--intro {
+      display: grid;
+      grid-template-columns: 0.7fr 1.5fr;
+      gap: 11vw;
+      align-items: start;
+      padding-top: 130px;
+      padding-bottom: 145px;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--terracotta);
+      font-size: 0.67rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .section-label::before {
+      width: 26px;
+      height: 1px;
+      background: currentColor;
+      content: "";
+    }
+
+    .intro-copy h2 {
+      max-width: 840px;
+      margin-bottom: 28px;
+      font: 500 clamp(3.2rem, 6.8vw, 7.2rem)/0.88 var(--serif);
+      letter-spacing: -0.075em;
+    }
+
+    .intro-copy h2 em {
+      color: var(--olive);
+      font-weight: 400;
+    }
+
+    .intro-copy > p {
+      max-width: 525px;
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 0.99rem;
+      line-height: 1.85;
+    }
+
+    .olive-branch {
+      position: absolute;
+      top: 106px;
+      right: -3%;
+      width: 170px;
+      height: 300px;
+      opacity: 0.68;
+      transform: rotate(20deg);
+      pointer-events: none;
+    }
+
+    .olive-branch::before {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 2px;
+      height: 100%;
+      border-radius: 50%;
+      background: var(--olive);
+      content: "";
+      transform: rotate(10deg);
+    }
+
+    .olive-branch span {
+      position: absolute;
+      width: 11px;
+      height: 29px;
+      border-radius: 100% 0 100% 0;
+      background: var(--olive);
+      transform: rotate(var(--leaf-angle));
+      animation: leaf-sway 3.6s ease-in-out var(--leaf-delay) infinite alternate;
+    }
+
+    .olive-branch span:nth-child(1) { top: 8%; left: 31%; --leaf-angle: -38deg; --leaf-delay: 0.2s; }
+    .olive-branch span:nth-child(2) { top: 18%; left: 58%; --leaf-angle: 132deg; --leaf-delay: 0.5s; }
+    .olive-branch span:nth-child(3) { top: 30%; left: 28%; --leaf-angle: -42deg; --leaf-delay: 0.8s; }
+    .olive-branch span:nth-child(4) { top: 42%; left: 62%; --leaf-angle: 136deg; --leaf-delay: 0.3s; }
+    .olive-branch span:nth-child(5) { top: 53%; left: 24%; --leaf-angle: -46deg; --leaf-delay: 1s; }
+    .olive-branch span:nth-child(6) { top: 66%; left: 61%; --leaf-angle: 141deg; --leaf-delay: 0.6s; }
+    .olive-branch span:nth-child(7) { top: 78%; left: 31%; --leaf-angle: -40deg; --leaf-delay: 0.9s; }
+    .olive-branch span:nth-child(8) { top: 89%; left: 57%; --leaf-angle: 135deg; --leaf-delay: 0.4s; }
+
+    .story-section {
+      padding-top: 80px;
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: minmax(260px, 0.88fr) minmax(300px, 1fr);
+      gap: clamp(50px, 10vw, 150px);
+      align-items: center;
+    }
+
+    .image-frame {
+      position: relative;
+      padding: 14px;
+      background: var(--paper-deep);
+      box-shadow: var(--shadow);
+      transform: rotate(-2.5deg);
+      transition: transform 700ms cubic-bezier(.22, 1, .36, 1), box-shadow 500ms ease;
+    }
+
+    .image-frame:hover {
+      box-shadow: 0 32px 70px rgba(53, 76, 59, 0.2);
+      transform: rotate(0) translateY(-8px);
+    }
+
+    .image-frame::before {
+      position: absolute;
+      z-index: -1;
+      inset: 20px 0 -20px 18px;
+      border: 1px solid var(--terracotta);
+      content: "";
+      transform: rotate(5deg);
+    }
+
+    .image-frame img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 0.8;
+      object-fit: cover;
+      filter: saturate(0.78) contrast(0.95);
+    }
+
+    .image-frame--watercolor {
+      padding: 10px 10px 16px;
+      background: rgba(244, 239, 229, 0.76);
+      transform: rotate(-1.5deg);
+    }
+
+    .image-frame--watercolor::before {
+      inset: 18px -8px -16px 16px;
+      opacity: 0.72;
+    }
+
+    .image-frame__visual {
+      overflow: hidden;
+      background: var(--paper);
+    }
+
+    .image-frame--watercolor img {
+      aspect-ratio: auto;
+      object-fit: contain;
+      filter: saturate(0.98) contrast(1.01);
+      transform: scale(1.20);
+      transform-origin: center;
+      transition: transform 700ms cubic-bezier(.22, 1, .36, 1), filter 500ms ease;
+    }
+
+    .image-frame--watercolor:hover img {
+      filter: saturate(1.04) contrast(1.02);
+      transform: scale(1.24);
+    }
+
+    .image-frame__caption {
+      display: block;
+      margin: 11px 6px 0;
+      color: var(--olive-dark);
+      font: italic 1.15rem/1 var(--serif);
+    }
+
+    .story-copy .section-label {
+      margin-bottom: 28px;
+    }
+
+    .story-copy h2 {
+      max-width: 500px;
+      margin-bottom: 24px;
+      font: 500 clamp(3.2rem, 5vw, 5.8rem)/0.84 var(--serif);
+      letter-spacing: -0.075em;
+    }
+
+    .story-copy h2 span {
+      color: var(--terracotta);
+    }
+
+    .story-copy p {
+      max-width: 460px;
+      margin-bottom: 28px;
+      color: var(--muted);
+      line-height: 1.85;
+    }
+
+    .signature {
+      display: inline-block;
+      color: var(--olive-dark);
+      font: 600 2.2rem/1 var(--serif);
+      transform: rotate(-7deg);
+    }
+
+    .gallery-section {
+      overflow: hidden;
+      background: var(--paper-deep);
+    }
+
+    .gallery-section .section {
+      padding-top: 130px;
+      padding-bottom: 145px;
+    }
+
+    .gallery-heading {
+      display: grid;
+      grid-template-columns: 0.7fr 1.3fr;
+      gap: 10vw;
+      align-items: end;
+      margin-bottom: 54px;
+    }
+
+    .gallery-heading__copy h2 {
+      max-width: 720px;
+      margin: 0 0 22px;
+      font: 500 clamp(3.3rem, 6vw, 6.7rem)/0.83 var(--serif);
+      letter-spacing: -0.075em;
+    }
+
+    .gallery-heading__copy h2 em {
+      color: var(--terracotta);
+      font-weight: 400;
+    }
+
+    .gallery-heading__copy > p {
+      max-width: 470px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.91rem;
+      line-height: 1.8;
+    }
+
+    .gallery-actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-top: 28px;
+    }
+
+    .gallery-upload {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 17px;
+      border: 1px solid var(--olive-dark);
+      color: var(--olive-dark);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: color 250ms ease, background 250ms ease, transform 250ms ease;
+    }
+
+    .gallery-upload:hover,
+    .gallery-upload:focus-within {
+      color: var(--paper);
+      background: var(--olive-dark);
+      transform: translateY(-3px);
+    }
+
+    .gallery-upload span {
+      font-size: 1.35rem;
+      font-weight: 400;
+      line-height: 0.7;
+    }
+
+    .gallery-upload input {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+
+    .feedback-message {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-height: 74px;
+      margin: 0;
+      padding: 12px 16px 12px 12px;
+      border: 1px solid rgba(38, 52, 45, 0.16);
+      opacity: 0;
+      transform: translateY(10px) scale(0.98);
+      transition: opacity 420ms ease, transform 420ms cubic-bezier(.22, 1, .36, 1), background-color 300ms ease, border-color 300ms ease;
+    }
+
+    .feedback-message[hidden] {
+      display: none;
+    }
+
+    .feedback-message.is-visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .feedback-message__icon {
+      display: grid;
+      flex: 0 0 auto;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border: 1px solid currentColor;
+      border-radius: 50%;
+      color: var(--terracotta);
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+
+    .feedback-message.is-visible .feedback-message__icon {
+      animation: feedback-icon-pop 600ms 80ms both cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .feedback-message__copy {
+      display: grid;
+      min-width: 0;
+      gap: 4px;
+    }
+
+    .feedback-message__title {
+      color: currentColor;
+      font: 500 1.35rem/0.92 var(--serif);
+      letter-spacing: -0.04em;
+    }
+
+    .feedback-message__text {
+      color: currentColor;
+      font-size: 0.72rem;
+      line-height: 1.45;
+      opacity: 0.76;
+    }
+
+    .gallery-status {
+      max-width: 340px;
+      min-height: 0;
+      padding: 9px 12px 9px 9px;
+      color: var(--muted);
+      background: rgba(244, 239, 229, 0.48);
+      font-size: 0.72rem;
+      line-height: 1.4;
+    }
+
+    .gallery-status .feedback-message__icon {
+      width: 28px;
+      height: 28px;
+      color: var(--terracotta);
+      font-size: 0.8rem;
+    }
+
+    .gallery-status .feedback-message__title {
+      font-size: 1.1rem;
+    }
+
+    .gallery-status .feedback-message__text {
+      font-size: 0.67rem;
+    }
+
+    .gallery-style-picker {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 25px;
+    }
+
+    .gallery-style-picker__label {
+      margin-right: 8px;
+      color: var(--muted);
+      font-size: 0.63rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .gallery-style-picker button {
+      padding: 9px 12px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      background: transparent;
+      font-size: 0.67rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 220ms ease, background 220ms ease, border-color 220ms ease, transform 220ms ease;
+    }
+
+    .gallery-style-picker button:hover,
+    .gallery-style-picker button:focus-visible,
+    .gallery-style-picker button[aria-selected="true"] {
+      border-color: var(--olive-dark);
+      color: var(--paper);
+      background: var(--olive-dark);
+      transform: translateY(-2px);
+    }
+
+    .gallery-style-note {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font: italic 1.15rem/1 var(--serif);
+    }
+
+    .gallery-carousel {
+      display: flex;
+      gap: 14px;
+      overflow-x: auto;
+      padding: 4px 0 22px;
+      scroll-behavior: smooth;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      overscroll-behavior-inline: contain;
+    }
+
+    .gallery-carousel::-webkit-scrollbar {
+      display: none;
+    }
+
+    .gallery-item {
+      position: relative;
+      display: block;
+      flex: 0 0 min(72vw, 880px);
+      aspect-ratio: 1.25;
+      min-width: 0;
+      padding: 0;
+      overflow: hidden;
+      border: 0;
+      background: var(--olive-dark);
+      color: var(--paper);
+      text-align: left;
+      cursor: zoom-in;
+      scroll-snap-align: start;
+      transform: translateZ(0);
+    }
+
+    .gallery-carousel-controls {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    .carousel-arrow {
+      display: grid;
+      flex: 0 0 auto;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--line);
+      color: var(--ink);
+      background: transparent;
+      font-size: 1.35rem;
+      transition: color 220ms ease, background 220ms ease, transform 220ms ease;
+    }
+
+    .carousel-arrow:hover,
+    .carousel-arrow:focus-visible {
+      color: var(--paper);
+      background: var(--olive-dark);
+      transform: translateY(-3px);
+    }
+
+    .carousel-dots {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 auto;
+    }
+
+    .carousel-dot {
+      width: 8px;
+      height: 8px;
+      padding: 0;
+      border-radius: 50%;
+      background: rgba(38, 52, 45, 0.24);
+      transition: width 280ms ease, border-radius 280ms ease, background 280ms ease;
+    }
+
+    .carousel-dot.is-active {
+      width: 27px;
+      border-radius: 10px;
+      background: var(--terracotta);
+    }
+
+    .carousel-count {
+      flex: 0 0 auto;
+      min-width: 46px;
+      color: var(--muted);
+      font-size: 0.67rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-align: right;
+    }
+
+    .gallery-item img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(0.8) contrast(0.96);
+      transition: filter 700ms ease, transform 900ms cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .gallery-item::before {
+      position: absolute;
+      z-index: 1;
+      inset: 0;
+      background: linear-gradient(to top, rgba(38, 52, 45, 0.78), transparent 58%);
+      content: "";
+      opacity: 0.9;
+      transition: opacity 400ms ease;
+    }
+
+    .gallery-item::after {
+      position: absolute;
+      z-index: 2;
+      top: 16px;
+      right: 18px;
+      display: grid;
+      place-items: center;
+      width: 29px;
+      height: 29px;
+      border: 1px solid rgba(244, 239, 229, 0.72);
+      border-radius: 50%;
+      color: var(--paper);
+      content: "\2197 ";
+      font-size: 1rem;
+      font-weight: 400;
+      opacity: 0;
+      transform: translateY(-5px);
+      transition: opacity 350ms ease, transform 350ms ease;
+    }
+
+    .gallery-item:hover img,
+    .gallery-item:focus-visible img {
+      filter: saturate(1) contrast(1);
+      transform: scale(1.06);
+    }
+
+    .gallery-item:hover::before,
+    .gallery-item:focus-visible::before {
+      opacity: 1;
+    }
+
+    .gallery-item:hover::after,
+    .gallery-item:focus-visible::after {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .gallery-item:focus-visible {
+      outline: 2px solid var(--terracotta);
+      outline-offset: 5px;
+    }
+
+    .gallery-item__caption {
+      position: absolute;
+      z-index: 2;
+      right: 20px;
+      bottom: 18px;
+      left: 20px;
+      display: grid;
+      gap: 4px;
+    }
+
+    .gallery-item__location {
+      color: var(--sun);
+      font-size: 0.61rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .gallery-item__title {
+      font: 500 clamp(1.55rem, 2.8vw, 2.75rem)/0.85 var(--serif);
+      letter-spacing: -0.05em;
+    }
+
+    .gallery-section[data-gallery-style="scrapbook"] {
+      color: var(--paper);
+      background: #282725;
+    }
+
+    .gallery-section[data-gallery-style="scrapbook"] .section-label,
+    .gallery-section[data-gallery-style="scrapbook"] .gallery-style-note {
+      color: var(--sun);
+    }
+
+    .gallery-section[data-gallery-style="scrapbook"] .gallery-heading__copy h2 em {
+      color: var(--sun);
+    }
+
+    .gallery-section[data-gallery-style="scrapbook"] .gallery-heading__copy > p,
+    .gallery-section[data-gallery-style="scrapbook"] .gallery-status,
+    .gallery-section[data-gallery-style="scrapbook"] .gallery-style-picker__label {
+      color: rgba(244, 239, 229, 0.65);
+    }
+
+    .gallery-section[data-gallery-style="scrapbook"] .gallery-upload {
+      border-color: var(--sun);
+      color: var(--sun);
+    }
+
+    .gallery-section[data-gallery-style="scrapbook"] .gallery-upload:hover,
+    .gallery-section[data-gallery-style="scrapbook"] .gallery-upload:focus-within,
+    .gallery-section[data-gallery-style="scrapbook"] .gallery-style-picker button:hover,
+    .gallery-section[data-gallery-style="scrapbook"] .gallery-style-picker button:focus-visible,
+    .gallery-section[data-gallery-style="scrapbook"] .gallery-style-picker button[aria-selected="true"] {
+      border-color: var(--sun);
+      color: var(--ink);
+      background: var(--sun);
+    }
+
+    .gallery-section[data-gallery-style="scrapbook"] .gallery-style-picker button {
+      border-color: rgba(244, 239, 229, 0.25);
+      color: rgba(244, 239, 229, 0.7);
+    }
+
+    .gallery-section[data-gallery-style="scrapbook"] .gallery-carousel {
+      gap: 30px;
+      padding-top: 34px;
+      padding-bottom: 40px;
+    }
+
+    .gallery-section[data-gallery-style="scrapbook"] .gallery-item {
+      flex-basis: min(64vw, 760px);
+      aspect-ratio: 1.12;
+      overflow: visible;
+      background: transparent;
+      scroll-snap-align: center;
+      --scrapbook-rotation: -1.6deg;
+    }
+
+    .gallery-section[data-gallery-style="scrapbook"] .gallery-item:nth-child(2n) {
+      --scrapbook-rotation: 1.8deg;
+    }
+
+    .gallery-section[data-gallery-style="scrapbook"] .gallery-item:nth-child(3n) {
+      --scrapbook-rotation: -0.6deg;
+    }
+
+    .gallery-section[data-gallery-style="scrapbook"] .gallery-item img {
+      position: absolute;
+      top: 6%;
+      right: auto;
+      bottom: auto;
+      left: 5%;
+      width: 90%;
+      height: 83%;
+      border: 14px solid var(--paper);
+      border-bottom-width: 42px;
+      box-shadow: 0 22px 35px rgba(0, 0, 0, 0.28);
+      transform: rotate(var(--scrapbook-rotation));
+    }
+
+    .gallery-section[data-gallery-style="scrapbook"] .gallery-item::before {
+      z-index: 4;
+      top: 3%;
+      right: auto;
+      bottom: auto;
+      left: 17%;
+      width: 74px;
+      height: 22px;
+      background: rgba(232, 174, 99, 0.78);
+      content: "";
+      opacity: 1;
+      transform: rotate(-8deg);
+    }
+
+    .gallery-section[data-gallery-style="scrapbook"] .gallery-item::after {
+      z-index: 5;
+      top: 7%;
+      right: 8%;
+      color: var(--paper);
+      opacity: 1;
+      transform: none;
+    }
+
+    .gallery-section[data-gallery-style="scrapbook"] .gallery-item__caption {
+      right: 11%;
+      bottom: 3%;
+      left: 11%;
+    }
+
+    .gallery-section[data-gallery-style="scrapbook"] .gallery-item__title {
+      color: var(--paper);
+      font-style: italic;
+    }
+
+    .gallery-section[data-gallery-style="scrapbook"] .carousel-arrow {
+      border-color: rgba(244, 239, 229, 0.3);
+      color: var(--paper);
+    }
+
+    .gallery-section[data-gallery-style="scrapbook"] .carousel-arrow:hover,
+    .gallery-section[data-gallery-style="scrapbook"] .carousel-arrow:focus-visible {
+      color: var(--ink);
+      background: var(--sun);
+    }
+
+    .gallery-section[data-gallery-style="scrapbook"] .carousel-dot {
+      background: rgba(244, 239, 229, 0.3);
+    }
+
+    .gallery-section[data-gallery-style="album"] {
+      background: #e3d6c4;
+    }
+
+    .gallery-section[data-gallery-style="album"] .gallery-heading__copy h2 em {
+      color: var(--olive-dark);
+    }
+
+    .gallery-section[data-gallery-style="album"] .gallery-carousel {
+      gap: 22px;
+      padding-top: 10px;
+      padding-bottom: 28px;
+    }
+
+    .gallery-section[data-gallery-style="album"] .gallery-item {
+      flex-basis: min(76vw, 920px);
+      aspect-ratio: 1.48;
+      padding: 24px;
+      border: 1px solid rgba(38, 52, 45, 0.14);
+      background: #f8f2e8;
+      box-shadow: 0 20px 42px rgba(53, 76, 59, 0.14);
+      color: var(--ink);
+      cursor: zoom-in;
+    }
+
+    .gallery-section[data-gallery-style="album"] .gallery-item img {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      width: 59%;
+      height: calc(100% - 48px);
+      border: 1px solid rgba(38, 52, 45, 0.14);
+      filter: saturate(0.78) sepia(0.08);
+      transform: none;
+    }
+
+    .gallery-section[data-gallery-style="album"] .gallery-item::before {
+      z-index: 2;
+      top: 24px;
+      bottom: 24px;
+      left: 63%;
+      width: 1px;
+      background: rgba(38, 52, 45, 0.16);
+      content: "";
+      opacity: 1;
+    }
+
+    .gallery-section[data-gallery-style="album"] .gallery-item::after {
+      z-index: 3;
+      top: auto;
+      right: 8%;
+      bottom: 24px;
+      border-color: var(--terracotta);
+      color: var(--terracotta);
+      opacity: 1;
+      transform: none;
+    }
+
+    .gallery-section[data-gallery-style="album"] .gallery-item__caption {
+      top: 50%;
+      right: 8%;
+      bottom: auto;
+      left: 68%;
+      color: var(--ink);
+      transform: translateY(-50%);
+    }
+
+    .gallery-section[data-gallery-style="album"] .gallery-item__location {
+      color: var(--terracotta);
+    }
+
+    .gallery-section[data-gallery-style="album"] .gallery-item__title {
+      color: var(--ink);
+      font-size: clamp(2rem, 4vw, 4rem);
+    }
+
+    .gallery-section[data-gallery-style="album"] .gallery-item:nth-child(2n) img {
+      right: 24px;
+      left: auto;
+    }
+
+    .gallery-section[data-gallery-style="album"] .gallery-item:nth-child(2n)::before {
+      right: 63%;
+      left: auto;
+    }
+
+    .gallery-section[data-gallery-style="album"] .gallery-item:nth-child(2n) .gallery-item__caption {
+      right: 68%;
+      left: 8%;
+    }
+
+    .scrapbook-book {
+      position: relative;
+      width: min(1100px, 100%);
+      aspect-ratio: 1.48;
+      margin: 42px auto 0;
+      perspective: 1800px;
+      isolation: isolate;
+    }
+
+    .scrapbook-book::before {
+      position: absolute;
+      z-index: -1;
+      inset: 4% -2% -4%;
+      border: 1px solid rgba(232, 174, 99, 0.5);
+      background: #181715;
+      box-shadow: 0 30px 55px rgba(0, 0, 0, 0.28);
+      content: "";
+      transform: rotate(-1deg);
+    }
+
+    .scrapbook-book > #scrapbook-pages {
+      position: absolute;
+      inset: 0;
+    }
+
+    .scrapbook-spread {
+      position: absolute;
+      z-index: 1;
+      inset: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      padding: 14px;
+      border: 1px solid rgba(244, 239, 229, 0.15);
+      background: #3b342e;
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.28);
+      transform-origin: left center;
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
+      transition: transform 900ms cubic-bezier(.22, 1, .36, 1), box-shadow 900ms ease;
+    }
+
+    .scrapbook-spread.is-turned {
+      box-shadow: -18px 20px 38px rgba(0, 0, 0, 0.18);
+      transform: rotateY(-180deg);
+    }
+
+    .scrapbook-spread--cover {
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: center;
+      overflow: hidden;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.04), transparent 46%),
+        #252321;
+    }
+
+    .scrapbook-page {
+      position: relative;
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      justify-content: center;
+      gap: 14px;
+      overflow: hidden;
+      padding: clamp(20px, 3vw, 42px);
+      border: 1px solid rgba(244, 239, 229, 0.08);
+      color: var(--paper);
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.025), transparent 42%),
+        #282725;
+    }
+
+    .scrapbook-page--left {
+      border-right: 0;
+    }
+
+    .scrapbook-page--right {
+      border-left: 0;
+    }
+
+    .scrapbook-page::before {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 42px;
+      height: 1px;
+      background: var(--terracotta);
+      content: "";
+      opacity: 0.7;
+      transform: rotate(-10deg);
+    }
+
+    .scrapbook-page__number {
+      position: absolute;
+      top: 18px;
+      left: 22px;
+      color: rgba(244, 239, 229, 0.42);
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+    }
+
+    .gallery-section[data-gallery-style="scrapbook"] .scrapbook-book .gallery-item {
+      position: relative;
+      display: block;
+      flex: none;
+      width: 92%;
+      min-width: 0;
+      aspect-ratio: auto;
+      margin: auto;
+      padding: 10px 10px 38px;
+      overflow: visible;
+      border: 0;
+      background: var(--paper);
+      color: var(--ink);
+      cursor: zoom-in;
+      scroll-snap-align: none;
+      transform: rotate(var(--photo-tilt));
+      box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .gallery-section[data-gallery-style="scrapbook"] .scrapbook-book .book-photo--left {
+      --photo-tilt: -1.8deg;
+    }
+
+    .gallery-section[data-gallery-style="scrapbook"] .scrapbook-book .book-photo--right {
+      --photo-tilt: 1.7deg;
+    }
+
+    .gallery-section[data-gallery-style="scrapbook"] .scrapbook-book .gallery-item img {
+      position: static;
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1.12;
+      border: 0;
+      filter: saturate(0.86) contrast(0.96);
+      object-fit: cover;
+      transform: none;
+    }
+
+    .gallery-section[data-gallery-style="scrapbook"] .scrapbook-book .gallery-item::before {
+      z-index: 4;
+      top: -12px;
+      right: auto;
+      bottom: auto;
+      left: 30%;
+      width: 68px;
+      height: 22px;
+      background: rgba(232, 174, 99, 0.8);
+      content: "";
+      opacity: 1;
+      transform: rotate(-7deg);
+    }
+
+    .gallery-section[data-gallery-style="scrapbook"] .scrapbook-book .gallery-item::after {
+      z-index: 5;
+      top: 12px;
+      right: 12px;
+      bottom: auto;
+      border-color: rgba(38, 52, 45, 0.32);
+      color: var(--ink);
+      opacity: 0.65;
+      transform: none;
+    }
+
+    .gallery-section[data-gallery-style="scrapbook"] .scrapbook-book .gallery-item__caption {
+      position: static;
+      z-index: auto;
+      display: grid;
+      gap: 2px;
+      margin-top: 7px;
+      color: var(--ink);
+      transform: none;
+    }
+
+    .gallery-section[data-gallery-style="scrapbook"] .scrapbook-book .gallery-item__location {
+      color: var(--terracotta);
+      font-size: 0.52rem;
+    }
+
+    .gallery-section[data-gallery-style="scrapbook"] .scrapbook-book .gallery-item__title {
+      color: var(--ink);
+      font-size: clamp(1.45rem, 2.5vw, 2.35rem);
+      font-style: italic;
+    }
+
+    .scrapbook-page__note {
+      max-width: 270px;
+      margin: 0 auto;
+      color: rgba(244, 239, 229, 0.72);
+      font: italic clamp(0.95rem, 1.5vw, 1.35rem)/1.15 var(--serif);
+      text-align: center;
+    }
+
+    .scrapbook-cover__inner {
+      display: grid;
+      justify-items: center;
+      gap: 18px;
+      padding: 30px;
+      border: 1px solid rgba(232, 174, 99, 0.56);
+      color: var(--paper);
+      text-align: center;
+      transform: rotate(-2deg);
+    }
+
+    .scrapbook-cover__eyebrow,
+    .scrapbook-cover__date {
+      color: var(--sun);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .scrapbook-cover__monogram {
+      display: inline-flex;
+      align-items: center;
+      font: 500 clamp(4rem, 8vw, 7.5rem)/0.75 var(--serif);
+      letter-spacing: -0.1em;
+    }
+
+    .scrapbook-cover__monogram .cypress-mark {
+      width: 0.42em;
+      height: 0.82em;
+      margin: 0 0.08em;
+    }
+
+    .scrapbook-cover__inner h3 {
+      margin: 0;
+      font: 500 clamp(2.2rem, 4vw, 4.7rem)/0.8 var(--serif);
+      letter-spacing: -0.07em;
+    }
+
+    .scrapbook-cover__inner h3 em {
+      color: var(--sun);
+      font-weight: 400;
+    }
+
+    .scrapbook-cover__inner p {
+      max-width: 230px;
+      margin: 0;
+      color: rgba(244, 239, 229, 0.68);
+      font: italic 1.2rem/1 var(--serif);
+    }
+
+    .scrapbook-book-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      margin: 26px auto 0;
+    }
+
+    .book-arrow {
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      border: 1px solid rgba(244, 239, 229, 0.3);
+      color: var(--paper);
+      background: #282725;
+      font-size: 1.4rem;
+      transition: color 220ms ease, background 220ms ease, transform 220ms ease;
+    }
+
+    .book-arrow:hover,
+    .book-arrow:focus-visible {
+      color: var(--ink);
+      background: var(--sun);
+      transform: translateY(-3px);
+    }
+
+    .book-arrow:disabled {
+      cursor: default;
+      opacity: 0.35;
+      transform: none;
+    }
+
+    .book-count {
+      min-width: 68px;
+      color: var(--sun);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .book-hint {
+      color: rgba(244, 239, 229, 0.5);
+      font: italic 1rem var(--serif);
+    }
+
+    .gallery-lightbox {
+      position: fixed;
+      z-index: 90;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      visibility: hidden;
+      opacity: 0;
+      background: rgba(38, 52, 45, 0.82);
+      transition: opacity 350ms ease, visibility 350ms ease;
+    }
+
+    .gallery-lightbox.is-open {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .gallery-lightbox__backdrop {
+      position: absolute;
+      inset: 0;
+    }
+
+    .gallery-lightbox__dialog {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 16px;
+      width: min(100%, 1040px);
+      max-height: calc(100svh - 48px);
+      padding: 12px;
+      background: var(--paper);
+      box-shadow: 0 30px 100px rgba(0, 0, 0, 0.3);
+      transform: translateY(18px) scale(0.97);
+      transition: transform 500ms cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .gallery-lightbox.is-open .gallery-lightbox__dialog {
+      transform: translateY(0) scale(1);
+    }
+
+    .gallery-lightbox__dialog img {
+      display: block;
+      width: 100%;
+      max-height: 72svh;
+      object-fit: contain;
+      background: var(--paper-deep);
+    }
+
+    .gallery-lightbox__close {
+      position: absolute;
+      z-index: 2;
+      top: 20px;
+      right: 20px;
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(244, 239, 229, 0.8);
+      border-radius: 50%;
+      color: var(--paper);
+      background: rgba(38, 52, 45, 0.6);
+      font-size: 1.6rem;
+      line-height: 1;
+      transition: color 220ms ease, background 220ms ease, transform 220ms ease;
+    }
+
+    .gallery-lightbox__close:hover,
+    .gallery-lightbox__close:focus-visible {
+      color: var(--ink);
+      background: var(--sun);
+      transform: rotate(8deg);
+    }
+
+    .gallery-lightbox__meta {
+      display: grid;
+      gap: 4px;
+      padding: 0 8px 8px;
+    }
+
+    .gallery-lightbox__location {
+      color: var(--terracotta);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .gallery-lightbox__title {
+      margin: 0;
+      color: var(--ink);
+      font: 500 clamp(2rem, 4vw, 3.8rem)/0.85 var(--serif);
+      letter-spacing: -0.06em;
+    }
+
+    .landscape-band {
+      position: relative;
+      min-height: 410px;
+      overflow: hidden;
+      color: var(--paper);
+      background:
+        linear-gradient(90deg, rgba(38, 52, 45, 0.86), rgba(38, 52, 45, 0.2)),
+        url("https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Grape_vines_and_cypress_trees_in_Tuscany.jpg/1280px-Grape_vines_and_cypress_trees_in_Tuscany.jpg") center / cover;
+    }
+
+    .landscape-band::before,
+    .landscape-band::after {
+      position: absolute;
+      right: -10%;
+      bottom: -23%;
+      left: -10%;
+      height: 53%;
+      border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+      background: var(--olive-dark);
+      content: "";
+      transform: rotate(3deg);
+    }
+
+    .landscape-band::after {
+      right: -15%;
+      bottom: -38%;
+      left: 25%;
+      background: var(--olive);
+      transform: rotate(-4deg);
+    }
+
+    .landscape-band__content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      width: min(1240px, calc(100% - 72px));
+      margin: 0 auto;
+      padding: 85px 0 140px;
+    }
+
+    .landscape-band h2 {
+      max-width: 620px;
+      margin: 0;
+      font: 500 clamp(3.1rem, 6vw, 6.6rem)/0.82 var(--serif);
+      letter-spacing: -0.08em;
+    }
+
+    .landscape-band h2 em {
+      color: var(--sun);
+      font-weight: 400;
+    }
+
+    .landscape-band__note {
+      max-width: 230px;
+      margin: 5px 0 0;
+      color: rgba(244, 239, 229, 0.78);
+      font-size: 0.86rem;
+      line-height: 1.7;
+    }
+
+    .event-section {
+      padding-top: 135px;
+      padding-bottom: 170px;
+    }
+
+    .event-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 30px;
+      margin-bottom: 60px;
+    }
+
+    .event-heading h2 {
+      max-width: 580px;
+      margin: 0;
+      font: 500 clamp(3rem, 5.2vw, 5.6rem)/0.86 var(--serif);
+      letter-spacing: -0.07em;
+    }
+
+    .event-heading h2 em {
+      color: var(--olive);
+      font-weight: 400;
+    }
+
+    .event-date {
+      margin-bottom: 0;
+      color: var(--terracotta);
+      font: 500 1.2rem var(--serif);
+    }
+
+    .event-location {
+      display: grid;
+      justify-items: end;
+      gap: 8px;
+      max-width: 320px;
+      margin-bottom: 8px;
+    }
+
+    .event-date--link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid currentColor;
+      transition: color 220ms ease, border-color 220ms ease;
+    }
+
+    .event-date--link:hover,
+    .event-date--link:focus-visible {
+      border-color: var(--olive-dark);
+      color: var(--olive-dark);
+    }
+
+    .event-date--link span {
+      font-family: var(--sans);
+      font-size: 0.85rem;
+    }
+
+    .event-list {
+      border-top: 1px solid var(--line);
+    }
+
+    .event-item {
+      display: grid;
+      grid-template-columns: 0.32fr 1fr 0.75fr;
+      gap: 28px;
+      align-items: center;
+      min-height: 145px;
+      border-bottom: 1px solid var(--line);
+      transition: padding 500ms cubic-bezier(.22, 1, .36, 1), background 400ms ease;
+    }
+
+    .event-item:hover {
+      padding: 0 28px;
+      background: var(--paper-deep);
+    }
+
+    .event-time {
+      color: var(--terracotta);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+    }
+
+    .event-name {
+      margin: 0;
+      font: 500 clamp(2rem, 3.7vw, 3.7rem)/0.9 var(--serif);
+      letter-spacing: -0.06em;
+    }
+
+    .event-place {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.83rem;
+      line-height: 1.5;
+    }
+
+    .details-section {
+      background: var(--sky);
+    }
+
+    .details-section .section {
+      padding-top: 135px;
+      padding-bottom: 145px;
+    }
+
+    .details-heading {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 10vw;
+      align-items: end;
+      margin-bottom: 68px;
+    }
+
+    .details-heading h2 {
+      max-width: 730px;
+      margin: 0;
+      font: 500 clamp(3.2rem, 6.1vw, 6.6rem)/0.83 var(--serif);
+      letter-spacing: -0.075em;
+    }
+
+    .details-heading h2 em {
+      color: var(--terracotta);
+      font-weight: 400;
+    }
+
+    .details-heading p {
+      max-width: 350px;
+      margin: 0 0 6px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.8;
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .detail-card {
+      position: relative;
+      min-height: 270px;
+      overflow: hidden;
+      padding: 28px;
+      background: rgba(244, 239, 229, 0.67);
+      transition: color 400ms ease, transform 500ms cubic-bezier(.22, 1, .36, 1), box-shadow 500ms ease;
+    }
+
+    .detail-card:hover {
+      color: var(--paper);
+      background: var(--olive-dark);
+      box-shadow: var(--shadow);
+      transform: translateY(-10px);
+    }
+
+    .detail-card__number {
+      position: relative;
+      z-index: 2;
+      color: var(--terracotta);
+      font-size: 0.67rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+    }
+
+    .detail-card h3 {
+      position: relative;
+      z-index: 2;
+      max-width: 190px;
+      margin: 42px 0 11px;
+      font: 500 2.35rem/0.9 var(--serif);
+      letter-spacing: -0.05em;
+    }
+
+    .detail-card p {
+      position: relative;
+      z-index: 2;
+      max-width: 220px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.79rem;
+      line-height: 1.65;
+      transition: color 400ms ease;
+    }
+
+    .detail-card:hover p {
+      color: rgba(244, 239, 229, 0.72);
+    }
+
+    .detail-card__shape {
+      position: absolute;
+      right: -12px;
+      bottom: -14px;
+      width: 135px;
+      height: 170px;
+      opacity: 0.8;
+      transition: transform 700ms cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .detail-card:hover .detail-card__shape {
+      transform: rotate(9deg) scale(1.08);
+    }
+
+    .detail-card__shape--olive::before {
+      position: absolute;
+      bottom: 0;
+      left: 53%;
+      width: 3px;
+      height: 100%;
+      border-radius: 50%;
+      background: var(--olive);
+      content: "";
+      transform: rotate(25deg);
+      transform-origin: bottom;
+    }
+
+    .detail-card__shape--olive::after {
+      position: absolute;
+      bottom: 59px;
+      left: 16px;
+      width: 68px;
+      height: 84px;
+      border-radius: 100% 0 100% 0;
+      background: var(--olive);
+      box-shadow: 34px -34px 0 -15px var(--olive), 48px 16px 0 -9px var(--olive), 3px 30px 0 -11px var(--olive);
+      content: "";
+      transform: rotate(-23deg);
+    }
+
+    .detail-card__shape--sun {
+      right: 15px;
+      bottom: 15px;
+      width: 125px;
+      height: 125px;
+      border: 20px solid var(--sun);
+      border-radius: 50%;
+      box-shadow: 0 0 0 24px rgba(232, 174, 99, 0.18);
+    }
+
+    .detail-card__shape--sun::before,
+    .detail-card__shape--sun::after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 185px;
+      height: 1px;
+      background: var(--sun);
+      content: "";
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    .detail-card__shape--sun::after {
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+
+    .detail-card__shape--cypress::before {
+      position: absolute;
+      right: 35px;
+      bottom: 0;
+      width: 43px;
+      height: 162px;
+      border-radius: 50% 50% 7% 7%;
+      background: var(--olive);
+      content: "";
+      clip-path: polygon(50% 0, 72% 16%, 66% 27%, 87% 43%, 74% 56%, 100% 75%, 78% 100%, 22% 100%, 0 75%, 26% 56%, 13% 43%, 34% 27%, 28% 16%);
+    }
+
+    .detail-card__shape--cypress::after {
+      position: absolute;
+      right: 57px;
+      bottom: 0;
+      width: 3px;
+      height: 50px;
+      background: var(--terracotta);
+      content: "";
+    }
+
+    .gifts-section {
+      background: var(--paper);
+    }
+
+    .gifts-section .section {
+      padding-top: 135px;
+      padding-bottom: 145px;
+    }
+
+    .gifts-heading {
+      display: grid;
+      grid-template-columns: 0.72fr 1.28fr;
+      gap: 10vw;
+      align-items: end;
+      margin-bottom: 60px;
+    }
+
+    .gifts-heading h2 {
+      max-width: 720px;
+      margin: 0 0 22px;
+      font: 500 clamp(3.2rem, 6vw, 6.5rem)/0.83 var(--serif);
+      letter-spacing: -0.075em;
+    }
+
+    .gifts-heading h2 em {
+      color: var(--terracotta);
+      font-weight: 400;
+    }
+
+    .gifts-heading p {
+      max-width: 470px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.91rem;
+      line-height: 1.8;
+    }
+
+    .gift-toolbar {
+      display: grid;
+      gap: 20px;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .gift-toolbar__top,
+    .gift-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .gift-controls {
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+
+    .gift-filter-list {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .gift-filter {
+      padding: 9px 12px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      background: transparent;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 220ms ease, background 220ms ease, border-color 220ms ease, transform 220ms ease;
+    }
+
+    .gift-filter:hover,
+    .gift-filter:focus-visible,
+    .gift-filter[aria-selected="true"] {
+      border-color: var(--olive-dark);
+      color: var(--paper);
+      background: var(--olive-dark);
+      transform: translateY(-2px);
+    }
+
+    .gift-sort {
+      min-width: 150px;
+      padding: 9px 11px;
+      border: 1px solid var(--line);
+      outline: 0;
+      color: var(--ink);
+      background: transparent;
+      font-size: 0.65rem;
+      font-weight: 600;
+    }
+
+    .gift-sort:focus {
+      border-color: var(--terracotta);
+    }
+
+    .gift-results-count {
+      margin: 0 0 0 auto;
+      color: var(--muted);
+      font-size: 0.67rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .gift-toolbar__note {
+      margin: 0;
+      color: var(--olive);
+      font: italic 1.12rem/1 var(--serif);
+    }
+
+    .gift-cart-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      padding: 13px 16px;
+      border: 1px solid var(--olive-dark);
+      color: var(--olive-dark);
+      background: transparent;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      transition: color 240ms ease, background 240ms ease, transform 240ms ease;
+    }
+
+    .gift-cart-button:hover,
+    .gift-cart-button:focus-visible {
+      color: var(--paper);
+      background: var(--olive-dark);
+      transform: translateY(-3px);
+    }
+
+    .gift-cart-button__icon {
+      font-size: 1.15rem;
+      font-weight: 400;
+      line-height: 0.7;
+    }
+
+    .gift-cart-button__count {
+      display: grid;
+      place-items: center;
+      min-width: 21px;
+      height: 21px;
+      padding: 0 5px;
+      border-radius: 50%;
+      color: var(--paper);
+      background: var(--terracotta);
+      font-size: 0.61rem;
+      letter-spacing: 0;
+    }
+
+    .gift-list {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+      border-top: 0;
+    }
+
+    .gift-item {
+      position: relative;
+      display: flex;
+      min-width: 0;
+      min-height: 100%;
+      flex-direction: column;
+      align-items: stretch;
+      border: 1px solid rgba(38, 52, 45, 0.14);
+      background: #fbf8f1;
+      box-shadow: 0 12px 28px rgba(53, 76, 59, 0.07);
+      transition: transform 400ms cubic-bezier(.22, 1, .36, 1), box-shadow 400ms ease;
+    }
+
+    .gift-item:hover {
+      padding: 0;
+      box-shadow: 0 22px 40px rgba(53, 76, 59, 0.14);
+      transform: translateY(-7px);
+    }
+
+    .gift-item[hidden] {
+      display: none;
+    }
+
+    .gift-item__media {
+      position: relative;
+      aspect-ratio: 1.08;
+      overflow: hidden;
+      background: var(--paper-deep);
+    }
+
+    .gift-item__media img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(0.82) contrast(0.97);
+      transition: filter 500ms ease, transform 700ms cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .gift-item:hover .gift-item__media img {
+      filter: saturate(1) contrast(1);
+      transform: scale(1.05);
+    }
+
+    .gift-item__badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      padding: 7px 9px;
+      color: var(--paper);
+      background: var(--terracotta);
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .gift-item__number {
+      position: absolute;
+      z-index: 2;
+      top: 12px;
+      right: 12px;
+      color: var(--paper);
+      font-size: 0.67rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .gift-item__content {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      gap: 8px;
+      padding: 20px 18px 16px;
+    }
+
+    .gift-item__content h3 {
+      margin: 0;
+      font: 500 clamp(1.65rem, 2vw, 2.35rem)/0.88 var(--serif);
+      letter-spacing: -0.06em;
+    }
+
+    .gift-item__content p {
+      max-width: none;
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.55;
+    }
+
+    .gift-item__price {
+      display: block;
+      margin-top: auto;
+      color: var(--olive-dark);
+      font: 600 1.2rem/1 var(--serif);
+      white-space: nowrap;
+    }
+
+    .gift-item__add {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin: 0 18px 18px;
+      padding: 12px 0;
+      border-top: 1px solid var(--line);
+      color: var(--olive-dark);
+      background: transparent;
+      font-size: 0.67rem;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      transition: color 220ms ease, transform 220ms ease;
+    }
+
+    .gift-item__add b {
+      font-size: 1.2rem;
+      font-weight: 400;
+      line-height: 0.7;
+    }
+
+    .gift-item__add:hover,
+    .gift-item__add:focus-visible {
+      color: var(--terracotta);
+      transform: none;
+    }
+
+    .gift-item__add:disabled {
+      color: var(--muted);
+      cursor: not-allowed;
+      opacity: 0.72;
+    }
+
+    .gift-item__status {
+      margin: 0 18px 18px;
+      padding: 10px 12px;
+      border-left: 2px solid var(--sun);
+      color: var(--muted);
+      background: rgba(232, 174, 99, 0.13);
+      font-size: 0.68rem;
+      line-height: 1.45;
+    }
+
+    .gift-item[data-gift-status="confirmed"] .gift-item__status {
+      border-color: var(--olive-dark);
+      color: var(--olive-dark);
+      background: rgba(215, 226, 219, 0.6);
+    }
+
+    .gift-catalog-empty {
+      grid-column: 1 / -1;
+      margin: 0;
+      padding: 30px 0;
+      color: var(--muted);
+      font: italic 1.4rem/1.1 var(--serif);
+    }
+
+    .cart-drawer-backdrop {
+      position: fixed;
+      z-index: 80;
+      inset: 0;
+      visibility: hidden;
+      opacity: 0;
+      background: rgba(38, 52, 45, 0.6);
+      transition: opacity 350ms ease, visibility 350ms ease;
+    }
+
+    .cart-drawer-backdrop.is-open {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .cart-drawer {
+      position: fixed;
+      z-index: 81;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      width: min(100%, 500px);
+      flex-direction: column;
+      color: var(--ink);
+      background: var(--paper);
+      box-shadow: -24px 0 80px rgba(38, 52, 45, 0.2);
+      transform: translateX(105%);
+      transition: transform 500ms cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .cart-drawer.is-open {
+      transform: translateX(0);
+    }
+
+    body.drawer-open {
+      overflow: hidden;
+    }
+
+    .cart-drawer__header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 30px 30px 24px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .cart-drawer__eyebrow {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--terracotta);
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .cart-drawer__title {
+      margin: 0;
+      font: 500 3rem/0.82 var(--serif);
+      letter-spacing: -0.07em;
+    }
+
+    .cart-drawer__close {
+      display: grid;
+      flex: 0 0 auto;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--ink);
+      background: transparent;
+      font-size: 1.55rem;
+      line-height: 1;
+      transition: color 220ms ease, background 220ms ease, transform 220ms ease;
+    }
+
+    .cart-drawer__close:hover,
+    .cart-drawer__close:focus-visible {
+      color: var(--paper);
+      background: var(--olive-dark);
+      transform: rotate(8deg);
+    }
+
+    .cart-drawer__body {
+      display: flex;
+      min-height: 0;
+      flex: 1;
+      flex-direction: column;
+    }
+
+    .cart-view,
+    .checkout-view {
+      display: flex;
+      min-height: 0;
+      flex: 1;
+      flex-direction: column;
+    }
+
+    .checkout-view[hidden],
+    .cart-view[hidden] {
+      display: none;
+    }
+
+    .cart-items {
+      display: grid;
+      align-content: start;
+      gap: 0;
+      overflow-y: auto;
+      padding: 0 30px;
+    }
+
+    .cart-empty {
+      margin: auto 30px;
+      padding: 30px 0;
+      color: var(--muted);
+      font: italic 1.45rem/1.1 var(--serif);
+    }
+
+    .cart-line {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .cart-line__name {
+      margin: 0 0 6px;
+      font: 500 1.45rem/0.9 var(--serif);
+      letter-spacing: -0.05em;
+    }
+
+    .cart-line__unit {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.7rem;
+    }
+
+    .cart-line__total {
+      color: var(--olive-dark);
+      font: 600 1rem var(--serif);
+      white-space: nowrap;
+    }
+
+    .cart-line__actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .quantity-control {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--line);
+    }
+
+    .quantity-control button {
+      display: grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      color: var(--ink);
+      background: transparent;
+      font-size: 1rem;
+    }
+
+    .quantity-control button:hover,
+    .quantity-control button:focus-visible {
+      color: var(--terracotta);
+    }
+
+    .quantity-control span {
+      min-width: 25px;
+      font-size: 0.72rem;
+      text-align: center;
+    }
+
+    .cart-line__remove {
+      padding: 5px 0;
+      color: var(--muted);
+      background: transparent;
+      font-size: 0.64rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .cart-line__remove:hover,
+    .cart-line__remove:focus-visible {
+      color: var(--terracotta);
+    }
+
+    .cart-summary {
+      display: grid;
+      gap: 12px;
+      margin-top: auto;
+      padding: 24px 30px 30px;
+      border-top: 1px solid var(--line);
+      background: var(--paper-deep);
+    }
+
+    .cart-summary__row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      color: var(--muted);
+      font-size: 0.77rem;
+    }
+
+    .cart-summary__row--total {
+      color: var(--ink);
+      font: 600 1.45rem/1 var(--serif);
+    }
+
+    .cart-checkout-button,
+    .fake-payment-button {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 16px 18px;
+      color: var(--paper);
+      background: var(--olive-dark);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      transition: color 220ms ease, background 220ms ease, transform 220ms ease;
+    }
+
+    .cart-checkout-button:hover,
+    .cart-checkout-button:focus-visible,
+    .fake-payment-button:hover,
+    .fake-payment-button:focus-visible {
+      color: var(--ink);
+      background: var(--sun);
+      transform: translateY(-3px);
+    }
+
+    .cart-checkout-button:disabled {
+      cursor: not-allowed;
+      opacity: 0.4;
+      transform: none;
+    }
+
+    .checkout-view {
+      overflow-y: auto;
+      padding: 24px 30px 30px;
+    }
+
+    .checkout-back {
+      align-self: flex-start;
+      margin-bottom: 24px;
+      padding: 0;
+      color: var(--terracotta);
+      background: transparent;
+      font-size: 0.66rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .checkout-back:hover,
+    .checkout-back:focus-visible {
+      color: var(--olive-dark);
+    }
+
+    .checkout-view h3 {
+      margin: 0 0 8px;
+      font: 500 2.6rem/0.85 var(--serif);
+      letter-spacing: -0.07em;
+    }
+
+    .checkout-view__intro {
+      margin: 0 0 24px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.6;
+    }
+
+    .fake-payment-note {
+      margin: 0 0 22px;
+      padding: 12px 14px;
+      border-left: 2px solid var(--sun);
+      color: var(--muted);
+      background: rgba(232, 174, 99, 0.14);
+      font-size: 0.72rem;
+      line-height: 1.5;
+    }
+
+    .checkout-fields {
+      display: grid;
+      gap: 16px;
+    }
+
+    .checkout-field label {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--muted);
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .checkout-field input {
+      width: 100%;
+      padding: 11px 0;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      outline: 0;
+      color: var(--ink);
+      background: transparent;
+    }
+
+    .checkout-field input:focus {
+      border-color: var(--terracotta);
+    }
+
+    .checkout-total {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin: 24px 0 14px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      font: 600 1.35rem/1 var(--serif);
+    }
+
+    .fake-payment-message {
+      margin: 14px 0 0;
+      border-color: rgba(38, 52, 45, 0.13);
+      color: var(--olive-dark);
+      background: rgba(215, 226, 219, 0.55);
+    }
+
+    .fake-payment-message .feedback-message__icon {
+      color: var(--olive-dark);
+    }
+
+    .payment-result {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+      padding: 16px;
+      border: 1px solid rgba(38, 52, 45, 0.14);
+      color: var(--olive-dark);
+      background: rgba(215, 226, 219, 0.58);
+    }
+
+    .payment-result[hidden] {
+      display: none;
+    }
+
+    .payment-result__title {
+      margin: 0;
+      font: 500 1.65rem/0.9 var(--serif);
+    }
+
+    .payment-result__text {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.72rem;
+      line-height: 1.55;
+    }
+
+    .payment-result__code {
+      width: 100%;
+      min-height: 76px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      color: var(--ink);
+      background: rgba(255, 253, 248, 0.8);
+      font-size: 0.68rem;
+      line-height: 1.4;
+      resize: vertical;
+    }
+
+    .payment-result__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .payment-result__actions button,
+    .payment-result__actions a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 9px 12px;
+      border: 1px solid var(--olive-dark);
+      color: var(--paper);
+      background: var(--olive-dark);
+      font-size: 0.64rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .payment-result__actions button:hover,
+    .payment-result__actions button:focus-visible,
+    .payment-result__actions a:hover,
+    .payment-result__actions a:focus-visible {
+      border-color: var(--terracotta);
+      background: var(--terracotta);
+    }
+
+    .rsvp-section {
+      background: var(--terracotta);
+      color: var(--paper);
+    }
+
+    .rsvp-section .section {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 12vw;
+      align-items: start;
+      padding-top: 145px;
+      padding-bottom: 150px;
+    }
+
+    .rsvp-copy .section-label {
+      color: var(--sun);
+      margin-bottom: 26px;
+    }
+
+    .rsvp-copy h2 {
+      max-width: 500px;
+      margin-bottom: 25px;
+      font: 500 clamp(3.4rem, 6.3vw, 7rem)/0.82 var(--serif);
+      letter-spacing: -0.08em;
+    }
+
+    .rsvp-copy p {
+      max-width: 380px;
+      color: rgba(244, 239, 229, 0.78);
+      font-size: 0.9rem;
+      line-height: 1.8;
+    }
+
+    .rsvp-form {
+      display: grid;
+      gap: 20px;
+      padding-top: 16px;
+    }
+
+    .rsvp-form.is-complete {
+      gap: 0;
+    }
+
+    .rsvp-fields {
+      display: grid;
+      gap: 20px;
+    }
+
+    .rsvp-fields[hidden],
+    .submit-button[hidden] {
+      display: none;
+    }
+
+    .field {
+      position: relative;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 9px;
+      color: rgba(244, 239, 229, 0.72);
+      font-size: 0.66rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      padding: 14px 0;
+      border: 0;
+      border-bottom: 1px solid rgba(244, 239, 229, 0.5);
+      outline: 0;
+      color: var(--paper);
+      background: transparent;
+      transition: border-color 250ms ease;
+    }
+
+    .field select {
+      color-scheme: dark;
+    }
+
+    .field input::placeholder {
+      color: rgba(244, 239, 229, 0.55);
+    }
+
+    .field input:focus,
+    .field select:focus {
+      border-color: var(--sun);
+    }
+
+    .field-help {
+      margin: -2px 0 0;
+      color: rgba(244, 239, 229, 0.64);
+      font-size: 0.7rem;
+      line-height: 1.45;
+    }
+
+    .companion-fields {
+      display: grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .companion-fields[hidden] {
+      display: none;
+    }
+
+    .companion-fields input,
+    .dietary-other input {
+      width: 100%;
+      padding: 11px 0;
+      border: 0;
+      border-bottom: 1px solid rgba(244, 239, 229, 0.35);
+      outline: 0;
+      color: var(--paper);
+      background: transparent;
+    }
+
+    .companion-fields input::placeholder,
+    .dietary-other input::placeholder {
+      color: rgba(244, 239, 229, 0.48);
+    }
+
+    .dietary-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .dietary-option {
+      position: relative;
+    }
+
+    .dietary-option input {
+      position: absolute;
+      opacity: 0;
+    }
+
+    .dietary-option span {
+      display: block;
+      padding: 9px 11px;
+      border: 1px solid rgba(244, 239, 229, 0.35);
+      color: rgba(244, 239, 229, 0.78);
+      font-size: 0.7rem;
+      transition: color 220ms ease, border-color 220ms ease, background 220ms ease;
+    }
+
+    .dietary-option input:checked + span,
+    .dietary-option span:hover {
+      border-color: var(--sun);
+      color: var(--ink);
+      background: var(--sun);
+    }
+
+    .dietary-other {
+      margin-top: 8px;
+    }
+
+    .consent-field {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      color: rgba(244, 239, 229, 0.72);
+      font-size: 0.7rem;
+      line-height: 1.5;
+    }
+
+    .consent-field input {
+      width: 17px;
+      height: 17px;
+      flex: 0 0 auto;
+      margin-top: 1px;
+      accent-color: var(--sun);
+    }
+
+    .attendance {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .attendance label {
+      position: relative;
+      display: block;
+      margin: 0;
+    }
+
+    .attendance input {
+      position: absolute;
+      opacity: 0;
+    }
+
+    .attendance span {
+      display: block;
+      padding: 12px 16px;
+      border: 1px solid rgba(244, 239, 229, 0.42);
+      color: rgba(244, 239, 229, 0.84);
+      font-size: 0.78rem;
+      transition: color 240ms ease, background 240ms ease, border-color 240ms ease;
+    }
+
+    .attendance input:checked + span,
+    .attendance span:hover {
+      border-color: var(--sun);
+      color: var(--ink);
+      background: var(--sun);
+    }
+
+    .submit-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin-top: 14px;
+      padding: 17px 20px;
+      color: var(--ink);
+      background: var(--paper);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      transition: color 250ms ease, background 250ms ease, transform 300ms ease;
+    }
+
+    .submit-button:hover,
+    .submit-button:focus-visible {
+      color: var(--paper);
+      background: var(--olive-dark);
+      transform: translateY(-3px);
+    }
+
+    .submit-button b {
+      font-size: 1.25rem;
+      font-weight: 400;
+      transition: transform 250ms ease;
+    }
+
+    .submit-button:hover b {
+      transform: translateX(4px);
+    }
+
+    .rsvp-loading {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-height: 74px;
+      padding: 12px 16px 12px 12px;
+      border: 1px solid rgba(244, 239, 229, 0.42);
+      color: var(--paper);
+      background: rgba(38, 52, 45, 0.16);
+      opacity: 0;
+      transform: translateY(10px) scale(0.98);
+      transition: opacity 420ms ease, transform 420ms cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .rsvp-loading[hidden] {
+      display: none;
+    }
+
+    .rsvp-loading.is-visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .rsvp-loading__spinner {
+      display: block;
+      flex: 0 0 auto;
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(244, 239, 229, 0.34);
+      border-top-color: var(--sun);
+      border-right-color: var(--sun);
+      border-radius: 50%;
+      animation: rsvp-spin 900ms linear infinite;
+    }
+
+    .rsvp-loading__copy {
+      display: grid;
+      gap: 4px;
+    }
+
+    .rsvp-loading__title {
+      color: var(--sun);
+      font: 500 1.35rem/0.92 var(--serif);
+      letter-spacing: -0.04em;
+    }
+
+    .rsvp-loading__text {
+      color: rgba(244, 239, 229, 0.78);
+      font-size: 0.72rem;
+      line-height: 1.45;
+    }
+
+    .rsvp-loading__dots {
+      display: inline-block;
+      width: 1.2em;
+      overflow: hidden;
+      vertical-align: bottom;
+      animation: rsvp-dots 1.2s steps(4, end) infinite;
+    }
+
+    .form-message {
+      position: relative;
+      display: grid;
+      grid-template-columns: 64px minmax(0, 1fr);
+      align-items: center;
+      gap: 20px;
+      min-height: 252px;
+      padding: 46px 36px 36px;
+      overflow: hidden;
+      color: var(--sun);
+      border-color: rgba(244, 239, 229, 0.42);
+      background: rgba(38, 52, 45, 0.13);
+      isolation: isolate;
+    }
+
+    .form-message::before {
+      position: absolute;
+      z-index: -1;
+      right: -62px;
+      bottom: -88px;
+      width: 190px;
+      height: 190px;
+      border: 1px solid rgba(232, 174, 99, 0.3);
+      border-radius: 50%;
+      box-shadow: 0 0 0 12px rgba(232, 174, 99, 0.04), 0 0 0 13px rgba(232, 174, 99, 0.13);
+      content: "";
+    }
+
+    .form-message::after {
+      position: absolute;
+      z-index: -1;
+      top: 23px;
+      right: 28px;
+      color: rgba(244, 239, 229, 0.48);
+      content: "25.04.27";
+      font-size: 0.56rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+    }
+
+    .form-message__stamp {
+      position: absolute;
+      top: 22px;
+      left: 28px;
+      color: rgba(244, 239, 229, 0.62);
+      font-size: 0.56rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .form-message .feedback-message__icon {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      width: 64px;
+      height: 64px;
+      border-color: var(--sun);
+      color: var(--sun);
+      background: rgba(38, 52, 45, 0.24);
+      font: 400 2rem/1 var(--serif);
+      box-shadow: 0 0 0 7px rgba(232, 174, 99, 0.04), 0 0 0 8px rgba(232, 174, 99, 0.2);
+    }
+
+    .form-message .feedback-message__copy {
+      position: relative;
+      z-index: 1;
+      gap: 10px;
+    }
+
+    .form-message__eyebrow {
+      color: var(--sun);
+      font-size: 0.59rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .form-message .feedback-message__title {
+      max-width: 520px;
+      color: var(--paper);
+      font-size: 3.05rem;
+      line-height: 0.86;
+      letter-spacing: 0;
+    }
+
+    .form-message .feedback-message__text {
+      max-width: 440px;
+      color: rgba(244, 239, 229, 0.84);
+      font-size: 0.82rem;
+      line-height: 1.55;
+      opacity: 1;
+    }
+
+    .form-message__signature {
+      color: var(--sun);
+      font: italic 1.35rem/1 var(--serif);
+      transform: rotate(-5deg);
+    }
+
+    .form-message.is-visible .feedback-message__copy {
+      animation: feedback-copy-in 700ms 120ms both cubic-bezier(.22, 1, .36, 1);
+    }
+
+    @keyframes rsvp-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes rsvp-dots {
+      0%, 20% { width: 0; }
+      50% { width: 0.4em; }
+      75%, 100% { width: 1.2em; }
+    }
+
+    @keyframes feedback-copy-in {
+      from { opacity: 0; transform: translateX(24px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .footer {
+      position: relative;
+      overflow: hidden;
+      padding: 70px max(36px, calc((100% - 1240px) / 2)) 45px;
+      color: var(--paper);
+      background: var(--olive-dark);
+    }
+
+    .footer__top {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 30px;
+      padding-bottom: 90px;
+    }
+
+    .footer__mark {
+      display: flex;
+      align-items: center;
+      margin: 0;
+      font: 500 clamp(4.8rem, 12vw, 12rem)/0.8 var(--serif);
+      column-gap: 0.08em;
+      letter-spacing: 0;
+    }
+
+    .footer__mark .monogram-letter {
+      display: block;
+      flex: 0 0 auto;
+      letter-spacing: 0;
+    }
+
+    .footer__mark .cypress-mark {
+      width: 0.36em;
+      height: 0.64em;
+      margin: 0;
+      vertical-align: 0;
+      transform: translateY(0.02em);
+    }
+
+    .footer__phrase {
+      max-width: 230px;
+      margin: 0 0 5px;
+      color: rgba(244, 239, 229, 0.72);
+      font-size: 0.86rem;
+      line-height: 1.6;
+    }
+
+    .footer__bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(244, 239, 229, 0.2);
+      color: rgba(244, 239, 229, 0.56);
+      font-size: 0.64rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 900ms ease, transform 900ms cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 120ms; }
+    .reveal-delay-2 { transition-delay: 220ms; }
+    .reveal-delay-3 { transition-delay: 320ms; }
+
+    @keyframes loader-out {
+      0% { opacity: 1; visibility: visible; }
+      80% { opacity: 0; visibility: visible; }
+      100% { opacity: 0; visibility: hidden; }
+    }
+
+    @keyframes mark-breathe {
+      from { opacity: 0.58; transform: scale(0.94); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes nav-in {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes stamp-float {
+      0%, 100% { transform: translateY(0) rotate(8deg); }
+      50% { transform: translateY(-13px) rotate(4deg); }
+    }
+
+    @keyframes stamp-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes scroll-line {
+      0% { top: -60%; }
+      60%, 100% { top: 120%; }
+    }
+
+    @keyframes feedback-icon-pop {
+      0% { opacity: 0; transform: scale(0.45) rotate(-14deg); }
+      70% { opacity: 1; transform: scale(1.08) rotate(4deg); }
+      100% { opacity: 1; transform: scale(1) rotate(0); }
+    }
+
+    @keyframes leaf-sway {
+      from { margin-left: -3px; }
+      to { margin-left: 5px; }
+    }
+
+    @keyframes leaf-fall {
+      0% { opacity: 0; transform: translate3d(0, -10vh, 0) rotate(0deg); }
+      12% { opacity: 0.74; }
+      72% { opacity: 0.48; }
+      100% { opacity: 0; transform: translate3d(var(--drift), 112vh, 0) rotate(680deg); }
+    }
+
+    @media (max-width: 800px) {
+      .site-nav,
+      .hero__content,
+      .section,
+      .landscape-band__content {
+        width: min(100% - 40px, 620px);
+      }
+
+      .site-nav {
+        padding-top: 22px;
+      }
+
+      .nav-links {
+        gap: 14px;
+        font-size: 0.58rem;
+        letter-spacing: 0.11em;
+      }
+
+      .nav-links a:nth-child(2) {
+        display: none;
+      }
+
+      .hero {
+        min-height: 760px;
+        height: 100svh;
+        background-position: 63% center;
+      }
+
+      .hero::before {
+        bottom: -9vw;
+        height: 25vw;
+        min-height: 125px;
+      }
+
+      .hero__content {
+        margin-top: 40px;
+        padding-bottom: 13vh;
+      }
+
+      .hero h1 {
+        font-size: clamp(5rem, 19vw, 8rem);
+      }
+
+      .hero__meta {
+        display: none;
+      }
+
+      .hero__stamp {
+        right: 3%;
+        top: calc(100% - 90px);
+        bottom: auto;
+        width: 105px;
+        height: 105px;
+        font-size: 0.52rem;
+      }
+
+      .section {
+        padding: 100px 0;
+      }
+
+      .section--intro,
+      .story-grid,
+      .details-heading,
+      .rsvp-section .section {
+        grid-template-columns: 1fr;
+        gap: 42px;
+      }
+
+      .section--intro {
+        padding-top: 90px;
+        padding-bottom: 90px;
+      }
+
+      .olive-branch {
+        top: 40px;
+        right: -10px;
+        opacity: 0.4;
+        transform: scale(0.7) rotate(20deg);
+      }
+
+      .story-section {
+        padding-top: 40px;
+      }
+
+      .story-grid {
+        gap: 70px;
+      }
+
+      .image-frame {
+        max-width: 420px;
+        margin: 0 auto;
+      }
+
+      .gallery-section .section {
+        padding-top: 90px;
+        padding-bottom: 100px;
+      }
+
+      .gallery-heading {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        margin-bottom: 40px;
+      }
+
+      .gallery-actions {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .gallery-carousel {
+        gap: 10px;
+        margin-right: -20px;
+        padding-bottom: 16px;
+      }
+
+      .gallery-item {
+        flex-basis: 84vw;
+        aspect-ratio: 0.94;
+      }
+
+      .gallery-section[data-gallery-style="scrapbook"] .gallery-item {
+        flex-basis: 84vw;
+        aspect-ratio: 0.96;
+      }
+
+      .gallery-section[data-gallery-style="album"] .gallery-item {
+        flex-basis: 86vw;
+        aspect-ratio: 0.92;
+        padding: 16px;
+      }
+
+      .gallery-section[data-gallery-style="album"] .gallery-item img {
+        top: 16px;
+        left: 16px;
+        width: 57%;
+        height: calc(100% - 32px);
+      }
+
+      .gallery-section[data-gallery-style="album"] .gallery-item::before {
+        top: 16px;
+        bottom: 16px;
+        left: 61%;
+      }
+
+      .gallery-section[data-gallery-style="album"] .gallery-item::after {
+        right: 7%;
+        bottom: 16px;
+      }
+
+      .gallery-section[data-gallery-style="album"] .gallery-item__caption {
+        right: 7%;
+        left: 65%;
+      }
+
+      .gallery-section[data-gallery-style="album"] .gallery-item:nth-child(2n) img {
+        right: 16px;
+      }
+
+      .gallery-section[data-gallery-style="album"] .gallery-item:nth-child(2n)::before {
+        right: 61%;
+      }
+
+      .gallery-section[data-gallery-style="album"] .gallery-item:nth-child(2n) .gallery-item__caption {
+        right: 65%;
+        left: 7%;
+      }
+
+      .gallery-item__caption {
+        right: 12px;
+        bottom: 12px;
+        left: 12px;
+      }
+
+      .gallery-item__title {
+        font-size: 1.65rem;
+      }
+
+      .gallery-carousel-controls {
+        gap: 10px;
+      }
+
+      .carousel-arrow {
+        width: 40px;
+        height: 40px;
+      }
+
+      .gallery-lightbox {
+        padding: 12px;
+      }
+
+      .gallery-lightbox__dialog {
+        max-height: calc(100svh - 24px);
+        padding: 8px;
+      }
+
+      .gallery-lightbox__dialog img {
+        max-height: 66svh;
+      }
+
+      .gallery-lightbox__close {
+        top: 14px;
+        right: 14px;
+      }
+
+      .scrapbook-book {
+        aspect-ratio: 1.08;
+        margin-top: 24px;
+      }
+
+      .scrapbook-spread {
+        gap: 1px;
+        padding: 7px;
+      }
+
+      .scrapbook-page {
+        gap: 8px;
+        padding: 12px 8px;
+      }
+
+      .scrapbook-page__number {
+        top: 10px;
+        left: 11px;
+        font-size: 0.45rem;
+      }
+
+      .gallery-section[data-gallery-style="scrapbook"] .scrapbook-book .gallery-item {
+        width: 94%;
+        padding: 5px 5px 23px;
+      }
+
+      .gallery-section[data-gallery-style="scrapbook"] .scrapbook-book .gallery-item img {
+        aspect-ratio: 1.02;
+      }
+
+      .gallery-section[data-gallery-style="scrapbook"] .scrapbook-book .gallery-item::before {
+        top: -7px;
+        width: 42px;
+        height: 13px;
+      }
+
+      .gallery-section[data-gallery-style="scrapbook"] .scrapbook-book .gallery-item::after {
+        top: 6px;
+        right: 6px;
+        width: 20px;
+        height: 20px;
+        font-size: 0.72rem;
+      }
+
+      .gallery-section[data-gallery-style="scrapbook"] .scrapbook-book .gallery-item__caption {
+        margin-top: 4px;
+      }
+
+      .gallery-section[data-gallery-style="scrapbook"] .scrapbook-book .gallery-item__location {
+        font-size: 0.37rem;
+        letter-spacing: 0.08em;
+      }
+
+      .gallery-section[data-gallery-style="scrapbook"] .scrapbook-book .gallery-item__title {
+        font-size: 0.95rem;
+      }
+
+      .scrapbook-page__note {
+        max-width: 145px;
+        font-size: 0.65rem;
+      }
+
+      .scrapbook-cover__inner {
+        gap: 10px;
+        padding: 18px 14px;
+      }
+
+      .scrapbook-cover__eyebrow,
+      .scrapbook-cover__date {
+        font-size: 0.45rem;
+        letter-spacing: 0.12em;
+      }
+
+      .scrapbook-cover__inner p {
+        max-width: 130px;
+        font-size: 0.8rem;
+      }
+
+      .scrapbook-book-controls {
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .book-arrow {
+        width: 40px;
+        height: 40px;
+      }
+
+      .book-hint {
+        display: none;
+      }
+
+      .landscape-band__content {
+        display: block;
+        padding-top: 80px;
+        padding-bottom: 160px;
+      }
+
+      .landscape-band__note {
+        margin-top: 35px;
+      }
+
+      .event-section {
+        padding-top: 95px;
+        padding-bottom: 110px;
+      }
+
+      .event-heading {
+        display: block;
+        margin-bottom: 40px;
+      }
+
+      .event-date {
+        margin-top: 0;
+      }
+
+      .event-location {
+        justify-items: start;
+        margin-top: 22px;
+        margin-bottom: 0;
+      }
+
+      .event-item {
+        grid-template-columns: 0.32fr 1fr;
+        gap: 16px;
+        min-height: 122px;
+      }
+
+      .event-place {
+        grid-column: 2;
+        margin-top: -28px;
+      }
+
+      .event-item:hover {
+        padding: 0 12px;
+      }
+
+      .details-section .section {
+        padding-top: 95px;
+        padding-bottom: 100px;
+      }
+
+      .details-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .detail-card {
+        min-height: 220px;
+      }
+
+      .gifts-section .section {
+        padding-top: 95px;
+        padding-bottom: 105px;
+      }
+
+      .gifts-heading {
+        grid-template-columns: 1fr;
+        gap: 28px;
+        margin-bottom: 42px;
+      }
+
+      .gift-toolbar {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .gift-toolbar__top,
+      .gift-controls {
+        width: 100%;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .gift-controls {
+        padding-top: 14px;
+      }
+
+      .gift-filter-list {
+        width: 100%;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 4px;
+        scrollbar-width: none;
+      }
+
+      .gift-filter-list::-webkit-scrollbar {
+        display: none;
+      }
+
+      .gift-sort {
+        width: 100%;
+      }
+
+      .gift-results-count {
+        margin: 0;
+      }
+
+      .gift-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .gift-item {
+        display: flex;
+        min-height: 100%;
+        padding: 0;
+      }
+
+      .gift-item:hover {
+        padding: 0;
+        transform: translateY(-3px);
+      }
+
+      .gift-item__media {
+        aspect-ratio: 0.94;
+      }
+
+      .gift-item__badge {
+        top: 8px;
+        left: 8px;
+        padding: 5px 6px;
+        font-size: 0.43rem;
+      }
+
+      .gift-item__number {
+        top: 9px;
+        right: 8px;
+        font-size: 0.48rem;
+      }
+
+      .gift-item__content {
+        gap: 6px;
+        padding: 13px 11px 10px;
+      }
+
+      .gift-item__content h3 {
+        font-size: 1.35rem;
+      }
+
+      .gift-item__content p {
+        display: none;
+      }
+
+      .gift-item__price {
+        font-size: 0.95rem;
+      }
+
+      .gift-item__add {
+        margin: 0 11px 11px;
+        padding: 9px 0;
+        font-size: 0.52rem;
+      }
+
+      .cart-drawer {
+        width: 100%;
+      }
+
+      .cart-drawer__header {
+        padding: 24px 20px 20px;
+      }
+
+      .cart-items,
+      .checkout-view {
+        padding-right: 20px;
+        padding-left: 20px;
+      }
+
+      .cart-empty {
+        margin-right: 20px;
+        margin-left: 20px;
+      }
+
+      .cart-summary {
+        padding-right: 20px;
+        padding-left: 20px;
+      }
+
+      .rsvp-section .section {
+        padding-top: 100px;
+        padding-bottom: 105px;
+      }
+
+      .rsvp-form.is-complete {
+        gap: 0;
+      }
+
+      .form-message {
+        grid-template-columns: 54px minmax(0, 1fr);
+        gap: 16px;
+        min-height: 270px;
+        padding: 44px 22px 28px;
+        text-align: left;
+      }
+
+      .form-message::after {
+        top: 22px;
+        right: 22px;
+        bottom: auto;
+        font-size: 0.52rem;
+      }
+
+      .form-message__stamp {
+        top: 20px;
+        left: 22px;
+      }
+
+      .form-message .feedback-message__icon {
+        width: 54px;
+        height: 54px;
+        font-size: 1.7rem;
+      }
+
+      .form-message .feedback-message__copy {
+        justify-items: start;
+      }
+
+      .form-message .feedback-message__title {
+        font-size: 2.35rem;
+        line-height: 0.9;
+      }
+
+      .form-message .feedback-message__text {
+        font-size: 0.78rem;
+      }
+
+      .form-message__signature {
+        font-size: 1.2rem;
+      }
+
+      .footer {
+        padding-right: 20px;
+        padding-left: 20px;
+      }
+
+      .footer__top {
+        display: block;
+        padding-bottom: 60px;
+      }
+
+      .footer__phrase {
+        margin-top: 35px;
+      }
+
+      .music-player {
+        right: 16px;
+        bottom: 16px;
+        width: min(360px, calc(100% - 32px));
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-loader" aria-hidden="true">
+    <div class="page-loader__mark"><span class="monogram-letter">G</span><span class="cypress-mark" aria-hidden="true"></span><span class="monogram-letter">V</span></div>
+  </div>
+
+  <div class="scroll-progress" aria-hidden="true"></div>
+  <div class="floating-leaves" aria-hidden="true"></div>
+
+  <aside class="music-player" id="music-player" aria-label="Trilha sonora" hidden>
+    <div class="music-player__info">
+      <span class="music-player__eyebrow"><span id="music-track-number">01</span> / <span id="music-track-total">00</span> · trilha do casamento</span>
+      <strong class="music-player__track" id="music-track-title">Trilha indisponivel</strong>
+      <span class="music-player__artist" id="music-track-artist">Adicione arquivos em audio/</span>
+    </div>
+    <div class="music-player__controls">
+      <button class="music-player__button" id="music-previous" type="button" aria-label="Faixa anterior">&#x23ee;</button>
+      <button class="music-player__button music-player__button--main" id="music-toggle" type="button" aria-label="Tocar trilha">&#x25b6;</button>
+      <button class="music-player__button" id="music-next" type="button" aria-label="Proxima faixa">&#x23ed;</button>
+      <button class="music-player__button" id="music-shuffle" type="button" aria-label="Ativar modo aleatorio" aria-pressed="false">&#x2921;</button>
+    </div>
+    <label class="music-player__volume" for="music-volume">
+      <span aria-hidden="true">&#x1f50a;</span>
+      <input id="music-volume" type="range" min="0" max="1" step="0.01" value="0.35" aria-label="Volume da trilha">
+    </label>
+    <audio id="music-audio" preload="metadata"></audio>
+  </aside>
+
+  <header class="hero" id="topo">
+    <nav class="site-nav" aria-label="Navega&#xe7;&#xe3;o principal">
+      <a class="brand" href="#topo" aria-label="Gabriela e Vitor, voltar ao topo">G<span class="cypress-mark" aria-hidden="true"></span>V</a>
+      <div class="nav-links">
+        <a href="#historia">A hist&#xf3;ria</a>
+        <a href="#dia">O dia</a>
+        <a href="#presentes">Presentes</a>
+        <a href="#rsvp">Confirmar</a>
+      </div>
+    </nav>
+
+    <div class="hero__content">
+      <p class="eyebrow">25 abril 2027 &#xb7; Casa Olivetto</p>
+      <h1>Gabriela <span>&amp;</span><br>Vitor</h1>
+      <p class="hero__intro">Um sim entre ciprestes, oliveiras e o sol dourado que s&#xf3; a Toscana sabe guardar.</p>
+      <div class="hero__stamp">ci vediamo<br>sob o sol</div>
+      <div class="hero__meta">uma celebra&#xe7;&#xe3;o para guardar</div>
+    </div>
+
+    <a class="scroll-cue" href="#historia"><i></i><span>deslize</span></a>
+  </header>
+
+  <main>
+    <section class="section section--intro reveal" id="historia">
+      <div>
+        <span class="section-label">A nossa dolce vita</span>
+      </div>
+      <div class="intro-copy">
+        <h2>De todos os lugares do mundo, escolhemos <em>um ao outro.</em></h2>
+        <p>Agora queremos celebrar essa escolha em um lugar que parece feito para desacelerar: estradas cercadas de ciprestes, mesas compridas, vinho na ta&#xe7;a e as pessoas que fazem parte da nossa hist&#xf3;ria.</p>
+      </div>
+      <div class="olive-branch" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </section>
+
+    <section class="section story-section reveal">
+      <div class="story-grid">
+        <figure class="image-frame image-frame--watercolor reveal reveal-delay-1">
+          <div class="image-frame__visual">
+            <img src="image.png" alt="Ilustra&#xe7;&#xe3;o em aquarela da Casa Olivetto, espa&#xe7;o do casamento" loading="lazy">
+          </div>
+          <figcaption class="image-frame__caption">Casa Di Pietra - Villa Toscana</figcaption>
+        </figure>
+        <div class="story-copy reveal reveal-delay-2">
+          <span class="section-label">Um cap&#xed;tulo novo</span>
+          <h2>Entre uma viagem e outra, encontramos <span>casa.</span></h2>
+          <p>Nosso casamento &#xe9; um convite para estar perto, brindar sem pressa e colecionar mais uma paisagem juntos. A Casa Olivetto ser&#xe1; o cen&#xe1;rio, mas a melhor parte ser&#xe1; dividir o dia com voc&#xea;s.</p>
+          <span class="signature">com carinho, G &amp; V</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="gallery-section" id="viagens" data-gallery-style="scrapbook">
+      <div class="section">
+        <div class="gallery-heading reveal">
+          <span class="section-label">Di&#xe1;rio de estrada</span>
+          <div class="gallery-heading__copy">
+            <h2>Um álbum para guardar <em>com a gente.</em></h2>
+            <p>Fotos das nossas viagens, dos desvios e das pequenas cenas que merecem voltar sempre.</p>
+            <div class="gallery-actions">
+              <div class="gallery-status feedback-message is-visible" id="gallery-status" role="status" aria-live="polite">
+                <span class="feedback-message__icon" aria-hidden="true">&#x2726;</span>
+                <span class="feedback-message__copy">
+                  <strong class="feedback-message__title">Nosso álbum</strong>
+                  <span class="feedback-message__text">Um lugar para as imagens que queremos guardar.</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-carousel" id="gallery-carousel" aria-label="Carrossel de fotos das viagens">
+          <button class="gallery-item reveal reveal-delay-1" type="button" data-location="Asciano &#xb7; Toscana" data-title="Fim de tarde" aria-label="Abrir foto: Fim de tarde em Asciano">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Cypress_tree_alley_at_sunset_in_Asciano%2C_Tuscany.jpg/1280px-Cypress_tree_alley_at_sunset_in_Asciano%2C_Tuscany.jpg" alt="Estrada cercada por ciprestes em Asciano, na Toscana" loading="lazy">
+            <span class="gallery-item__caption"><span class="gallery-item__location">Asciano &#xb7; Toscana</span><strong class="gallery-item__title">Fim de tarde</strong></span>
+          </button>
+          <button class="gallery-item reveal reveal-delay-2" type="button" data-location="Pitigliano &#xb7; Toscana" data-title="Pedra antiga" aria-label="Abrir foto: Pedra antiga em Pitigliano">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/01665_ITA_Tuscany_Pitigliano_S_from_viewpoint_V-P.jpg/1280px-01665_ITA_Tuscany_Pitigliano_S_from_viewpoint_V-P.jpg" alt="Vila de pedra de Pitigliano vista de longe" loading="lazy">
+            <span class="gallery-item__caption"><span class="gallery-item__location">Pitigliano &#xb7; Toscana</span><strong class="gallery-item__title">Pedra antiga</strong></span>
+          </button>
+          <button class="gallery-item reveal reveal-delay-3" type="button" data-location="San Gimignano &#xb7; Toscana" data-title="Entre vinhedos" aria-label="Abrir foto: Entre vinhedos em San Gimignano">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Grape_vines_and_cypress_trees_in_Tuscany.jpg/1280px-Grape_vines_and_cypress_trees_in_Tuscany.jpg" alt="Vinhedos e ciprestes em San Gimignano" loading="lazy">
+            <span class="gallery-item__caption"><span class="gallery-item__location">San Gimignano &#xb7; Toscana</span><strong class="gallery-item__title">Entre vinhedos</strong></span>
+          </button>
+          <button class="gallery-item reveal reveal-delay-1" type="button" data-location="Val d'Orcia &#xb7; Toscana" data-title="Um desvio bonito" aria-label="Abrir foto: Um desvio bonito no Val d'Orcia">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Ridge_of_Cypress_Trees.jpg/1280px-Ridge_of_Cypress_Trees.jpg" alt="Colina com uma linha de ciprestes no Val d'Orcia" loading="lazy">
+            <span class="gallery-item__caption"><span class="gallery-item__location">Val d'Orcia &#xb7; Toscana</span><strong class="gallery-item__title">Um desvio bonito</strong></span>
+          </button>
+          <button class="gallery-item reveal reveal-delay-2" type="button" data-location="Toscana &#xb7; It&#xe1;lia" data-title="Manh&#xe3; lenta" aria-label="Abrir foto: Manh&#xe3; lenta na Toscana">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Twin_cypresses_in_foggy_landscape_-_Tuscany.jpg/1280px-Twin_cypresses_in_foggy_landscape_-_Tuscany.jpg" alt="Dois ciprestes em uma paisagem com neblina na Toscana" loading="lazy">
+            <span class="gallery-item__caption"><span class="gallery-item__location">Toscana &#xb7; It&#xe1;lia</span><strong class="gallery-item__title">Manh&#xe3; lenta</strong></span>
+          </button>
+          <button class="gallery-item reveal reveal-delay-3" type="button" data-location="Toscana &#xb7; It&#xe1;lia" data-title="Onde a gente chegar" aria-label="Abrir foto: Onde a gente chegar na Toscana">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Landscape_of_Tuscany_2.jpg/1280px-Landscape_of_Tuscany_2.jpg" alt="Paisagem ampla das colinas da Toscana" loading="lazy">
+            <span class="gallery-item__caption"><span class="gallery-item__location">Toscana &#xb7; It&#xe1;lia</span><strong class="gallery-item__title">Onde a gente chegar</strong></span>
+          </button>
+        </div>
+        <div class="gallery-carousel-controls" aria-label="Controles da galeria">
+          <button class="carousel-arrow" type="button" id="gallery-prev" aria-label="Foto anterior">&#8592;</button>
+          <div class="carousel-dots" id="gallery-dots" role="tablist" aria-label="Selecionar foto">
+            <button class="carousel-dot is-active" type="button" role="tab" aria-label="Foto 1 de 6" aria-selected="true"></button>
+            <button class="carousel-dot" type="button" role="tab" aria-label="Foto 2 de 6" aria-selected="false"></button>
+            <button class="carousel-dot" type="button" role="tab" aria-label="Foto 3 de 6" aria-selected="false"></button>
+            <button class="carousel-dot" type="button" role="tab" aria-label="Foto 4 de 6" aria-selected="false"></button>
+            <button class="carousel-dot" type="button" role="tab" aria-label="Foto 5 de 6" aria-selected="false"></button>
+            <button class="carousel-dot" type="button" role="tab" aria-label="Foto 6 de 6" aria-selected="false"></button>
+          </div>
+          <button class="carousel-arrow" type="button" id="gallery-next" aria-label="Pr&#xf3;xima foto">&#8594;</button>
+          <span class="carousel-count" id="gallery-count" aria-live="polite">01 / 06</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="landscape-band reveal" aria-label="Mensagem sobre a celebra&#xe7;&#xe3;o">
+      <div class="landscape-band__content">
+        <h2>Um dia com gosto de <em>ver&#xe3;o.</em></h2>
+        <p class="landscape-band__note">Aperitivo ao ar livre, flores do campo, m&#xfa;sica no jardim e aquela luz bonita que faz tudo parecer cena de filme.</p>
+      </div>
+    </section>
+
+    <section class="section event-section" id="dia">
+      <div class="event-heading reveal">
+        <div>
+          <span class="section-label">O nosso 25.04.27</span>
+          <h2>O dia come&#xe7;a calmo e termina <em>dan&#xe7;ando.</em></h2>
+        </div>
+        <div class="event-location">
+          <a class="event-date event-date--link" href="https://share.google/blsDGhpf1G3Ecewe8" target="_blank" rel="noopener noreferrer" aria-label="Abrir o endere&#xe7;o da Casa Olivetto no Google Maps">Casa Olivetto <span aria-hidden="true">&#x2197;</span></a>
+        </div>
+      </div>
+
+      <div class="event-list">
+        <article class="event-item reveal reveal-delay-1">
+          <span class="event-time">16:00</span>
+          <h3 class="event-name">Cerim&#xf4;nia</h3>
+          <p class="event-place">No jardim, sob a sombra dos ciprestes</p>
+        </article>
+        <article class="event-item reveal reveal-delay-2">
+          <span class="event-time">17:30</span>
+          <h3 class="event-name">Aperitivo</h3>
+          <p class="event-place">Vinho local, limoncello e pequenos brindes</p>
+        </article>
+        <article class="event-item reveal reveal-delay-3">
+          <span class="event-time">19:30</span>
+          <h3 class="event-name">Jantar &amp; festa</h3>
+          <p class="event-place">Uma mesa longa para todo mundo se sentir em casa</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="details-section">
+      <div class="section">
+        <div class="details-heading reveal">
+          <span class="section-label">Pequenos detalhes</span>
+          <div>
+            <h2>Para entrar no clima, pense em <em>tr&#xea;s coisas.</em></h2>
+            <p>Uma paleta de verde oliva, terracota e amarelo-sol. O resto a gente deixa por conta da paisagem.</p>
+          </div>
+        </div>
+
+        <div class="details-grid">
+          <article class="detail-card reveal reveal-delay-1">
+            <span class="detail-card__number">01 / OLIVEIRA</span>
+            <h3>Leveza que fica</h3>
+            <p>Texturas naturais, ramos verdes e aquele ar de almo&#xe7;o demorado no campo.</p>
+            <span class="detail-card__shape detail-card__shape--olive" aria-hidden="true"></span>
+          </article>
+          <article class="detail-card reveal reveal-delay-2">
+            <span class="detail-card__number">02 / LUZ</span>
+            <h3>Sol at&#xe9; tarde</h3>
+            <p>Uma celebra&#xe7;&#xe3;o aberta, quente e com espa&#xe7;o para respirar entre um brinde e outro.</p>
+            <span class="detail-card__shape detail-card__shape--sun" aria-hidden="true"></span>
+          </article>
+          <article class="detail-card reveal reveal-delay-3">
+            <span class="detail-card__number">03 / CIPRESTE</span>
+            <h3>Um caminho junto</h3>
+            <p>Linhas simples, horizonte amplo e a sensa&#xe7;&#xe3;o boa de estar exatamente onde dever&#xed;amos.</p>
+            <span class="detail-card__shape detail-card__shape--cypress" aria-hidden="true"></span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="gifts-section" id="presentes">
+      <div class="section">
+        <div class="gifts-heading reveal">
+          <span class="section-label">Lista de presentes</span>
+          <div>
+            <h2>Pe&#xe7;as para a casa que vamos <em>construir.</em></h2>
+            <p>Uma sele&#xe7;&#xe3;o de objetos para o nosso primeiro lar: cer&#xe2;mica, linho, luz quente e tudo que deixa um espa&#xe7;o com cara de casa.</p>
+            <div class="gift-toolbar">
+              <div class="gift-toolbar__top">
+                <p class="gift-toolbar__note">curadoria para o nosso lar</p>
+                <button class="gift-cart-button" type="button" id="open-cart" aria-label="Abrir carrinho de presentes">
+                  <span class="gift-cart-button__icon" aria-hidden="true">+</span>
+                  <span>Meu carrinho</span>
+                  <span class="gift-cart-button__count" id="cart-count">0</span>
+                </button>
+              </div>
+              <div class="gift-controls">
+                <div class="gift-filter-list" role="tablist" aria-label="Filtrar presentes por categoria">
+                  <button class="gift-filter" type="button" role="tab" data-filter="todos" aria-selected="true">Todos</button>
+                  <button class="gift-filter" type="button" role="tab" data-filter="cozinha" aria-selected="false">Cozinha</button>
+                  <button class="gift-filter" type="button" role="tab" data-filter="mesa" aria-selected="false">Mesa</button>
+                  <button class="gift-filter" type="button" role="tab" data-filter="quarto" aria-selected="false">Quarto</button>
+                  <button class="gift-filter" type="button" role="tab" data-filter="sala" aria-selected="false">Sala</button>
+                </div>
+                <select class="gift-sort" id="gift-sort" aria-label="Ordenar presentes">
+                  <option value="featured">Em destaque</option>
+                  <option value="price-low">Menor pre&#xe7;o</option>
+                  <option value="price-high">Maior pre&#xe7;o</option>
+                </select>
+                <p class="gift-results-count" id="gift-results-count">8 produtos</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="gift-list" id="gift-list">
+          <article class="gift-item" data-category="cozinha" data-featured="1" data-gift-id="panelas" data-gift-name="Jogo de panelas em ferro esmaltado" data-gift-price="1290">
+            <div class="gift-item__media"><img src="https://images.unsplash.com/photo-1556912167-f556f1f39fdf?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Cozinha clara com utens&#xed;lios e panelas" loading="lazy"><span class="gift-item__badge">mais pedido</span><span class="gift-item__number">01</span></div>
+            <div class="gift-item__content"><h3>Jogo de panelas em ferro esmaltado</h3><p>Para cozinhar receitas de domingo e transformar a cozinha no lugar mais vivo da casa.</p><span class="gift-item__price">R$ 1.290</span></div>
+            <button class="gift-item__add" type="button"><span>Adicionar ao carrinho</span><b>+</b></button>
+          </article>
+          <article class="gift-item" data-category="mesa" data-featured="2" data-gift-id="ceramica" data-gift-name="Aparelho de jantar em cer&#xe2;mica" data-gift-price="680">
+            <div class="gift-item__media"><img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Pe&#xe7;as de cer&#xe2;mica artesanal para mesa posta" loading="lazy"><span class="gift-item__badge">artesanal</span><span class="gift-item__number">02</span></div>
+            <div class="gift-item__content"><h3>Aparelho de jantar em cer&#xe2;mica</h3><p>Pe&#xe7;as imperfeitas e bonitas para as mesas que ainda vamos inventar.</p><span class="gift-item__price">R$ 680</span></div>
+            <button class="gift-item__add" type="button"><span>Adicionar ao carrinho</span><b>+</b></button>
+          </article>
+          <article class="gift-item" data-category="mesa" data-featured="3" data-gift-id="tacas" data-gift-name="Jogo de ta&#xe7;as de vinho" data-gift-price="340">
+            <div class="gift-item__media"><img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Ta&#xe7;as de vinho em uma mesa iluminada" loading="lazy"><span class="gift-item__number">03</span></div>
+            <div class="gift-item__content"><h3>Jogo de ta&#xe7;as de vinho</h3><p>Para brindar as pequenas vit&#xf3;rias, as visitas e as noites que come&#xe7;am sem hora para acabar.</p><span class="gift-item__price">R$ 340</span></div>
+            <button class="gift-item__add" type="button"><span>Adicionar ao carrinho</span><b>+</b></button>
+          </article>
+          <article class="gift-item" data-category="cozinha" data-featured="4" data-gift-id="cafeteira" data-gift-name="Cafeteira italiana para dois" data-gift-price="280">
+            <div class="gift-item__media"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Caf&#xe9; servido em uma mesa pela manh&#xe3;" loading="lazy"><span class="gift-item__number">04</span></div>
+            <div class="gift-item__content"><h3>Cafeteira italiana para dois</h3><p>O ritual da manh&#xe3;, com caf&#xe9; forte e tempo para contar os sonhos.</p><span class="gift-item__price">R$ 280</span></div>
+            <button class="gift-item__add" type="button"><span>Adicionar ao carrinho</span><b>+</b></button>
+          </article>
+          <article class="gift-item" data-category="quarto" data-featured="5" data-gift-id="linho" data-gift-name="Jogo de cama em linho" data-gift-price="760">
+            <div class="gift-item__media"><img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Quarto claro com cama e roupas de linho" loading="lazy"><span class="gift-item__badge">para o lar</span><span class="gift-item__number">05</span></div>
+            <div class="gift-item__content"><h3>Jogo de cama em linho</h3><p>Textura leve para deixar o quarto com cara de manh&#xe3; demorada.</p><span class="gift-item__price">R$ 760</span></div>
+            <button class="gift-item__add" type="button"><span>Adicionar ao carrinho</span><b>+</b></button>
+          </article>
+          <article class="gift-item" data-category="sala" data-featured="6" data-gift-id="luminaria" data-gift-name="Lumin&#xe1;ria de mesa em cer&#xe2;mica" data-gift-price="520">
+            <div class="gift-item__media"><img src="https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Lumin&#xe1;ria acesa em um ambiente acolhedor" loading="lazy"><span class="gift-item__number">06</span></div>
+            <div class="gift-item__content"><h3>Lumin&#xe1;ria de mesa em cer&#xe2;mica</h3><p>Uma luz quente para as leituras, conversas e noites de vinho.</p><span class="gift-item__price">R$ 520</span></div>
+            <button class="gift-item__add" type="button"><span>Adicionar ao carrinho</span><b>+</b></button>
+          </article>
+          <article class="gift-item" data-category="sala" data-featured="7" data-gift-id="manta" data-gift-name="Manta de linho para o sof&#xe1;" data-gift-price="420">
+            <div class="gift-item__media"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Sala com sof&#xe1; e texturas naturais" loading="lazy"><span class="gift-item__number">07</span></div>
+            <div class="gift-item__content"><h3>Manta de linho para o sof&#xe1;</h3><p>Para as tardes de filme, o friozinho e as visitas que ficam at&#xe9; tarde.</p><span class="gift-item__price">R$ 420</span></div>
+            <button class="gift-item__add" type="button"><span>Adicionar ao carrinho</span><b>+</b></button>
+          </article>
+          <article class="gift-item" data-category="quarto" data-featured="8" data-gift-id="toalhas" data-gift-name="Kit de toalhas de banho" data-gift-price="380">
+            <div class="gift-item__media"><img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Toalhas claras em um banheiro elegante" loading="lazy"><span class="gift-item__number">08</span></div>
+            <div class="gift-item__content"><h3>Kit de toalhas de banho</h3><p>Um detalhe simples que faz a casa nova come&#xe7;ar com cuidado.</p><span class="gift-item__price">R$ 380</span></div>
+            <button class="gift-item__add" type="button"><span>Adicionar ao carrinho</span><b>+</b></button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="rsvp-section" id="rsvp">
+      <div class="section">
+        <div class="rsvp-copy reveal">
+          <span class="section-label">Presen&#xe7;a confirmada?</span>
+          <h2>Vem viver esse dia com a gente.</h2>
+          <p>Conte para n&#xf3;s se voc&#xea; estar&#xe1; na Casa Olivetto para brindar, abra&#xe7;ar e dan&#xe7;ar at&#xe9; a &#xfa;ltima m&#xfa;sica.</p>
+        </div>
+
+        <form class="rsvp-form reveal reveal-delay-1" id="rsvp-form">
+          <div class="rsvp-fields" id="rsvp-fields">
+            <div class="field">
+              <label for="name">Seu nome</label>
+              <input id="name" name="name" type="text" placeholder="Como devemos chamar voc&#xea;?" required>
+            </div>
+            <div class="field">
+              <label for="email">Seu e-mail</label>
+              <input id="email" name="email" type="email" placeholder="Para receber os pr&#xf3;ximos detalhes" required>
+            </div>
+            <div class="field">
+              <label>Voc&#xea; vem?</label>
+              <div class="attendance">
+                <label><input type="radio" name="attendance" value="sim" required><span>Sim, estarei l&#xe1;</span></label>
+                <label><input type="radio" name="attendance" value="nao"><span>N&#xe3;o vou conseguir</span></label>
+              </div>
+            </div>
+            <div class="field">
+              <label for="companion-count">Acompanhantes</label>
+              <select id="companion-count" name="companion-count">
+                <option value="0">Nenhum acompanhante</option>
+                <option value="1">1 acompanhante</option>
+                <option value="2">2 acompanhantes</option>
+                <option value="3">3 acompanhantes</option>
+                <option value="4">4 acompanhantes</option>
+              </select>
+              <div class="companion-fields" id="companion-fields" hidden>
+                <input type="text" data-companion-index="0" placeholder="Nome do acompanhante 1" maxlength="80">
+                <input type="text" data-companion-index="1" placeholder="Nome do acompanhante 2" maxlength="80" hidden>
+                <input type="text" data-companion-index="2" placeholder="Nome do acompanhante 3" maxlength="80" hidden>
+                <input type="text" data-companion-index="3" placeholder="Nome do acompanhante 4" maxlength="80" hidden>
+              </div>
+            </div>
+            <div class="field">
+              <label>Restri&#xe7;&#xf5;es alimentares</label>
+              <div class="dietary-options">
+                <label class="dietary-option"><input type="checkbox" name="dietary" value="sem-restricoes"><span>Sem restri&#xe7;&#xf5;es</span></label>
+                <label class="dietary-option"><input type="checkbox" name="dietary" value="vegetariano"><span>Vegetariano</span></label>
+                <label class="dietary-option"><input type="checkbox" name="dietary" value="vegano"><span>Vegano</span></label>
+                <label class="dietary-option"><input type="checkbox" name="dietary" value="alergia"><span>Alergia</span></label>
+                <label class="dietary-option"><input id="dietary-other-toggle" type="checkbox" name="dietary" value="outro"><span>Outro</span></label>
+              </div>
+              <div class="dietary-other" id="dietary-other" hidden><input id="dietary-other-text" type="text" maxlength="240" placeholder="Conte um pouco mais, se quiser"></div>
+            </div>
+            <label class="consent-field"><input id="rsvp-consent" type="checkbox" required><span>Autorizo o uso desses dados para organizar a confirma&#xe7;&#xe3;o do casamento. As informa&#xe7;&#xf5;es ser&#xe3;o exclu&#xed;das ap&#xf3;s o per&#xed;odo de organiza&#xe7;&#xe3;o.</span></label>
+            <input id="rsvp-edit-token" type="hidden">
+          </div>
+          <button class="submit-button" id="rsvp-submit" type="submit"><span>Enviar confirma&#xe7;&#xe3;o</span><b>&#x2197;</b></button>
+          <div class="rsvp-loading" id="rsvp-loading" role="status" aria-live="polite" hidden>
+            <span class="rsvp-loading__spinner" aria-hidden="true"></span>
+            <span class="rsvp-loading__copy">
+              <strong class="rsvp-loading__title">Guardando sua resposta<span class="rsvp-loading__dots" aria-hidden="true">...</span></strong>
+              <span class="rsvp-loading__text">Um instante: estamos preparando uma mensagem especial para voc&#xea;s.</span>
+            </span>
+          </div>
+          <div class="form-message feedback-message" id="form-message" role="status" aria-live="polite" tabindex="-1" hidden>
+            <span class="form-message__stamp">25.04.27 &#xb7; RSVP</span>
+            <span class="feedback-message__icon" aria-hidden="true">&#x2726;</span>
+            <span class="feedback-message__copy">
+              <span class="form-message__eyebrow">Resposta recebida</span>
+              <strong class="feedback-message__title"></strong>
+              <span class="feedback-message__text"></span>
+              <span class="form-message__signature">com carinho, G &amp; V</span>
+            </span>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__top">
+      <p class="footer__mark" aria-label="Gabriela e Vitor"><span class="monogram-letter">G</span><span class="cypress-mark" aria-hidden="true"></span><span class="monogram-letter">V</span></p>
+      <p class="footer__phrase">Ci vediamo na Casa Olivetto.<br>25 de abril de 2027.</p>
+    </div>
+    <div class="footer__bottom">
+      <span>Gabriela &amp; Vitor</span>
+      <span>feito com amore</span>
+      <span class="footer__credit">Fotos: <a href="https://commons.wikimedia.org/wiki/File:Cypress_tree_alley_at_sunset_in_Asciano,_Tuscany.jpg">Eric Kilby</a>, <a href="https://commons.wikimedia.org/wiki/File:Grape_vines_and_cypress_trees_in_Tuscany.jpg">Ian McKellar</a> e <a href="https://commons.wikimedia.org/wiki/File:01665_ITA_Tuscany_Pitigliano_S_from_viewpoint_V-P.jpg">Virtual-Pano</a> &#xb7; CC BY-SA 2.0 / 4.0</span>
+    </div>
+  </footer>
+
+  <div class="cart-drawer-backdrop" id="cart-backdrop" data-close-cart></div>
+  <aside class="cart-drawer" id="cart-drawer" aria-label="Carrinho de presentes" aria-hidden="true" data-view="cart">
+    <header class="cart-drawer__header">
+      <div>
+        <span class="cart-drawer__eyebrow">Lista de presentes</span>
+        <h2 class="cart-drawer__title">Seu gesto</h2>
+      </div>
+      <button class="cart-drawer__close" type="button" id="close-cart" aria-label="Fechar carrinho">&times;</button>
+    </header>
+    <div class="cart-drawer__body">
+      <div class="cart-view" id="cart-view">
+        <div class="cart-items" id="cart-items"></div>
+        <p class="cart-empty" id="cart-empty">Seu carrinho est&#xe1; vazio. Escolha uma experi&#xea;ncia para come&#xe7;ar.</p>
+        <div class="cart-summary">
+          <div class="cart-summary__row"><span>Itens</span><span id="cart-summary-items">0</span></div>
+          <div class="cart-summary__row cart-summary__row--total"><span>Total</span><span id="cart-total">R$ 0</span></div>
+          <button class="cart-checkout-button" type="button" id="go-checkout" disabled><span>Continuar para pagamento</span><b>&#x2197;</b></button>
+        </div>
+      </div>
+
+      <form class="checkout-view" id="fake-checkout" hidden>
+        <button class="checkout-back" type="button" id="back-to-cart">&#8592; Voltar ao carrinho</button>
+        <h3>Escolher presente</h3>
+        <p class="checkout-view__intro">Registre sua escolha e siga direto para o Mercado Pago. O casal confirma manualmente cada recebimento.</p>
+        <p class="fake-payment-note" id="checkout-note">A reserva fica ativa por 24 horas. O pagamento será concluído em uma página segura do Mercado Pago.</p>
+        <div class="checkout-fields">
+          <div class="checkout-field"><label for="checkout-name">Seu nome</label><input id="checkout-name" type="text" placeholder="Nome de quem presenteia" required></div>
+          <div class="checkout-field"><label for="checkout-email">Seu e-mail</label><input id="checkout-email" type="email" placeholder="Para receber a confirma&#xe7;&#xe3;o" required></div>
+          <div class="checkout-field"><label for="payment-note">Observa&#xe7;&#xe3;o opcional</label><input id="payment-note" type="text" maxlength="240" placeholder="C&#xf3;digo ou detalhe para ajudar na confer&#xea;ncia"></div>
+        </div>
+        <div class="checkout-total"><span>Total do presente</span><span id="checkout-total">R$ 0</span></div>
+        <button class="fake-payment-button" id="reserve-gift-button" type="submit"><span>Reservar e abrir Mercado Pago</span><b>&#x2197;</b></button>
+        <div class="payment-result" id="payment-result" hidden>
+          <h4 class="payment-result__title" id="payment-result-title">Reserva criada</h4>
+          <p class="payment-result__text" id="payment-result-text"></p>
+          <div class="payment-result__actions">
+            <a id="open-payment-link" href="#" target="_blank" rel="noopener noreferrer" hidden>Ir para o Mercado Pago</a>
+            <button id="report-payment-button" type="button">Avisei que paguei</button>
+          </div>
+        </div>
+        <div class="fake-payment-message feedback-message" id="fake-payment-message" role="status" aria-live="polite" hidden>
+          <span class="feedback-message__icon" aria-hidden="true">&#x2713;</span>
+          <span class="feedback-message__copy">
+            <strong class="feedback-message__title"></strong>
+            <span class="feedback-message__text"></span>
+          </span>
+        </div>
+      </form>
+    </div>
+  </aside>
+
+  <div class="gallery-lightbox" id="gallery-lightbox" aria-hidden="true">
+    <div class="gallery-lightbox__backdrop" data-lightbox-close></div>
+    <div class="gallery-lightbox__dialog" role="dialog" aria-modal="true" aria-labelledby="lightbox-title">
+      <button class="gallery-lightbox__close" type="button" aria-label="Fechar foto" data-lightbox-close>&times;</button>
+      <img id="lightbox-image" src="" alt="">
+      <div class="gallery-lightbox__meta">
+        <span class="gallery-lightbox__location" id="lightbox-location"></span>
+        <h2 class="gallery-lightbox__title" id="lightbox-title"></h2>
+      </div>
+    </div>
+  </div>
+
+  <script src="audio/playlist.js"></script>
+  <script>
+window.weddingPlaylist = [
+  {
+    enabled: true,
+    title: 'Volare',
+    artist: 'Jack Jezzro',
+    mp3: 'files/Volare - Jack Jezzro - Mauro Lucio (320k).mp3',
+    ogg: 'audio/01-faixa-provisoria.ogg'
+  },
+  {
+    enabled: true,
+    title: 'Until I Found You',
+    artist: 'Stephen Sanchez',
+    mp3: 'files/Stephen Sanchez - Until I Found You (Official Video) (1).mp3',
+    ogg: 'audio/02-faixa-provisoria.ogg'
+  }
+];
+
+    
+    const progressBar = document.querySelector('.scroll-progress');
+    const siteNav = document.querySelector('.site-nav');
+    const navLinks = [...document.querySelectorAll('.nav-links a')];
+    const navSections = navLinks
+      .map((link) => document.querySelector(link.getAttribute('href')))
+      .filter(Boolean);
+    const floatingLeaves = document.querySelector('.floating-leaves');
+    const revealElements = document.querySelectorAll('.reveal');
+    const hero = document.querySelector('.hero');
+    const heroContent = document.querySelector('.hero__content');
+    const galleryCarousel = document.querySelector('#gallery-carousel');
+    const galleryPrevious = document.querySelector('#gallery-prev');
+    const galleryNext = document.querySelector('#gallery-next');
+    let galleryDots = [...document.querySelectorAll('.carousel-dot')];
+    const galleryCount = document.querySelector('#gallery-count');
+    const galleryLightbox = document.querySelector('#gallery-lightbox');
+    const lightboxImage = document.querySelector('#lightbox-image');
+    const lightboxLocation = document.querySelector('#lightbox-location');
+    const lightboxTitle = document.querySelector('#lightbox-title');
+    const galleryStatus = document.querySelector('#gallery-status');
+    const scrapbookPages = document.querySelector('#scrapbook-pages');
+    let giftRows = [...document.querySelectorAll('.gift-item')];
+    const giftList = document.querySelector('#gift-list');
+    const giftFilters = [...document.querySelectorAll('.gift-filter')];
+    const giftSort = document.querySelector('#gift-sort');
+    const giftResultsCount = document.querySelector('#gift-results-count');
+    let activeGiftFilter = 'todos';
+    const cartDrawer = document.querySelector('#cart-drawer');
+    const cartBackdrop = document.querySelector('#cart-backdrop');
+    const openCartButton = document.querySelector('#open-cart');
+    const closeCartButton = document.querySelector('#close-cart');
+    const cartItems = document.querySelector('#cart-items');
+    const cartEmpty = document.querySelector('#cart-empty');
+    const cartCount = document.querySelector('#cart-count');
+    const cartSummaryItems = document.querySelector('#cart-summary-items');
+    const cartTotal = document.querySelector('#cart-total');
+    const goCheckoutButton = document.querySelector('#go-checkout');
+    const cartView = document.querySelector('#cart-view');
+    const checkoutView = document.querySelector('#fake-checkout');
+    const backToCartButton = document.querySelector('#back-to-cart');
+    const checkoutTotal = document.querySelector('#checkout-total');
+    const fakePaymentMessage = document.querySelector('#fake-payment-message');
+    const reserveGiftButton = document.querySelector('#reserve-gift-button');
+    const paymentResult = document.querySelector('#payment-result');
+    const paymentResultTitle = document.querySelector('#payment-result-title');
+    const paymentResultText = document.querySelector('#payment-result-text');
+    const openPaymentLink = document.querySelector('#open-payment-link');
+    const reportPaymentButton = document.querySelector('#report-payment-button');
+    const rsvpForm = document.querySelector('#rsvp-form');
+    const rsvpFields = document.querySelector('#rsvp-fields');
+    const rsvpSubmitButton = document.querySelector('#rsvp-submit');
+    const rsvpLoading = document.querySelector('#rsvp-loading');
+    const companionCount = document.querySelector('#companion-count');
+    const companionFields = document.querySelector('#companion-fields');
+    const companionInputs = [...document.querySelectorAll('[data-companion-index]')];
+    const dietaryOtherToggle = document.querySelector('#dietary-other-toggle');
+    const dietaryOther = document.querySelector('#dietary-other');
+    const dietaryOtherText = document.querySelector('#dietary-other-text');
+    const rsvpConsent = document.querySelector('#rsvp-consent');
+    const rsvpEditToken = document.querySelector('#rsvp-edit-token');
+    const musicPlayer = document.querySelector('#music-player');
+    const musicAudio = document.querySelector('#music-audio');
+    const musicTrackNumber = document.querySelector('#music-track-number');
+    const musicTrackTotal = document.querySelector('#music-track-total');
+    const musicTrackTitle = document.querySelector('#music-track-title');
+    const musicTrackArtist = document.querySelector('#music-track-artist');
+    const musicPrevious = document.querySelector('#music-previous');
+    const musicToggle = document.querySelector('#music-toggle');
+    const musicNext = document.querySelector('#music-next');
+    const musicShuffle = document.querySelector('#music-shuffle');
+    const musicVolume = document.querySelector('#music-volume');
+    const cartState = new Map();
+    let lastCartTrigger;
+    let galleryCurrentIndex = 0;
+    let isProgrammaticCarouselScroll = false;
+    let carouselScrollTimer;
+    let isRsvpProcessing = false;
+    let currentGiftCatalog = [];
+    let currentClaimToken = '';
+    let musicTracks = Array.isArray(window.weddingPlaylist)
+      ? window.weddingPlaylist.filter((track) => track && track.enabled !== false && (track.mp3 || track.ogg))
+      : [];
+    let musicIndex = 0;
+    let musicSourceIndex = 0;
+    let musicWantsToPlay = false;
+    let musicShuffleEnabled = false;
+    let musicFadeFrame;
+    let musicTransitionId = 0;
+    const MUSIC_VOLUME_KEY = 'casamento-toscana:music-volume';
+    const showFeedback = (element, { icon, title, text }) => {
+      element.querySelector('.feedback-message__icon').textContent = icon;
+      element.querySelector('.feedback-message__title').textContent = title;
+      element.querySelector('.feedback-message__text').textContent = text;
+      element.hidden = false;
+      element.classList.remove('is-visible');
+      window.requestAnimationFrame(() => element.classList.add('is-visible'));
+    };
+
+    const hideFeedback = (element) => {
+      element.classList.remove('is-visible');
+      element.hidden = true;
+    };
+
+    const escapeHtml = (value) => String(value ?? '').replace(/[&<>'"]/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[character]));
+
+    const apiRequest = async (path, options = {}) => {
+      const response = await fetch(path, {
+        ...options,
+        headers: {
+          'Content-Type': 'application/json',
+          ...(options.headers || {})
+        }
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(data.error || 'Nao foi possivel concluir a operacao.');
+      return data;
+    };
+
+    const getStoredMusicVolume = () => {
+      try {
+        const storedVolume = Number.parseFloat(window.localStorage.getItem(MUSIC_VOLUME_KEY));
+        return Number.isFinite(storedVolume) ? Math.min(1, Math.max(0, storedVolume)) : 0.35;
+      } catch {
+        return 0.35;
+      }
+    };
+
+    let preferredMusicVolume = getStoredMusicVolume();
+
+    const getMusicSources = (track) => {
+      const sources = [];
+      if (track?.ogg && musicAudio.canPlayType('audio/ogg; codecs="vorbis"')) sources.push(track.ogg);
+      if (track?.mp3 && musicAudio.canPlayType('audio/mpeg')) sources.push(track.mp3);
+      return sources.length ? sources : [track?.mp3, track?.ogg].filter(Boolean);
+    };
+
+    const setMusicPlaybackState = (isPlaying) => {
+      musicToggle.textContent = isPlaying ? '\u23f8' : '\u25b6';
+      musicToggle.setAttribute('aria-label', isPlaying ? 'Pausar trilha' : 'Tocar trilha');
+    };
+
+    const updateMusicMeta = () => {
+      const track = musicTracks[musicIndex];
+      if (!track) return;
+      musicTrackNumber.textContent = String(musicIndex + 1).padStart(2, '0');
+      musicTrackTotal.textContent = String(musicTracks.length).padStart(2, '0');
+      musicTrackTitle.textContent = track.title || `Faixa ${musicIndex + 1}`;
+      musicTrackArtist.textContent = track.artist || 'Trilha do casamento';
+    };
+
+    const loadMusicTrack = () => {
+      const track = musicTracks[musicIndex];
+      const sources = getMusicSources(track);
+      if (!track || !sources.length) return false;
+      musicSourceIndex = Math.min(musicSourceIndex, sources.length - 1);
+      musicAudio.dataset.trackIndex = String(musicIndex);
+      musicAudio.dataset.sourceIndex = String(musicSourceIndex);
+      musicAudio.src = sources[musicSourceIndex];
+      musicAudio.volume = preferredMusicVolume;
+      musicAudio.load();
+      updateMusicMeta();
+      return true;
+    };
+
+    let musicFadeResolver;
+    const fadeMusicVolume = (targetVolume, duration) => {
+      if (musicFadeResolver) musicFadeResolver();
+      cancelAnimationFrame(musicFadeFrame);
+      if (duration <= 0) {
+        musicAudio.volume = targetVolume;
+        return Promise.resolve();
+      }
+
+      return new Promise((resolve) => {
+        musicFadeResolver = resolve;
+        const initialVolume = musicAudio.volume;
+        const startedAt = performance.now();
+        const animate = (now) => {
+          const progress = Math.min(1, (now - startedAt) / duration);
+          musicAudio.volume = initialVolume + (targetVolume - initialVolume) * progress;
+          if (progress >= 1) {
+            musicFadeResolver = null;
+            resolve();
+            return;
+          }
+          musicFadeFrame = requestAnimationFrame(animate);
+        };
+        musicFadeFrame = requestAnimationFrame(animate);
+      });
+    };
+
+    const getNextMusicIndex = () => {
+      if (musicTracks.length <= 1 || !musicShuffleEnabled) return (musicIndex + 1) % musicTracks.length;
+      const candidates = musicTracks.map((track, index) => index).filter((index) => index !== musicIndex);
+      return candidates[Math.floor(Math.random() * candidates.length)];
+    };
+
+    const getPreviousMusicIndex = () => (musicIndex - 1 + musicTracks.length) % musicTracks.length;
+
+    const playMusic = async () => {
+      if (!musicTracks.length) return;
+      musicPlayer.hidden = false;
+      musicWantsToPlay = true;
+      if (!musicAudio.src || musicAudio.dataset.trackIndex !== String(musicIndex)) loadMusicTrack();
+      try {
+        await musicAudio.play();
+        setMusicPlaybackState(true);
+      } catch {
+        setMusicPlaybackState(false);
+      }
+    };
+
+    const transitionToMusicTrack = async (nextIndex) => {
+      if (!musicTracks.length) return;
+      const transitionId = ++musicTransitionId;
+      const shouldPlay = musicWantsToPlay;
+      const fadeDuration = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 500;
+      if (shouldPlay) await fadeMusicVolume(0, fadeDuration);
+      if (transitionId !== musicTransitionId) return;
+      musicAudio.pause();
+      musicIndex = (nextIndex + musicTracks.length) % musicTracks.length;
+      musicSourceIndex = 0;
+      if (!loadMusicTrack()) return;
+      if (!shouldPlay) return;
+      musicAudio.volume = 0;
+      await playMusic();
+      if (transitionId === musicTransitionId) await fadeMusicVolume(preferredMusicVolume, fadeDuration);
+    };
+
+    const handleMusicError = () => {
+      if (!musicTracks.length) return;
+      const sources = getMusicSources(musicTracks[musicIndex]);
+      if (musicSourceIndex < sources.length - 1) {
+        musicSourceIndex += 1;
+        loadMusicTrack();
+        if (musicWantsToPlay) playMusic();
+        return;
+      }
+
+      musicTracks.splice(musicIndex, 1);
+      if (!musicTracks.length) {
+        musicWantsToPlay = false;
+        musicPlayer.hidden = true;
+        setMusicPlaybackState(false);
+        musicAudio.removeAttribute('src');
+        musicAudio.load();
+        return;
+      }
+
+      if (musicIndex >= musicTracks.length) musicIndex = 0;
+      musicSourceIndex = 0;
+      loadMusicTrack();
+      if (musicWantsToPlay) playMusic();
+    };
+
+    const initializeMusicPlayer = () => {
+      musicVolume.value = String(preferredMusicVolume);
+      musicAudio.volume = preferredMusicVolume;
+      musicPlayer.hidden = musicTracks.length === 0;
+      if (!musicTracks.length) return;
+
+      updateMusicMeta();
+      musicToggle.addEventListener('click', () => {
+        if (musicAudio.paused) {
+          playMusic();
+        } else {
+          musicWantsToPlay = false;
+          musicAudio.pause();
+          setMusicPlaybackState(false);
+        }
+      });
+      musicPrevious.addEventListener('click', () => {
+        if (musicAudio.currentTime > 3) {
+          musicAudio.currentTime = 0;
+          return;
+        }
+        transitionToMusicTrack(getPreviousMusicIndex());
+      });
+      musicNext.addEventListener('click', () => transitionToMusicTrack(getNextMusicIndex()));
+      musicShuffle.addEventListener('click', () => {
+        musicShuffleEnabled = !musicShuffleEnabled;
+        musicShuffle.setAttribute('aria-pressed', String(musicShuffleEnabled));
+        musicShuffle.setAttribute('aria-label', musicShuffleEnabled ? 'Desativar modo aleatorio' : 'Ativar modo aleatorio');
+      });
+      musicVolume.addEventListener('input', () => {
+        preferredMusicVolume = Number(musicVolume.value);
+        musicAudio.volume = preferredMusicVolume;
+        try {
+          window.localStorage.setItem(MUSIC_VOLUME_KEY, String(preferredMusicVolume));
+        } catch {
+        }
+      });
+      musicAudio.addEventListener('ended', () => transitionToMusicTrack(getNextMusicIndex()));
+      musicAudio.addEventListener('error', handleMusicError);
+    };
+
+    initializeMusicPlayer();
+
+    const travelPhotos = [
+      {
+        src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Cypress_tree_alley_at_sunset_in_Asciano%2C_Tuscany.jpg/1280px-Cypress_tree_alley_at_sunset_in_Asciano%2C_Tuscany.jpg',
+        alt: 'Estrada cercada por ciprestes em Asciano, na Toscana',
+        location: 'Asciano \u00b7 Toscana',
+        title: 'Fim de tarde',
+        note: 'A estrada mais bonita costuma aparecer quando a gente erra o caminho.'
+      },
+      {
+        src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/01665_ITA_Tuscany_Pitigliano_S_from_viewpoint_V-P.jpg/1280px-01665_ITA_Tuscany_Pitigliano_S_from_viewpoint_V-P.jpg',
+        alt: 'Vila de pedra de Pitigliano vista de longe',
+        location: 'Pitigliano \u00b7 Toscana',
+        title: 'Pedra antiga',
+        note: 'Casas de pedra, janelas abertas e tempo para olhar tudo.'
+      },
+      {
+        src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Grape_vines_and_cypress_trees_in_Tuscany.jpg/1280px-Grape_vines_and_cypress_trees_in_Tuscany.jpg',
+        alt: 'Vinhedos e ciprestes em San Gimignano',
+        location: 'San Gimignano \u00b7 Toscana',
+        title: 'Entre vinhedos',
+        note: 'Um almo\u00e7o longo, uma ta\u00e7a cheia e nenhuma pressa.'
+      },
+      {
+        src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Ridge_of_Cypress_Trees.jpg/1280px-Ridge_of_Cypress_Trees.jpg',
+        alt: 'Colina com uma linha de ciprestes no Val d\'Orcia',
+        location: 'Val d\'Orcia \u00b7 Toscana',
+        title: 'Um desvio bonito',
+        note: 'Algumas paisagens parecem ter sido desenhadas para n\u00f3s.'
+      },
+      {
+        src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Twin_cypresses_in_foggy_landscape_-_Tuscany.jpg/1280px-Twin_cypresses_in_foggy_landscape_-_Tuscany.jpg',
+        alt: 'Dois ciprestes em uma paisagem com neblina na Toscana',
+        location: 'Toscana \u00b7 It\u00e1lia',
+        title: 'Manh\u00e3 lenta',
+        note: 'Acordar cedo s\u00f3 para ver a neblina desaparecer.'
+      },
+      {
+        src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Landscape_of_Tuscany_2.jpg/1280px-Landscape_of_Tuscany_2.jpg',
+        alt: 'Paisagem ampla das colinas da Toscana',
+        location: 'Toscana \u00b7 It\u00e1lia',
+        title: 'Onde a gente chegar',
+        note: 'O horizonte sempre parece maior quando estamos juntos.'
+      },
+      {
+        src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/MontorsaioCampagnaticoPanorama3.jpg/1280px-MontorsaioCampagnaticoPanorama3.jpg',
+        alt: 'Panorama das colinas de Montorsaio, na Toscana',
+        location: 'Montorsaio \u00b7 Toscana',
+        title: 'Vista de cima',
+        note: 'Subimos sem saber o que encontrar e encontramos tudo.'
+      },
+      {
+        src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Lari_Panorama_1.jpg/1280px-Lari_Panorama_1.jpg',
+        alt: 'Panorama de Lari, na Toscana',
+        location: 'Lari \u00b7 Toscana',
+        title: 'Uma vila qualquer',
+        note: 'Para n\u00f3s, nenhum lugar bonito \u00e9 realmente qualquer.'
+      },
+      {
+        src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Stribugliano.JPG/1280px-Stribugliano.JPG',
+        alt: 'Paisagem rural de Stribugliano, na Toscana',
+        location: 'Stribugliano \u00b7 Toscana',
+        title: 'Campo aberto',
+        note: 'Sil\u00eancio tamb\u00e9m \u00e9 uma forma de conversa.'
+      },
+      {
+        src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Stribugliano_2.jpg/1280px-Stribugliano_2.jpg',
+        alt: 'Colinas e casas de Stribugliano, na Toscana',
+        location: 'Stribugliano \u00b7 Toscana',
+        title: 'Depois da curva',
+        note: 'Sempre existe uma curva guardando outra hist\u00f3ria.'
+      },
+      {
+        src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Stribugliano_Arcidosso_3.jpg/1280px-Stribugliano_Arcidosso_3.jpg',
+        alt: 'Paisagem de Stribugliano e Arcidosso, na Toscana',
+        location: 'Arcidosso \u00b7 Toscana',
+        title: 'Dias de sol',
+        note: 'A luz muda, mas a vontade de ficar continua.'
+      },
+      {
+        src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Stribugliano_fattoria_dei_marchesi_La_Greca.jpg/1280px-Stribugliano_fattoria_dei_marchesi_La_Greca.jpg',
+        alt: 'Fazenda hist\u00f3rica em Stribugliano, na Toscana',
+        location: 'Stribugliano \u00b7 Toscana',
+        title: 'Casa no campo',
+        note: 'Toda viagem boa deixa vontade de morar um pouco ali.'
+      },
+      {
+        src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Stribugliano_palazzo_dei_marchesi_La_Greca.jpg/1280px-Stribugliano_palazzo_dei_marchesi_La_Greca.jpg',
+        alt: 'Pal\u00e1cio hist\u00f3rico de Stribugliano, na Toscana',
+        location: 'Stribugliano \u00b7 Toscana',
+        title: 'Parede com hist\u00f3ria',
+        note: 'Alguns lugares parecem lembrar de pessoas que ainda nem chegaram.'
+      },
+      {
+        src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/P.S.Stefano_panorama.jpg/1280px-P.S.Stefano_panorama.jpg',
+        alt: 'Panorama de Porto Santo Stefano, na Toscana',
+        location: 'Porto Santo Stefano \u00b7 It\u00e1lia',
+        title: 'O azul do mapa',
+        note: 'Mudamos de estrada e o mar apareceu sem avisar.'
+      },
+      {
+        src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Porto_Santo_Stefano_-_Hafen.jpg/1280px-Porto_Santo_Stefano_-_Hafen.jpg',
+        alt: 'Porto de Porto Santo Stefano, na It\u00e1lia',
+        location: 'Porto Santo Stefano \u00b7 It\u00e1lia',
+        title: 'Fim de porto',
+        note: 'Chegar tamb\u00e9m pode ser uma aventura.'
+      },
+      {
+        src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Porto_Santo_Stefano_-_Vista_Mare_2.JPG/1280px-Porto_Santo_Stefano_-_Vista_Mare_2.JPG',
+        alt: 'Vista do mar em Porto Santo Stefano, na It\u00e1lia',
+        location: 'Porto Santo Stefano \u00b7 It\u00e1lia',
+        title: 'Mar aberto',
+        note: 'Um mergulho, duas risadas e o dia inteiro pela frente.'
+      },
+      {
+        src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Porto_Santo_Stefano_-_Vista_dalla_giannella.JPG/1280px-Porto_Santo_Stefano_-_Vista_dalla_giannella.JPG',
+        alt: 'Vista costeira a partir de Giannella, na Toscana',
+        location: 'Giannella \u00b7 Toscana',
+        title: 'Entre mar\u00e9s',
+        note: 'A melhor parte da viagem foi n\u00e3o saber o pr\u00f3ximo lugar.'
+      },
+      {
+        src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Porto_santo_stefano%2C_veduta_05.jpg/1280px-Porto_santo_stefano%2C_veduta_05.jpg',
+        alt: 'Vista de Porto Santo Stefano, na Toscana',
+        location: 'Porto Santo Stefano \u00b7 It\u00e1lia',
+        title: 'Cart\u00e3o-postal',
+        note: 'Guardamos algumas paisagens como quem guarda bilhetes.'
+      },
+      {
+        src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Panorama_Montorsaio_%28GR%29.jpg/1280px-Panorama_Montorsaio_%28GR%29.jpg',
+        alt: 'Panorama de Montorsaio, na prov\u00edncia de Grosseto',
+        location: 'Grosseto \u00b7 Toscana',
+        title: 'O caminho de volta',
+        note: 'Voltar para casa fica mais bonito depois de viajar.'
+      },
+      {
+        src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Tuscany_-_Cypress_Trees_%285698663059%29.jpg/1280px-Tuscany_-_Cypress_Trees_%285698663059%29.jpg',
+        alt: 'Ciprestes em uma paisagem da Toscana',
+        location: 'Toscana \u00b7 It\u00e1lia',
+        title: 'Ainda temos estrada',
+        note: 'A pr\u00f3xima p\u00e1gina \u00e9 sempre a nossa preferida.'
+      }
+    ];
+
+    if (scrapbookPages) {
+      for (let index = 0; index < travelPhotos.length; index += 2) {
+      const leftPhoto = travelPhotos[index];
+      const rightPhoto = travelPhotos[index + 1];
+      const spread = document.createElement('article');
+      const spreadNumber = String(index + 1).padStart(2, '0');
+      spread.className = 'scrapbook-spread';
+      spread.dataset.spread = String(index / 2 + 1);
+      spread.innerHTML = `
+        <div class="scrapbook-page scrapbook-page--left">
+          <span class="scrapbook-page__number">${spreadNumber}</span>
+          <button class="book-photo gallery-item book-photo--left" type="button" data-location="${leftPhoto.location}" data-title="${leftPhoto.title}" aria-label="Abrir foto: ${leftPhoto.title} em ${leftPhoto.location}">
+            <img src="${leftPhoto.src}" alt="${leftPhoto.alt}" loading="lazy">
+            <span class="gallery-item__caption"><span class="gallery-item__location">${leftPhoto.location}</span><strong class="gallery-item__title">${leftPhoto.title}</strong></span>
+          </button>
+          <p class="scrapbook-page__note">${leftPhoto.note}</p>
+        </div>
+        <div class="scrapbook-page scrapbook-page--right">
+          <span class="scrapbook-page__number">${String(index + 2).padStart(2, '0')}</span>
+          <button class="book-photo gallery-item book-photo--right" type="button" data-location="${rightPhoto.location}" data-title="${rightPhoto.title}" aria-label="Abrir foto: ${rightPhoto.title} em ${rightPhoto.location}">
+            <img src="${rightPhoto.src}" alt="${rightPhoto.alt}" loading="lazy">
+            <span class="gallery-item__caption"><span class="gallery-item__location">${rightPhoto.location}</span><strong class="gallery-item__title">${rightPhoto.title}</strong></span>
+          </button>
+          <p class="scrapbook-page__note">${rightPhoto.note}</p>
+        </div>`;
+        scrapbookPages.appendChild(spread);
+      }
+    }
+
+    let galleryItems = [...galleryCarousel.querySelectorAll('.gallery-item')];
+    let lastFocusedGalleryItem;
+
+    for (let index = 0; index < 16; index += 1) {
+      const leaf = document.createElement('span');
+      leaf.className = 'leaf';
+      leaf.style.left = `${Math.random() * 100}%`;
+      leaf.style.setProperty('--fall-time', `${11 + Math.random() * 13}s`);
+      leaf.style.setProperty('--fall-delay', `${Math.random() * -20}s`);
+      leaf.style.setProperty('--drift', `${-100 + Math.random() * 200}px`);
+      leaf.style.transform = `scale(${0.65 + Math.random() * 0.7}) rotate(${Math.random() * 80}deg)`;
+      floatingLeaves.appendChild(leaf);
+    }
+
+    const updateScrollProgress = () => {
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+      progressBar.style.width = `${progress}%`;
+      siteNav.classList.toggle('is-scrolled', window.scrollY > 32);
+
+      const scrollMarker = window.scrollY + window.innerHeight * 0.35;
+      let activeSectionId = '';
+      navSections.forEach((section) => {
+        const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+        if (sectionTop <= scrollMarker) activeSectionId = section.id;
+      });
+
+      navLinks.forEach((link) => {
+        const isActive = link.getAttribute('href') === `#${activeSectionId}`;
+        link.classList.toggle('is-active', isActive);
+        if (isActive) {
+          link.setAttribute('aria-current', 'location');
+        } else {
+          link.removeAttribute('aria-current');
+        }
+      });
+    };
+
+    window.addEventListener('scroll', updateScrollProgress, { passive: true });
+    updateScrollProgress();
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.14 });
+
+    revealElements.forEach((element) => revealObserver.observe(element));
+
+    window.addEventListener('pointermove', (event) => {
+      if (window.innerWidth < 801 || !heroContent) return;
+      const x = (event.clientX / window.innerWidth - 0.5) * 10;
+      const y = (event.clientY / window.innerHeight - 0.5) * 8;
+      heroContent.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+    }, { passive: true });
+
+    const openGalleryLightbox = (item) => {
+      const image = item.querySelector('img');
+      lastFocusedGalleryItem = item;
+      lightboxImage.src = image.currentSrc || image.src;
+      lightboxImage.alt = image.alt;
+      lightboxLocation.textContent = item.dataset.location;
+      lightboxTitle.textContent = item.dataset.title;
+      galleryLightbox.classList.add('is-open');
+      galleryLightbox.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('lightbox-open');
+      galleryLightbox.querySelector('.gallery-lightbox__close').focus();
+    };
+
+    const closeGalleryLightbox = () => {
+      galleryLightbox.classList.remove('is-open');
+      galleryLightbox.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('lightbox-open');
+      lightboxImage.src = '';
+      if (lastFocusedGalleryItem) lastFocusedGalleryItem.focus();
+    };
+
+    const updateCarouselControls = (index) => {
+      if (!galleryItems.length) {
+        galleryCount.textContent = '00 / 00';
+        return;
+      }
+      galleryCurrentIndex = index;
+      galleryDots.forEach((dot, dotIndex) => {
+        const isActive = dotIndex === index;
+        dot.classList.toggle('is-active', isActive);
+        dot.setAttribute('aria-selected', String(isActive));
+      });
+      galleryCount.textContent = `${String(index + 1).padStart(2, '0')} / ${String(galleryItems.length).padStart(2, '0')}`;
+    };
+
+    const scrollToGalleryItem = (index) => {
+      if (!galleryItems.length) return;
+      const nextIndex = (index + galleryItems.length) % galleryItems.length;
+      const item = galleryItems[nextIndex];
+      isProgrammaticCarouselScroll = true;
+      window.clearTimeout(carouselScrollTimer);
+      galleryCarousel.scrollTo({
+        left: item.offsetLeft - galleryCarousel.offsetLeft,
+        behavior: 'smooth'
+      });
+      updateCarouselControls(nextIndex);
+      carouselScrollTimer = window.setTimeout(() => {
+        isProgrammaticCarouselScroll = false;
+      }, 750);
+    };
+
+    galleryPrevious.addEventListener('click', () => scrollToGalleryItem(galleryCurrentIndex - 1));
+    galleryNext.addEventListener('click', () => scrollToGalleryItem(galleryCurrentIndex + 1));
+
+    galleryCarousel.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') scrollToGalleryItem(galleryCurrentIndex - 1);
+      if (event.key === 'ArrowRight') scrollToGalleryItem(galleryCurrentIndex + 1);
+    });
+
+    const carouselObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !isProgrammaticCarouselScroll) {
+          const index = galleryItems.indexOf(entry.target);
+          if (index >= 0) updateCarouselControls(index);
+        }
+      });
+    }, { root: galleryCarousel, threshold: 0.65 });
+
+    const bindGalleryItems = () => {
+      galleryItems = [...galleryCarousel.querySelectorAll('.gallery-item')];
+      galleryItems.forEach((item, index) => {
+        item.addEventListener('click', () => {
+          updateCarouselControls(index);
+          openGalleryLightbox(item);
+        });
+        carouselObserver.observe(item);
+      });
+      galleryDots = [...document.querySelectorAll('#gallery-dots .carousel-dot')];
+      galleryDots.forEach((dot, index) => dot.addEventListener('click', () => scrollToGalleryItem(index)));
+      const controls = document.querySelector('.gallery-carousel-controls');
+      controls.hidden = galleryItems.length <= 1;
+      updateCarouselControls(0);
+    };
+
+    const renderPublicGallery = (photos) => {
+      galleryItems.forEach((item) => carouselObserver.unobserve(item));
+      galleryCarousel.replaceChildren();
+      photos.forEach((photo, index) => {
+        const item = document.createElement('button');
+        item.className = `gallery-item reveal is-visible reveal-delay-${index % 3 + 1}`;
+        item.type = 'button';
+        item.dataset.location = photo.subtitle || '';
+        item.dataset.title = photo.title;
+        item.setAttribute('aria-label', `Abrir foto: ${photo.title}`);
+        const image = document.createElement('img');
+        image.src = photo.public_url;
+        image.alt = photo.title;
+        image.loading = 'lazy';
+        const caption = document.createElement('span');
+        caption.className = 'gallery-item__caption';
+        const subtitle = document.createElement('span');
+        subtitle.className = 'gallery-item__location';
+        subtitle.textContent = photo.subtitle || '';
+        subtitle.hidden = !photo.subtitle;
+        const title = document.createElement('strong');
+        title.className = 'gallery-item__title';
+        title.textContent = photo.title;
+        caption.append(subtitle, title);
+        item.append(image, caption);
+        galleryCarousel.appendChild(item);
+      });
+      const dots = document.querySelector('#gallery-dots');
+      dots.replaceChildren(...photos.map((photo, index) => {
+        const dot = document.createElement('button');
+        dot.className = `carousel-dot${index === 0 ? ' is-active' : ''}`;
+        dot.type = 'button';
+        dot.setAttribute('role', 'tab');
+        dot.setAttribute('aria-label', `Foto ${index + 1} de ${photos.length}`);
+        dot.setAttribute('aria-selected', String(index === 0));
+        return dot;
+      }));
+      bindGalleryItems();
+      galleryCarousel.scrollLeft = 0;
+      showFeedback(galleryStatus, {
+        icon: photos.length ? '\u2726' : '\u2661',
+        title: photos.length ? 'Álbum atualizado' : 'Álbum vazio',
+        text: photos.length ? `${photos.length} foto${photos.length === 1 ? '' : 's'} publicada${photos.length === 1 ? '' : 's'}.` : 'Novas fotos aparecerão aqui quando forem publicadas.'
+      });
+    };
+
+    bindGalleryItems();
+    fetch('/api/gallery')
+      .then((response) => response.ok ? response.json() : null)
+      .then((data) => {
+        if (data?.active === true && Array.isArray(data.photos)) renderPublicGallery(data.photos);
+      })
+      .catch(() => {});
+
+    const formatBRL = (amount) => amount.toLocaleString('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+      maximumFractionDigits: 0
+    });
+
+    const giftStatusLabel = {
+      available: 'Disponivel',
+      reserved: 'Reservado por 24 horas',
+      payment_reported: 'Pagamento em conferencia',
+      confirmed: 'Presente confirmado'
+    };
+
+    const renderGiftCatalog = (gifts) => {
+      if (!Array.isArray(gifts)) return;
+      currentGiftCatalog = gifts;
+      if (!gifts.length) {
+        giftList.innerHTML = '<p class="gift-catalog-empty">A lista de presentes sera atualizada em breve.</p>';
+        giftRows = [];
+        applyGiftCatalog();
+        renderCart();
+        return;
+      }
+      giftList.innerHTML = gifts.map((gift) => {
+        const status = gift.status || 'available';
+        const isAvailable = status === 'available';
+        const buttonLabel = isAvailable ? 'Presentear' : giftStatusLabel[status] || 'Indisponivel';
+        return `<article class="gift-item" data-category="${escapeHtml(gift.category)}" data-featured="${Number(gift.featured) || 99}" data-gift-id="${escapeHtml(gift.id)}" data-gift-name="${escapeHtml(gift.name)}" data-gift-price="${Number(gift.price) || 0}" data-gift-status="${escapeHtml(status)}" data-payment-url="${escapeHtml(gift.paymentUrl || '')}" data-expires-at="${escapeHtml(gift.expiresAt || '')}">
+          <div class="gift-item__media"><img src="${escapeHtml(gift.imageUrl || 'image.png')}" alt="${escapeHtml(gift.name)}" loading="lazy">${gift.badge ? `<span class="gift-item__badge">${escapeHtml(gift.badge)}</span>` : ''}<span class="gift-item__number">${String(Number(gift.featured) || 0).padStart(2, '0')}</span></div>
+          <div class="gift-item__content"><h3>${escapeHtml(gift.name)}</h3><p>${escapeHtml(gift.description)}</p><span class="gift-item__price">${formatBRL(Number(gift.price) || 0)}</span></div>
+          ${isAvailable ? `<button class="gift-item__add" type="button"><span>Presentear</span><b>+</b></button>` : `<p class="gift-item__status">${escapeHtml(buttonLabel)}</p>`}
+        </article>`;
+      }).join('');
+      giftRows = [...giftList.querySelectorAll('.gift-item')];
+      applyGiftCatalog();
+      renderCart();
+    };
+
+    const loadGiftCatalog = async () => {
+      try {
+        const data = await apiRequest('/api/gifts');
+        if (data.gifts?.length) renderGiftCatalog(data.gifts);
+      } catch {
+        // Keep the static catalog visible until Supabase is configured.
+      }
+    };
+
+    const getCartEntries = () => giftRows.map((row) => {
+      const id = row.dataset.giftId;
+      const quantity = cartState.has(id) ? 1 : 0;
+      return {
+        id,
+        name: row.dataset.giftName,
+        price: Number(row.dataset.giftPrice),
+        quantity
+      };
+    }).filter((entry) => entry.quantity > 0);
+
+    const getCartTotal = (entries) => entries.reduce((total, entry) => total + entry.price * entry.quantity, 0);
+
+    const renderCart = () => {
+      const entries = getCartEntries();
+      const itemCount = entries.reduce((total, entry) => total + entry.quantity, 0);
+      const total = getCartTotal(entries);
+
+      cartCount.textContent = String(itemCount);
+      cartSummaryItems.textContent = String(itemCount);
+      cartTotal.textContent = formatBRL(total);
+      checkoutTotal.textContent = formatBRL(total);
+      cartEmpty.hidden = entries.length > 0;
+      goCheckoutButton.disabled = entries.length === 0;
+      cartItems.innerHTML = entries.map((entry) => `
+        <div class="cart-line" data-cart-line="${entry.id}">
+          <div>
+            <h3 class="cart-line__name">${entry.name}</h3>
+            <p class="cart-line__unit">${formatBRL(entry.price)} cada</p>
+            <div class="cart-line__actions">
+              <div class="quantity-control" aria-label="Quantidade de ${entry.name}">
+                <span>1 presente</span>
+              </div>
+              <button class="cart-line__remove" type="button" data-cart-action="remove" data-cart-id="${entry.id}">Remover</button>
+            </div>
+          </div>
+          <strong class="cart-line__total">${formatBRL(entry.price * entry.quantity)}</strong>
+        </div>`).join('');
+    };
+
+    const applyGiftCatalog = () => {
+      const sortValue = giftSort.value;
+      const orderedRows = [...giftRows].sort((firstRow, secondRow) => {
+        if (sortValue === 'price-low') return Number(firstRow.dataset.giftPrice) - Number(secondRow.dataset.giftPrice);
+        if (sortValue === 'price-high') return Number(secondRow.dataset.giftPrice) - Number(firstRow.dataset.giftPrice);
+        return Number(firstRow.dataset.featured) - Number(secondRow.dataset.featured);
+      });
+
+      orderedRows.forEach((row) => {
+        const matchesFilter = activeGiftFilter === 'todos' || row.dataset.category === activeGiftFilter;
+        row.hidden = !matchesFilter;
+        giftList.appendChild(row);
+      });
+
+      const visibleCount = orderedRows.filter((row) => !row.hidden).length;
+      giftResultsCount.textContent = `${visibleCount} ${visibleCount === 1 ? 'produto' : 'produtos'}`;
+    };
+
+    giftFilters.forEach((filterButton) => {
+      filterButton.addEventListener('click', () => {
+        activeGiftFilter = filterButton.dataset.filter;
+        giftFilters.forEach((button) => button.setAttribute('aria-selected', String(button === filterButton)));
+        applyGiftCatalog();
+      });
+    });
+
+    giftSort.addEventListener('change', applyGiftCatalog);
+    applyGiftCatalog();
+
+    const setCartDrawerView = (view) => {
+      const isCheckout = view === 'checkout';
+      cartDrawer.dataset.view = view;
+      cartView.hidden = isCheckout;
+      checkoutView.hidden = !isCheckout;
+      if (isCheckout) resetPaymentResult();
+      if (!isCheckout) hideFeedback(fakePaymentMessage);
+    };
+
+    const openCart = (trigger) => {
+      lastCartTrigger = trigger || openCartButton;
+      renderCart();
+      setCartDrawerView('cart');
+      cartDrawer.classList.add('is-open');
+      cartBackdrop.classList.add('is-open');
+      cartDrawer.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('drawer-open');
+      closeCartButton.focus();
+    };
+
+    const closeCart = () => {
+      cartDrawer.classList.remove('is-open');
+      cartBackdrop.classList.remove('is-open');
+      cartDrawer.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('drawer-open');
+      if (lastCartTrigger) lastCartTrigger.focus();
+    };
+
+    giftList.addEventListener('click', (event) => {
+      const addButton = event.target.closest('.gift-item__add');
+      if (!addButton) return;
+      const row = addButton.closest('.gift-item');
+      if (!row || row.dataset.giftStatus && row.dataset.giftStatus !== 'available') return;
+      cartState.clear();
+      cartState.set(row.dataset.giftId, 1);
+      openCart(addButton);
+    });
+
+    cartItems.addEventListener('click', (event) => {
+      const actionButton = event.target.closest('[data-cart-action]');
+      if (!actionButton) return;
+      const id = actionButton.dataset.cartId;
+      const currentQuantity = cartState.get(id) || 0;
+      const action = actionButton.dataset.cartAction;
+
+      if (action === 'remove' || action === 'decrease' || action === 'increase') cartState.delete(id);
+      renderCart();
+    });
+
+    openCartButton.addEventListener('click', () => openCart(openCartButton));
+    closeCartButton.addEventListener('click', closeCart);
+    cartBackdrop.addEventListener('click', closeCart);
+    backToCartButton.addEventListener('click', () => setCartDrawerView('cart'));
+    goCheckoutButton.addEventListener('click', () => {
+      if (getCartEntries().length > 0) {
+        renderCart();
+        setCartDrawerView('checkout');
+        checkoutView.querySelector('#checkout-name').focus();
+      }
+    });
+
+    const getSelectedGiftRow = () => {
+      const entry = getCartEntries()[0];
+      return entry ? giftRows.find((row) => row.dataset.giftId === entry.id) : null;
+    };
+
+    const resetPaymentResult = () => {
+      currentClaimToken = '';
+      paymentResult.hidden = true;
+      openPaymentLink.hidden = true;
+      reportPaymentButton.hidden = true;
+      reserveGiftButton.hidden = false;
+      reserveGiftButton.disabled = false;
+      reserveGiftButton.querySelector('span').textContent = 'Reservar e abrir Mercado Pago';
+      hideFeedback(fakePaymentMessage);
+    };
+
+    const showPaymentResult = ({ claim, payment }, paymentWindow) => {
+      currentClaimToken = claim.claimToken;
+      reserveGiftButton.disabled = true;
+      reserveGiftButton.querySelector('span').textContent = 'Reserva criada';
+      paymentResultTitle.textContent = 'Presente reservado!';
+      paymentResultText.textContent = `A reserva fica ativa por 24 horas. O Mercado Pago foi aberto em uma nova aba. Depois de pagar, avise o casal para que eles possam confirmar o recebimento.`;
+      openPaymentLink.href = payment.paymentUrl || '#';
+      openPaymentLink.hidden = !payment.paymentUrl;
+      reportPaymentButton.hidden = false;
+      paymentResult.hidden = false;
+      if (paymentWindow && payment.paymentUrl) {
+        paymentWindow.location.href = payment.paymentUrl;
+      }
+    };
+
+    checkoutView.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (currentClaimToken) return;
+      const row = getSelectedGiftRow();
+      if (!row) return;
+      const paymentWindow = window.open('about:blank', '_blank');
+      reserveGiftButton.disabled = true;
+      reserveGiftButton.querySelector('span').textContent = 'Reservando...';
+      try {
+        const data = await apiRequest('/api/gift-claims', {
+          method: 'POST',
+          body: JSON.stringify({
+            giftId: row.dataset.giftId,
+            name: document.querySelector('#checkout-name').value.trim(),
+            email: document.querySelector('#checkout-email').value.trim()
+          })
+        });
+        showPaymentResult(data, paymentWindow);
+        row.dataset.giftStatus = 'reserved';
+        row.querySelector('.gift-item__add')?.remove();
+        const status = document.createElement('p');
+        status.className = 'gift-item__status';
+        status.textContent = 'Reservado por 24 horas';
+        row.appendChild(status);
+      } catch (error) {
+        paymentWindow?.close();
+        reserveGiftButton.disabled = false;
+        reserveGiftButton.querySelector('span').textContent = 'Reservar e abrir Mercado Pago';
+        showFeedback(fakePaymentMessage, { icon: '!', title: 'Nao foi possivel reservar', text: error.message });
+      }
+    });
+
+    reportPaymentButton.addEventListener('click', async () => {
+      if (!currentClaimToken) return;
+      reportPaymentButton.disabled = true;
+      try {
+        await apiRequest('/api/gift-claims', {
+          method: 'POST',
+          body: JSON.stringify({ action: 'paid', claimToken: currentClaimToken, paymentNote: document.querySelector('#payment-note').value.trim() })
+        });
+        reportPaymentButton.textContent = 'Pagamento avisado';
+        showFeedback(fakePaymentMessage, { icon: '\u2713', title: 'Aviso recebido!', text: 'O casal vai conferir o pagamento e atualizar a lista.' });
+      } catch (error) {
+        reportPaymentButton.disabled = false;
+        showFeedback(fakePaymentMessage, { icon: '!', title: 'Nao foi possivel avisar', text: error.message });
+      }
+    });
+
+    renderCart();
+    loadGiftCatalog();
+
+    galleryLightbox.querySelectorAll('[data-lightbox-close]').forEach((element) => {
+      element.addEventListener('click', closeGalleryLightbox);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && galleryLightbox.classList.contains('is-open')) {
+        closeGalleryLightbox();
+      } else if (event.key === 'Escape' && cartDrawer.classList.contains('is-open')) {
+        closeCart();
+      }
+    });
+
+    const updateCompanionFields = () => {
+      const count = Number(companionCount.value) || 0;
+      companionFields.hidden = count === 0;
+      companionInputs.forEach((input, index) => {
+        const visible = index < count;
+        input.hidden = !visible;
+        input.required = visible;
+      });
+    };
+
+    companionCount.addEventListener('change', updateCompanionFields);
+    dietaryOtherToggle.addEventListener('change', () => {
+      dietaryOther.hidden = !dietaryOtherToggle.checked;
+      dietaryOtherText.required = dietaryOtherToggle.checked;
+    });
+    updateCompanionFields();
+
+    const populateRsvpForm = (rsvp) => {
+      document.querySelector('#name').value = rsvp.name || '';
+      document.querySelector('#email').value = rsvp.email || '';
+      const attendanceInput = document.querySelector(`input[name="attendance"][value="${rsvp.attendance}"]`);
+      if (attendanceInput) attendanceInput.checked = true;
+      companionCount.value = String(Math.min(4, rsvp.companionCount || 0));
+      companionInputs.forEach((input, index) => { input.value = rsvp.companions?.[index] || ''; });
+      document.querySelectorAll('input[name="dietary"]').forEach((input) => { input.checked = rsvp.dietaryPreferences?.includes(input.value) || false; });
+      dietaryOtherText.value = rsvp.dietaryOther || '';
+      dietaryOtherToggle.checked = rsvp.dietaryPreferences?.includes('outro') || Boolean(rsvp.dietaryOther);
+      dietaryOther.hidden = !dietaryOtherToggle.checked;
+      dietaryOtherText.required = dietaryOtherToggle.checked;
+      rsvpConsent.checked = true;
+      updateCompanionFields();
+      rsvpForm.dataset.editing = 'true';
+      rsvpSubmitButton.querySelector('span').textContent = 'Atualizar confirma\u00e7\u00e3o';
+    };
+
+    const loadRsvpForEdit = async () => {
+      const token = new URLSearchParams(window.location.search).get('rsvp_token');
+      if (!token) return;
+      try {
+        const data = await apiRequest(`/api/rsvp?token=${encodeURIComponent(token)}`);
+        populateRsvpForm(data.rsvp);
+        rsvpEditToken.value = token;
+        document.querySelector('#rsvp').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } catch {
+        // The normal RSVP form remains available if the edit link has expired or is invalid.
+      }
+    };
+
+    rsvpForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (isRsvpProcessing) return;
+
+      const name = document.querySelector('#name').value.trim();
+      const attendance = document.querySelector('input[name="attendance"]:checked');
+      const companionNames = companionInputs.slice(0, Number(companionCount.value) || 0).map((input) => input.value.trim());
+      const message = document.querySelector('#form-message');
+      if (companionNames.some((companion) => !companion)) {
+        showFeedback(message, { icon: '!', title: 'Falta um nome', text: 'Preencha o nome de cada acompanhante ou ajuste a quantidade.' });
+        return;
+      }
+
+      isRsvpProcessing = true;
+      rsvpFields.hidden = true;
+      rsvpSubmitButton.hidden = true;
+      rsvpLoading.hidden = false;
+      hideFeedback(message);
+      window.requestAnimationFrame(() => rsvpLoading.classList.add('is-visible'));
+
+      try {
+        const data = await apiRequest('/api/rsvp', {
+          method: 'POST',
+          body: JSON.stringify({
+            name,
+            email: document.querySelector('#email').value.trim(),
+            attendance: attendance?.value,
+            companions: companionNames,
+            dietaryPreferences: [...document.querySelectorAll('input[name="dietary"]:checked')].map((input) => input.value),
+            dietaryOther: dietaryOtherText.value.trim(),
+            consent: rsvpConsent.checked,
+            editToken: rsvpEditToken.value
+          })
+        });
+        rsvpLoading.classList.remove('is-visible');
+        rsvpLoading.hidden = true;
+        rsvpForm.classList.add('is-complete');
+        const isAttending = attendance?.value === 'sim';
+        showFeedback(message, {
+          icon: isAttending ? '\u2726' : '\u2661',
+          title: isAttending ? 'Que alegria ter voc\u00ea com a gente!' : `Obrigado por avisar, ${name}.`,
+          text: data.emailSent === false ? 'Sua resposta foi salva. O e-mail com o link de edi\xe7\xe3o ser\xe1 ativado quando o remetente estiver configurado.' : 'Enviamos um link para o seu e-mail caso voc\xea precise atualizar a resposta.'
+        });
+        event.target.reset();
+        rsvpEditToken.value = '';
+        rsvpForm.dataset.editing = 'false';
+        rsvpSubmitButton.querySelector('span').textContent = 'Enviar confirma\xe7\xe3o';
+        updateCompanionFields();
+        dietaryOther.hidden = true;
+        dietaryOtherText.required = false;
+        message.focus({ preventScroll: true });
+      } catch (error) {
+        rsvpLoading.classList.remove('is-visible');
+        rsvpLoading.hidden = true;
+        rsvpFields.hidden = false;
+        rsvpSubmitButton.hidden = false;
+        isRsvpProcessing = false;
+        showFeedback(message, { icon: '!', title: 'Nao foi possivel enviar', text: error.message });
+        return;
+      }
+      isRsvpProcessing = false;
+    });
+
+    loadRsvpForEdit();
+  </script>
+</body>
+</html>
