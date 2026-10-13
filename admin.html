@@ -130,6 +130,36 @@
     .gallery-admin-row { grid-template-columns: 82px minmax(0, 1fr); }
     .gallery-admin-row img { width: 82px; height: 82px; }
     .gallery-help { color: var(--muted); font-size: .78rem; line-height: 1.5; }
+    .gallery-admin-row__copy { min-width: 0; }
+    .gallery-admin-row__copy strong { display: block; margin-bottom: 4px; }
+    .gallery-admin-row__copy small { display: block; color: var(--muted); }
+
+    .gallery-editor {
+      width: min(760px, calc(100% - 24px));
+      max-height: calc(100dvh - 24px);
+      padding: 24px;
+      border: 1px solid var(--line);
+      color: var(--ink);
+      background: var(--paper);
+      box-shadow: 0 24px 80px rgba(21, 29, 24, .28);
+      overflow: auto;
+    }
+    .gallery-editor::backdrop { background: rgba(20, 28, 23, .72); }
+    .gallery-editor__header { display: flex; align-items: start; justify-content: space-between; gap: 18px; margin-bottom: 18px; }
+    .gallery-editor__header h2 { margin: 0; font: 500 2rem/1 var(--serif); }
+    .gallery-editor__close { border: 0; padding: 0 4px; color: var(--muted); background: transparent; font-size: 1.8rem; line-height: 1; cursor: pointer; }
+    .gallery-editor__stage { position: relative; width: min(100%, 680px); aspect-ratio: 1.25; margin: 0 auto 16px; overflow: hidden; background: var(--olive-dark); touch-action: none; cursor: grab; }
+    .gallery-editor__stage:active { cursor: grabbing; }
+    .gallery-editor__stage img { position: absolute; top: 50%; left: 50%; max-width: none; max-height: none; transform-origin: center; pointer-events: none; }
+    .gallery-editor__caption { position: absolute; z-index: 1; right: 20px; bottom: 18px; left: 20px; display: grid; gap: 4px; color: var(--paper); pointer-events: none; }
+    .gallery-editor__caption span { color: var(--sun); font-size: .61rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; }
+    .gallery-editor__caption strong { font: 600 1.35rem/1.1 var(--serif); }
+    .gallery-editor__help { margin: 0; color: var(--muted); font-size: .78rem; text-align: center; }
+    .gallery-editor__zoom { display: grid; grid-template-columns: 1fr auto; gap: 4px 14px; align-items: center; margin: 18px 0; }
+    .gallery-editor__zoom label { font-size: .8rem; font-weight: 700; }
+    .gallery-editor__zoom input { grid-column: 1; width: 100%; accent-color: var(--olive-dark); }
+    .gallery-editor__zoom output { grid-column: 2; grid-row: 1 / span 2; color: var(--muted); font-size: .78rem; }
+    .gallery-editor__actions { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; margin-top: 16px; }
 
     @media (max-width: 980px) {
       .dashboard-grid { grid-template-columns: 1fr; }
@@ -222,6 +252,31 @@
     </section>
   </main>
 
+  <dialog class="gallery-editor" id="gallery-editor" aria-labelledby="gallery-editor-title">
+    <div class="gallery-editor__header">
+      <div><p class="eyebrow">Ajuste da imagem</p><h2 id="gallery-editor-title">Editar foto</h2></div>
+      <button class="gallery-editor__close" id="gallery-editor-close" type="button" aria-label="Fechar editor">&times;</button>
+    </div>
+    <div class="gallery-editor__stage" id="gallery-editor-stage" tabindex="0" role="img" aria-label="Prévia da foto. Arraste para ajustar a posição ou use as setas do teclado.">
+      <img id="gallery-editor-image" alt="">
+      <div class="gallery-editor__caption"><span id="gallery-editor-subtitle-preview"></span><strong id="gallery-editor-title-preview"></strong></div>
+    </div>
+    <p class="gallery-editor__help">Arraste a foto para posicioná-la. Use as setas do teclado quando a prévia estiver selecionada.</p>
+    <div class="field"><label for="gallery-editor-title-input">Título</label><input id="gallery-editor-title-input" maxlength="140" required></div>
+    <div class="field"><label for="gallery-editor-subtitle-input">Subtítulo (opcional)</label><input id="gallery-editor-subtitle-input" maxlength="240"></div>
+    <div class="gallery-editor__zoom">
+      <label for="gallery-editor-zoom">Zoom</label>
+      <input id="gallery-editor-zoom" type="range" min="0.01" max="3" step="0.01">
+      <output id="gallery-editor-zoom-value" for="gallery-editor-zoom"></output>
+    </div>
+    <p class="gallery-help">No zoom mínimo, a foto inteira aparece e o fundo do cartão fica visível nas bordas. O lightbox continua exibindo a imagem inteira.</p>
+    <p class="notice" id="gallery-editor-notice" role="status" aria-live="polite"></p>
+    <div class="gallery-editor__actions">
+      <button class="button button--small button--quiet" id="gallery-editor-reset" type="button">Repor enquadramento</button>
+      <div class="button-row"><button class="button button--small button--quiet" id="gallery-editor-cancel" type="button">Cancelar</button><button class="button button--small" id="gallery-editor-save" type="button">Salvar</button></div>
+    </div>
+  </dialog>
+
   <script>
     const loginView = document.querySelector('#login-view');
     const dashboardView = document.querySelector('#dashboard-view');
@@ -241,8 +296,22 @@
     const galleryNotice = document.querySelector('#gallery-notice');
     const galleryFilesInput = document.querySelector('#gallery-files');
     const galleryUploadButton = document.querySelector('#gallery-upload');
+    const galleryEditor = document.querySelector('#gallery-editor');
+    const galleryEditorStage = document.querySelector('#gallery-editor-stage');
+    const galleryEditorImage = document.querySelector('#gallery-editor-image');
+    const galleryEditorTitleInput = document.querySelector('#gallery-editor-title-input');
+    const galleryEditorSubtitleInput = document.querySelector('#gallery-editor-subtitle-input');
+    const galleryEditorTitlePreview = document.querySelector('#gallery-editor-title-preview');
+    const galleryEditorSubtitlePreview = document.querySelector('#gallery-editor-subtitle-preview');
+    const galleryEditorZoom = document.querySelector('#gallery-editor-zoom');
+    const galleryEditorZoomValue = document.querySelector('#gallery-editor-zoom-value');
+    const galleryEditorNotice = document.querySelector('#gallery-editor-notice');
+    const galleryEditorSave = document.querySelector('#gallery-editor-save');
     let galleryQueue = [];
     let galleryBusy = false;
+    let editingGalleryPhoto = null;
+    let editorFraming = { zoom: 1, x: 0, y: 0 };
+    let editorDrag = null;
     let dashboardData = { rsvps: [], claims: [], gifts: [], gallery: [], settings: {} };
 
     const escapeHtml = (value) => String(value ?? '').replace(/[&<>'"]/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[character]));
@@ -335,6 +404,159 @@
       renderGallery();
     };
 
+    const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+    const getFramingLayout = (frame, image) => {
+      const frameRect = frame.getBoundingClientRect();
+      const width = frameRect.width;
+      const height = frameRect.height;
+      if (!width || !height || !image.naturalWidth || !image.naturalHeight) return null;
+      const imageRatio = image.naturalWidth / image.naturalHeight;
+      const frameRatio = width / height;
+      const fitWidth = imageRatio > frameRatio ? width : height * imageRatio;
+      const fitHeight = imageRatio > frameRatio ? width / imageRatio : height;
+      return {
+        fitWidth,
+        fitHeight,
+        coverZoom: Math.max(width / fitWidth, height / fitHeight),
+        width,
+        height
+      };
+    };
+
+    const drawFramedImage = (frame, image, framing) => {
+      const layout = getFramingLayout(frame, image);
+      if (!layout) return null;
+      const scale = layout.coverZoom * framing.zoom;
+      const maxX = Math.abs(layout.fitWidth * scale - layout.width) / 2;
+      const maxY = Math.abs(layout.fitHeight * scale - layout.height) / 2;
+      const offsetX = clamp(framing.x, -1, 1) * maxX;
+      const offsetY = clamp(framing.y, -1, 1) * maxY;
+      image.style.width = `${layout.fitWidth}px`;
+      image.style.height = `${layout.fitHeight}px`;
+      image.style.left = `calc(50% + ${offsetX}px)`;
+      image.style.top = `calc(50% + ${offsetY}px)`;
+      image.style.marginLeft = `${-layout.fitWidth / 2}px`;
+      image.style.marginTop = `${-layout.fitHeight / 2}px`;
+      image.style.transform = `scale(${scale})`;
+      return { ...layout, maxX, maxY };
+    };
+
+    const renderGalleryEditorPreview = () => {
+      if (!editingGalleryPhoto || !galleryEditorImage.naturalWidth) return null;
+      const layout = getFramingLayout(galleryEditorStage, galleryEditorImage);
+      if (!layout) return null;
+      const minZoom = Math.max(0.01, 1 / layout.coverZoom);
+      editorFraming.zoom = clamp(editorFraming.zoom, minZoom, 3);
+      galleryEditorZoom.min = String(minZoom);
+      galleryEditorZoom.value = String(editorFraming.zoom);
+      const drawn = drawFramedImage(galleryEditorStage, galleryEditorImage, editorFraming);
+      galleryEditorZoomValue.textContent = editorFraming.zoom <= minZoom + 0.005
+        ? 'Foto inteira'
+        : `${editorFraming.zoom.toFixed(2)}×`;
+      galleryEditorTitlePreview.textContent = galleryEditorTitleInput.value.trim();
+      galleryEditorSubtitlePreview.textContent = galleryEditorSubtitleInput.value.trim();
+      galleryEditorSubtitlePreview.hidden = !galleryEditorSubtitlePreview.textContent;
+      return drawn;
+    };
+
+    const galleryEditorResizeObserver = new ResizeObserver(renderGalleryEditorPreview);
+    galleryEditorResizeObserver.observe(galleryEditorStage);
+
+    const openGalleryEditor = (photo) => {
+      editingGalleryPhoto = photo;
+      editorFraming = {
+        zoom: Number(photo.framing_zoom) || 1,
+        x: Number(photo.framing_x) || 0,
+        y: Number(photo.framing_y) || 0
+      };
+      galleryEditorTitleInput.value = photo.title || '';
+      galleryEditorSubtitleInput.value = photo.subtitle || '';
+      galleryEditorImage.onload = () => {
+        galleryEditorSave.disabled = false;
+        renderGalleryEditorPreview();
+      };
+      galleryEditorImage.onerror = () => {
+        galleryEditorSave.disabled = true;
+        showNotice(galleryEditorNotice, 'Nao foi possivel carregar a foto para edicao.', 'error');
+      };
+      galleryEditorImage.src = photo.public_url;
+      galleryEditorImage.alt = photo.title || '';
+      galleryEditorSave.disabled = true;
+      showNotice(galleryEditorNotice, '');
+      galleryEditor.showModal();
+      if (galleryEditorImage.complete && galleryEditorImage.naturalWidth) galleryEditorSave.disabled = false;
+      requestAnimationFrame(renderGalleryEditorPreview);
+      galleryEditorTitleInput.focus();
+    };
+
+    document.querySelector('#gallery-editor-close').addEventListener('click', () => galleryEditor.close());
+    document.querySelector('#gallery-editor-cancel').addEventListener('click', () => galleryEditor.close());
+    galleryEditorTitleInput.addEventListener('input', renderGalleryEditorPreview);
+    galleryEditorSubtitleInput.addEventListener('input', renderGalleryEditorPreview);
+    galleryEditorZoom.addEventListener('input', () => {
+      editorFraming.zoom = Number(galleryEditorZoom.value);
+      renderGalleryEditorPreview();
+    });
+    document.querySelector('#gallery-editor-reset').addEventListener('click', () => {
+      editorFraming = { zoom: 1, x: 0, y: 0 };
+      renderGalleryEditorPreview();
+    });
+    galleryEditorStage.addEventListener('pointerdown', (event) => {
+      if (!editingGalleryPhoto || !galleryEditorImage.naturalWidth) return;
+      editorDrag = { clientX: event.clientX, clientY: event.clientY };
+      galleryEditorStage.setPointerCapture(event.pointerId);
+    });
+    galleryEditorStage.addEventListener('pointermove', (event) => {
+      if (!editorDrag) return;
+      const layout = renderGalleryEditorPreview();
+      if (layout?.maxX) editorFraming.x = clamp(editorFraming.x + (event.clientX - editorDrag.clientX) / layout.maxX, -1, 1);
+      if (layout?.maxY) editorFraming.y = clamp(editorFraming.y + (event.clientY - editorDrag.clientY) / layout.maxY, -1, 1);
+      editorDrag = { clientX: event.clientX, clientY: event.clientY };
+      renderGalleryEditorPreview();
+    });
+    ['pointerup', 'pointercancel', 'lostpointercapture'].forEach((type) => {
+      galleryEditorStage.addEventListener(type, () => { editorDrag = null; });
+    });
+    galleryEditorStage.addEventListener('keydown', (event) => {
+      const adjustments = { ArrowLeft: [-0.05, 0], ArrowRight: [0.05, 0], ArrowUp: [0, -0.05], ArrowDown: [0, 0.05] };
+      const adjustment = adjustments[event.key];
+      if (!adjustment) return;
+      event.preventDefault();
+      editorFraming.x = clamp(editorFraming.x + adjustment[0], -1, 1);
+      editorFraming.y = clamp(editorFraming.y + adjustment[1], -1, 1);
+      renderGalleryEditorPreview();
+    });
+    galleryEditorSave.addEventListener('click', async () => {
+      if (!editingGalleryPhoto || !galleryEditorTitleInput.reportValidity()) return;
+      galleryEditorSave.disabled = true;
+      showNotice(galleryEditorNotice, 'Salvando ajustes...');
+      try {
+        await request('/api/gallery', {
+          method: 'PATCH',
+          body: JSON.stringify({
+            action: 'update',
+            id: editingGalleryPhoto.id,
+            title: galleryEditorTitleInput.value.trim(),
+            subtitle: galleryEditorSubtitleInput.value.trim(),
+            framingZoom: editorFraming.zoom,
+            framingX: editorFraming.x,
+            framingY: editorFraming.y
+          })
+        });
+        galleryEditor.close();
+        editingGalleryPhoto = null;
+        try {
+          await loadDashboard();
+          showNotice(galleryNotice, 'Foto atualizada.', 'success');
+        } catch (error) {
+          showNotice(galleryNotice, error.message, 'error');
+        }
+      } catch (error) {
+        galleryEditorSave.disabled = false;
+        showNotice(galleryEditorNotice, error.message, 'error');
+      }
+    });
+
     const loadDashboard = async () => {
       dashboardData = await request('/api/admin/data');
       loginView.hidden = true;
@@ -365,11 +587,10 @@
       galleryAdminList.innerHTML = dashboardData.gallery.map((photo, index) => `<article class="gallery-admin-row" data-gallery-id="${escapeHtml(photo.id)}">
         <img src="${escapeHtml(photo.public_url)}" alt="">
         <div class="gallery-admin-row__fields">
-          <input type="text" maxlength="140" required aria-label="Título da imagem" data-photo-field="title" value="${escapeHtml(photo.title)}">
-          <input type="text" maxlength="240" aria-label="Subtítulo da imagem" data-photo-field="subtitle" value="${escapeHtml(photo.subtitle || '')}" placeholder="Subtítulo (opcional)">
+          <div class="gallery-admin-row__copy"><strong>${escapeHtml(photo.title)}</strong><small>${escapeHtml(photo.subtitle || 'Sem subtítulo')}</small></div>
           <p class="gallery-queue-row__meta">${index + 1} de ${dashboardData.gallery.length}</p>
           <div class="gallery-admin-row__actions">
-            <button class="button button--small button--quiet gallery-save" type="button">Salvar texto</button>
+            <button class="button button--small button--quiet gallery-edit" type="button">Editar foto</button>
             <button class="button button--small button--quiet gallery-move" type="button" data-direction="-1" ${index === 0 ? 'disabled' : ''}>Subir</button>
             <button class="button button--small button--quiet gallery-move" type="button" data-direction="1" ${index === dashboardData.gallery.length - 1 ? 'disabled' : ''}>Descer</button>
             <button class="button button--small button--danger gallery-delete" type="button">Excluir</button>
@@ -452,15 +673,7 @@
       if (!row) return;
       const id = row.dataset.galleryId;
       const photo = dashboardData.gallery.find((entry) => entry.id === id);
-      if (event.target.closest('.gallery-save')) {
-        const title = row.querySelector('[data-photo-field="title"]').value.trim();
-        const subtitle = row.querySelector('[data-photo-field="subtitle"]').value.trim();
-        try {
-          await request('/api/gallery', { method: 'PATCH', body: JSON.stringify({ action: 'update', id, title, subtitle }) });
-          await loadDashboard();
-          showNotice(galleryNotice, 'Texto da imagem atualizado.', 'success');
-        } catch (error) { showNotice(galleryNotice, error.message, 'error'); }
-      }
+      if (event.target.closest('.gallery-edit') && photo) openGalleryEditor(photo);
       const moveButton = event.target.closest('.gallery-move');
       if (moveButton) {
         const photos = [...dashboardData.gallery];
