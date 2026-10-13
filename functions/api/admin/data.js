@@ -45,7 +45,7 @@ const getDashboardData = async (env) => {
     supabaseGet(env, 'gift_claims', '?select=id,gift_id,guest_name,guest_email,payment_method,status,payment_note,reserved_at,expires_at,payment_reported_at,confirmed_at,created_at,updated_at&order=created_at.desc'),
     supabaseGet(env, 'gifts', '?select=id,name,category,description,price,image_url,badge,featured,payment_url,available&order=featured.asc'),
     supabaseGet(env, 'settings', '?select=key,value'),
-    supabaseGetAll(env, 'gallery_photos', '?select=id,storage_path,title,subtitle,position,created_at&order=position.asc,created_at.asc,id.asc')
+    supabaseGetAll(env, 'gallery_photos', '?select=id,storage_path,title,subtitle,position,framing_zoom,framing_x,framing_y,created_at&order=position.asc,created_at.asc,id.asc')
   ]);
   const giftsById = new Map(gifts.map((gift) => [gift.id, gift]));
   const globalReopenSetting = settings.find((setting) => setting.key === 'rsvp_global_reopen');

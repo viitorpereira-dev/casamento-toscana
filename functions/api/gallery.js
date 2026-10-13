@@ -25,7 +25,7 @@ const requireSession = async (request, env) => {
   if (!(await requireAdmin(request, env))) throw new Response('Unauthorized', { status: 401 });
 };
 
-const galleryRows = (env) => supabaseGetAll(env, 'gallery_photos', '?select=id,storage_path,title,subtitle,position,created_at&order=position.asc,created_at.asc,id.asc');
+const galleryRows = (env) => supabaseGetAll(env, 'gallery_photos', '?select=id,storage_path,title,subtitle,position,framing_zoom,framing_x,framing_y,created_at&order=position.asc,created_at.asc,id.asc');
 
 const storageRequest = async (env, path, options = {}) => {
   if (!env.SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY) throw new Error('Supabase is not configured');
@@ -114,9 +114,20 @@ const updatePhoto = async (env, body) => {
   const subtitle = normalizeText(body.subtitle, 240);
   if (!UUID_PATTERN.test(id)) return errorResponse('Imagem invalida.', 422);
   if (!title) return errorResponse('Informe o titulo da imagem.', 422);
-  const rows = await supabasePatch(env, 'gallery_photos', `?id=eq.${encodeURIComponent(id)}&select=id,storage_path,title,subtitle,position,created_at`, {
+  const framingZoom = Number(body.framingZoom);
+  const framingX = Number(body.framingX);
+  const framingY = Number(body.framingY);
+  if (!Number.isFinite(framingZoom) || framingZoom < 0.01 || framingZoom > 3
+      || !Number.isFinite(framingX) || framingX < -1 || framingX > 1
+      || !Number.isFinite(framingY) || framingY < -1 || framingY > 1) {
+    return errorResponse('O enquadramento da imagem e invalido.', 422);
+  }
+  const rows = await supabasePatch(env, 'gallery_photos', `?id=eq.${encodeURIComponent(id)}&select=id,storage_path,title,subtitle,position,framing_zoom,framing_x,framing_y,created_at`, {
     title,
-    subtitle: subtitle || null
+    subtitle: subtitle || null,
+    framing_zoom: framingZoom,
+    framing_x: framingX,
+    framing_y: framingY
   });
   if (!rows.length) return errorResponse('Imagem nao encontrada.', 404);
   return json({ ok: true, photo: rows[0] });
