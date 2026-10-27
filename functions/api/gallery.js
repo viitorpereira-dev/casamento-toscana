@@ -1,3 +1,4 @@
+import { albumFilter, albumForPhoto, requestAlbum } from '../_albums.js';
 import {
   errorResponse,
   handleUnexpectedError,
@@ -25,7 +26,7 @@ const requireSession = async (request, env) => {
   if (!(await requireAdmin(request, env))) throw new Response('Unauthorized', { status: 401 });
 };
 
-const galleryRows = (env) => supabaseGetAll(env, 'gallery_photos', '?select=id,storage_path,title,subtitle,position,framing_zoom,framing_x,framing_y,created_at&order=position.asc,created_at.asc,id.asc');
+const galleryRows = (env, album) => supabaseGetAll(env, 'gallery_photos', '?select=id,storage_path,title,subtitle,position,framing_zoom,framing_x,framing_y,created_at&order=position.asc,created_at.asc,id.asc' + (album ? albumFilter(album) : ''));
 
 const storageRequest = async (env, path, options = {}) => {
   if (!env.SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY) throw new Error('Supabase is not configured');
@@ -61,7 +62,7 @@ const validateImage = async (file) => {
   return { bytes, extension: descriptor.extension };
 };
 
-const publishPhoto = async (request, env) => {
+const publishPhoto = async (request, env, album) => {
   const form = await request.formData();
   const file = form.get('file');
   const title = normalizeText(form.get('title'), 140);
@@ -76,8 +77,9 @@ const publishPhoto = async (request, env) => {
   }
 
   const id = crypto.randomUUID();
-  const path = `${id}.${validated.extension}`;
+  const path = `${album === 'story' ? 'story/' : ''}${id}.${validated.extension}`;
   try {
+    // Allocate positions across both albums to preserve existing database constraints.
     const existingPhotos = await galleryRows(env);
     const position = existingPhotos.reduce((maximum, photo) => Math.max(maximum, Number(photo.position) || 0), -1) + 1;
     await storageRequest(env, storageObjectPath(path), {
@@ -94,8 +96,9 @@ const publishPhoto = async (request, env) => {
         subtitle: subtitle || null,
         position
       }, '?select=id,storage_path,title,subtitle,position,created_at');
-      const active = await supabasePost(env, 'gallery_state', { id: 1, is_active: true }, '?on_conflict=id', 'resolution=merge-duplicates,return=minimal');
-      void active;
+      if (album === 'travel') {
+        await supabasePost(env, 'gallery_state', { id: 1, is_active: true }, '?on_conflict=id', 'resolution=merge-duplicates,return=minimal');
+      }
     } catch (error) {
       await supabaseDelete(env, 'gallery_photos', `?id=eq.${encodeURIComponent(id)}`).catch(() => {});
       await storageRequest(env, storageObjectPath(path), { method: 'DELETE' }).catch(() => {});
@@ -108,7 +111,7 @@ const publishPhoto = async (request, env) => {
   }
 };
 
-const updatePhoto = async (env, body) => {
+const updatePhoto = async (env, body, album) => {
   const id = normalizeText(body.id, 36);
   const title = normalizeText(body.title, 140);
   const subtitle = normalizeText(body.subtitle, 240);
@@ -122,7 +125,7 @@ const updatePhoto = async (env, body) => {
       || !Number.isFinite(framingY) || framingY < -1 || framingY > 1) {
     return errorResponse('O enquadramento da imagem e invalido.', 422);
   }
-  const rows = await supabasePatch(env, 'gallery_photos', `?id=eq.${encodeURIComponent(id)}&select=id,storage_path,title,subtitle,position,framing_zoom,framing_x,framing_y,created_at`, {
+  const rows = await supabasePatch(env, 'gallery_photos', `?id=eq.${encodeURIComponent(id)}&select=id,storage_path,title,subtitle,position,framing_zoom,framing_x,framing_y,created_at${albumFilter(album)}`, {
     title,
     subtitle: subtitle || null,
     framing_zoom: framingZoom,
@@ -133,11 +136,20 @@ const updatePhoto = async (env, body) => {
   return json({ ok: true, photo: rows[0] });
 };
 
-const reorderPhotos = async (env, body) => {
+const reorderPhotos = async (env, body, album) => {
   if (!Array.isArray(body.ids) || body.ids.some((id) => !UUID_PATTERN.test(String(id))) || new Set(body.ids).size !== body.ids.length) {
     return errorResponse('A ordem enviada e invalida.', 422);
   }
-  await supabaseRequestRpc(env, 'reorder_gallery_photos', { photo_ids: body.ids });
+  const photos = await galleryRows(env);
+  const selected = photos.filter((photo) => albumForPhoto(photo) === album);
+  const selectedIds = new Set(selected.map((photo) => photo.id));
+  if (body.ids.length !== selected.length || body.ids.some((id) => !selectedIds.has(id))) {
+    return errorResponse('As fotos do album mudaram. Atualize a pagina e tente novamente.', 409);
+  }
+  // The existing RPC receives the full gallery; keep the other album's order intact.
+  const otherIds = photos.filter((photo) => albumForPhoto(photo) !== album).map((photo) => photo.id);
+  const ids = album === 'story' ? [...otherIds, ...body.ids] : [...body.ids, ...otherIds];
+  await supabaseRequestRpc(env, 'reorder_gallery_photos', { photo_ids: ids });
   return json({ ok: true });
 };
 
@@ -155,33 +167,35 @@ const supabaseRequestRpc = async (env, name, payload) => {
   if (!response.ok) throw new Error('Nao foi possivel salvar a ordem da galeria.');
 };
 
-const deletePhoto = async (env, body) => {
+const deletePhoto = async (env, body, album) => {
   const id = normalizeText(body.id, 36);
   if (!UUID_PATTERN.test(id)) return errorResponse('Imagem invalida.', 422);
-  const matches = await supabaseGet(env, 'gallery_photos', `?id=eq.${encodeURIComponent(id)}&select=id,storage_path`);
+  const matches = await supabaseGet(env, 'gallery_photos', `?id=eq.${encodeURIComponent(id)}&select=id,storage_path${albumFilter(album)}`);
   if (!matches.length) return errorResponse('Imagem nao encontrada.', 404);
   await storageRequest(env, storageObjectPath(matches[0].storage_path), { method: 'DELETE' }).catch((error) => {
     if (error.status !== 404) throw error;
   });
-  await supabaseDelete(env, 'gallery_photos', `?id=eq.${encodeURIComponent(id)}`);
+  await supabaseDelete(env, 'gallery_photos', `?id=eq.${encodeURIComponent(id)}${albumFilter(album)}`);
   return json({ ok: true });
 };
 
-export const onRequestGet = async ({ env }) => {
+export const onRequestGet = async ({ request, env }) => {
   try {
+    const album = requestAlbum(request);
     const [state, photos] = await Promise.all([
-      supabaseGet(env, 'gallery_state', '?select=is_active&id=eq.1'),
-      galleryRows(env)
+      album === 'travel' ? supabaseGet(env, 'gallery_state', '?select=is_active&id=eq.1') : [],
+      galleryRows(env, album)
     ]);
     const publicBase = `${env.SUPABASE_URL.replace(/\/$/, '')}/storage/v1/object/public/gallery/`;
     return json({
-      active: state[0]?.is_active === true,
+      active: album === 'story' || state[0]?.is_active === true,
       photos: photos.map((photo) => ({
         ...photo,
         public_url: `${publicBase}${photo.storage_path.split('/').map(encodeURIComponent).join('/')}`
       }))
     });
   } catch (error) {
+    if (error instanceof Response) return errorResponse('Album invalido.', error.status);
     return handleUnexpectedError(error);
   }
 };
@@ -189,9 +203,9 @@ export const onRequestGet = async ({ env }) => {
 export const onRequestPost = async ({ request, env }) => {
   try {
     await requireSession(request, env);
-    return await publishPhoto(request, env);
+    return await publishPhoto(request, env, requestAlbum(request));
   } catch (error) {
-    if (error instanceof Response) return errorResponse('Acesso administrativo necessario.', 401);
+    if (error instanceof Response) return errorResponse(error.status === 401 ? 'Acesso administrativo necessario.' : 'Album invalido.', error.status);
     return handleUnexpectedError(error);
   }
 };
@@ -199,12 +213,13 @@ export const onRequestPost = async ({ request, env }) => {
 export const onRequestPatch = async ({ request, env }) => {
   try {
     await requireSession(request, env);
+    const album = requestAlbum(request);
     const body = await readJson(request);
-    if (body.action === 'update') return await updatePhoto(env, body);
-    if (body.action === 'reorder') return await reorderPhotos(env, body);
+    if (body.action === 'update') return await updatePhoto(env, body, album);
+    if (body.action === 'reorder') return await reorderPhotos(env, body, album);
     return errorResponse('Acao de galeria desconhecida.', 400);
   } catch (error) {
-    if (error instanceof Response) return errorResponse('Acesso administrativo necessario.', 401);
+    if (error instanceof Response) return errorResponse(error.status === 401 ? 'Acesso administrativo necessario.' : 'Album invalido.', error.status);
     return handleUnexpectedError(error);
   }
 };
@@ -212,9 +227,10 @@ export const onRequestPatch = async ({ request, env }) => {
 export const onRequestDelete = async ({ request, env }) => {
   try {
     await requireSession(request, env);
-    return await deletePhoto(env, await readJson(request));
+    return await deletePhoto(env, await readJson(request), requestAlbum(request));
   } catch (error) {
-    if (error instanceof Response) return errorResponse('Acesso administrativo necessario.', 401);
+    if (error instanceof Response) return errorResponse(error.status === 401 ? 'Acesso administrativo necessario.' : 'Album invalido.', error.status);
     return handleUnexpectedError(error);
   }
 };
+

@@ -1,3 +1,4 @@
+import { albumForPhoto } from '../../_albums.js';
 import {
   errorResponse,
   handleUnexpectedError,
@@ -56,6 +57,7 @@ const getDashboardData = async (env) => {
     gifts,
     gallery: gallery.map((photo) => ({
       ...photo,
+      album: albumForPhoto(photo),
       public_url: `${env.SUPABASE_URL.replace(/\/$/, '')}/storage/v1/object/public/gallery/${photo.storage_path.split('/').map(encodeURIComponent).join('/')}`
     })),
     settings: {
@@ -143,3 +145,4 @@ export const onRequestPost = async ({ request, env }) => {
     return handleUnexpectedError(error);
   }
 };
+
