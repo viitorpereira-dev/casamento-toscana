@@ -213,8 +213,10 @@
 
       <div class="dashboard-grid">
         <section class="panel panel--wide">
-          <div class="panel__header"><div><h2>Galeria</h2><p>Publique fotos e gerencie a ordem exibida no convite.</p></div></div>
-          <p class="gallery-help">JPEG, PNG, WebP ou AVIF, até 10 MB por imagem. Revise o título e o subtítulo de cada foto antes de publicar. Uma publicação substitui as seis imagens de demonstração; depois disso, a galeria é gerenciada aqui.</p>
+          <div class="panel__header"><div><h2>Galeria</h2><p>Escolha um álbum para publicar fotos e gerenciar a ordem exibida no convite.</p></div></div>
+          <p class="gallery-help">JPEG, PNG, WebP ou AVIF, até 10 MB por imagem. Revise o título e o subtítulo de cada foto antes de publicar. No Diário de estrada, a primeira publicação substitui as imagens de demonstração. Cada álbum tem suas próprias fotos e ordem.</p>
+          <div class="field"><label for="gallery-album">Álbum</label><select id="gallery-album" aria-describedby="gallery-album-help"><option value="travel">Diário de estrada</option><option value="story">Um capítulo novo</option></select></div>
+          <p class="gallery-help" id="gallery-album-help">Publique ou remova as imagens da fila antes de trocar de álbum.</p>
           <div class="field"><label for="gallery-files">Selecionar imagens</label><input id="gallery-files" type="file" accept="image/jpeg,image/png,image/webp,image/avif" multiple></div>
           <div class="gallery-queue" id="gallery-queue"></div>
           <div class="button-row" style="margin: 14px 0 22px"><button class="button button--small" id="gallery-upload" type="button" disabled>Publicar imagens</button></div>
@@ -307,6 +309,9 @@
     const galleryEditorZoomValue = document.querySelector('#gallery-editor-zoom-value');
     const galleryEditorNotice = document.querySelector('#gallery-editor-notice');
     const galleryEditorSave = document.querySelector('#gallery-editor-save');
+    const galleryAlbumSelect = document.querySelector('#gallery-album');
+    const galleryEndpoint = () => `/api/gallery?album=${galleryAlbumSelect.value}`;
+    const selectedGalleryPhotos = () => dashboardData.gallery.filter((photo) => (photo.album || 'travel') === galleryAlbumSelect.value);
     let galleryQueue = [];
     let galleryBusy = false;
     let editingGalleryPhoto = null;
@@ -531,7 +536,7 @@
       galleryEditorSave.disabled = true;
       showNotice(galleryEditorNotice, 'Salvando ajustes...');
       try {
-        await request('/api/gallery', {
+        await request(galleryEndpoint(), {
           method: 'PATCH',
           body: JSON.stringify({
             action: 'update',
@@ -574,30 +579,38 @@
           <div class="gallery-queue-row__actions"><button class="button button--small button--danger gallery-queue-remove" type="button" data-index="${index}" ${galleryBusy ? 'disabled' : ''}>Remover</button></div>
         </div>
       </article>`).join('');
+      galleryAlbumSelect.disabled = galleryBusy || galleryQueue.length > 0;
       galleryFilesInput.disabled = galleryBusy;
       galleryUploadButton.disabled = galleryBusy || !galleryQueue.length;
       galleryUploadButton.textContent = galleryQueue.some((item) => item.error) ? 'Publicar / tentar novamente' : 'Publicar imagens';
     };
 
     const renderGallery = () => {
-      if (!dashboardData.gallery.length) {
+      const photos = selectedGalleryPhotos();
+      if (!photos.length) {
         galleryAdminList.innerHTML = '<p class="muted">Nenhuma imagem publicada.</p>';
         return;
       }
-      galleryAdminList.innerHTML = dashboardData.gallery.map((photo, index) => `<article class="gallery-admin-row" data-gallery-id="${escapeHtml(photo.id)}">
+      galleryAdminList.innerHTML = photos.map((photo, index) => `<article class="gallery-admin-row" data-gallery-id="${escapeHtml(photo.id)}">
         <img src="${escapeHtml(photo.public_url)}" alt="">
         <div class="gallery-admin-row__fields">
           <div class="gallery-admin-row__copy"><strong>${escapeHtml(photo.title)}</strong><small>${escapeHtml(photo.subtitle || 'Sem subtítulo')}</small></div>
-          <p class="gallery-queue-row__meta">${index + 1} de ${dashboardData.gallery.length}</p>
+          <p class="gallery-queue-row__meta">${index + 1} de ${photos.length}</p>
           <div class="gallery-admin-row__actions">
             <button class="button button--small button--quiet gallery-edit" type="button">Editar foto</button>
             <button class="button button--small button--quiet gallery-move" type="button" data-direction="-1" ${index === 0 ? 'disabled' : ''}>Subir</button>
-            <button class="button button--small button--quiet gallery-move" type="button" data-direction="1" ${index === dashboardData.gallery.length - 1 ? 'disabled' : ''}>Descer</button>
+            <button class="button button--small button--quiet gallery-move" type="button" data-direction="1" ${index === photos.length - 1 ? 'disabled' : ''}>Descer</button>
             <button class="button button--small button--danger gallery-delete" type="button">Excluir</button>
           </div>
         </div>
       </article>`).join('');
     };
+
+    galleryAlbumSelect.addEventListener('change', () => {
+      showNotice(galleryNotice, '');
+      showNotice(galleryQueueNotice, '');
+      renderGallery();
+    });
 
     galleryFilesInput.addEventListener('change', () => {
       [...galleryFilesInput.files].forEach((file) => {
@@ -650,7 +663,7 @@
             form.append('file', item.file);
             form.append('title', item.title);
             form.append('subtitle', item.subtitle);
-            await request('/api/gallery', { method: 'POST', body: form });
+            await request(galleryEndpoint(), { method: 'POST', body: form });
             URL.revokeObjectURL(item.preview);
             continue;
           } catch (error) {
@@ -672,24 +685,24 @@
       const row = event.target.closest('[data-gallery-id]');
       if (!row) return;
       const id = row.dataset.galleryId;
-      const photo = dashboardData.gallery.find((entry) => entry.id === id);
+      const photo = selectedGalleryPhotos().find((entry) => entry.id === id);
       if (event.target.closest('.gallery-edit') && photo) openGalleryEditor(photo);
       const moveButton = event.target.closest('.gallery-move');
       if (moveButton) {
-        const photos = [...dashboardData.gallery];
+        const photos = [...selectedGalleryPhotos()];
         const index = photos.findIndex((entry) => entry.id === id);
         const nextIndex = index + Number(moveButton.dataset.direction);
         if (nextIndex < 0 || nextIndex >= photos.length) return;
         [photos[index], photos[nextIndex]] = [photos[nextIndex], photos[index]];
         try {
-          await request('/api/gallery', { method: 'PATCH', body: JSON.stringify({ action: 'reorder', ids: photos.map((entry) => entry.id) }) });
+          await request(galleryEndpoint(), { method: 'PATCH', body: JSON.stringify({ action: 'reorder', ids: photos.map((entry) => entry.id) }) });
           await loadDashboard();
           showNotice(galleryNotice, 'Ordem da galeria atualizada.', 'success');
         } catch (error) { showNotice(galleryNotice, error.message, 'error'); }
       }
       if (event.target.closest('.gallery-delete') && window.confirm(`Excluir "${photo?.title || 'esta imagem'}"?`)) {
         try {
-          await request('/api/gallery', { method: 'DELETE', body: JSON.stringify({ id }) });
+          await request(galleryEndpoint(), { method: 'DELETE', body: JSON.stringify({ id }) });
           await loadDashboard();
           showNotice(galleryNotice, 'Imagem e arquivo excluídos.', 'success');
         } catch (error) { showNotice(galleryNotice, error.message, 'error'); }

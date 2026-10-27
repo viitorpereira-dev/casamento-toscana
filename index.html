@@ -1028,6 +1028,9 @@
       margin-top: 14px;
     }
 
+    .gallery-carousel[hidden],
+    .gallery-carousel-controls[hidden] { display: none; }
+
     .carousel-arrow {
       display: grid;
       flex: 0 0 auto;
@@ -1683,6 +1686,18 @@
       color: rgba(244, 239, 229, 0.5);
       font: italic 1rem var(--serif);
     }
+
+    .story-album { min-width: 0; padding: 16px; background: var(--paper-deep); box-shadow: var(--shadow); }
+    .story-album .gallery-carousel { gap: 16px; padding: 0; }
+    .story-album .gallery-item { flex-basis: 100%; aspect-ratio: 1.25; border: 10px solid var(--paper); }
+    .story-album .gallery-item__title { font-size: clamp(1.5rem, 3vw, 2.2rem); }
+    .story-album .gallery-carousel-controls { gap: 8px; flex-wrap: wrap; }
+    .story-album .carousel-dots { flex: 1; min-width: 0; overflow-x: auto; padding: 10px 2px; }
+    .story-album .carousel-dot { flex-shrink: 0; }
+    .story-album [hidden] { display: none; }
+    .story-album__empty { display: grid; place-content: center; min-height: 240px; margin: 0; padding: 24px; text-align: center; font: 500 1.8rem/1.25 var(--serif); }
+    .story-album__empty span { display: block; margin-top: 12px; color: var(--muted); font: .85rem/1.5 var(--sans); }
+    .story-grid > * { min-width: 0; }
 
     .gallery-lightbox {
       position: fixed;
@@ -4044,12 +4059,21 @@
 
     <section class="section story-section reveal">
       <div class="story-grid">
-        <figure class="image-frame image-frame--watercolor reveal reveal-delay-1">
-          <div class="image-frame__visual">
-            <img src="image.png" alt="Ilustra&#xe7;&#xe3;o em aquarela da Casa Olivetto, espa&#xe7;o do casamento" loading="lazy">
+        <div class="story-album reveal reveal-delay-1" id="story-album" role="region" aria-label="Álbum Um capítulo novo" aria-roledescription="carrossel">
+          <div class="gallery-carousel" id="story-carousel" aria-label="Fotos de Um capítulo novo">
+            <button class="gallery-item" type="button" data-location="Casa Olivetto" data-title="Um capítulo novo" aria-label="Abrir foto: Um capítulo novo">
+              <img src="image.png" alt="Ilustração em aquarela da Casa Olivetto" loading="lazy">
+              <span class="gallery-item__caption"><span class="gallery-item__location">Nossa história</span><strong class="gallery-item__title">Um capítulo novo</strong></span>
+            </button>
           </div>
-          <figcaption class="image-frame__caption">Casa Di Pietra - Villa Toscana</figcaption>
-        </figure>
+          <p class="story-album__empty" id="story-album-empty" role="status" hidden>Nosso novo capítulo em fotos.<br><span>Em breve, mais memórias por aqui.</span></p>
+          <div class="gallery-carousel-controls" hidden>
+            <button class="carousel-arrow" type="button" id="story-prev" aria-label="Foto anterior de Um capítulo novo">&#8592;</button>
+            <div class="carousel-dots" id="story-dots" role="tablist" aria-label="Selecionar foto de Um capítulo novo"></div>
+            <button class="carousel-arrow" type="button" id="story-next" aria-label="Próxima foto de Um capítulo novo">&#8594;</button>
+            <span class="carousel-count" id="story-count" aria-live="polite">01 / 01</span>
+          </div>
+        </div>
         <div class="story-copy reveal reveal-delay-2">
           <span class="section-label">Um cap&#xed;tulo novo</span>
           <h2>Entre uma viagem e outra, encontramos <span>casa.</span></h2>
@@ -4444,11 +4468,6 @@ window.weddingPlaylist = [
     const revealElements = document.querySelectorAll('.reveal');
     const hero = document.querySelector('.hero');
     const heroContent = document.querySelector('.hero__content');
-    const galleryCarousel = document.querySelector('#gallery-carousel');
-    const galleryPrevious = document.querySelector('#gallery-prev');
-    const galleryNext = document.querySelector('#gallery-next');
-    let galleryDots = [...document.querySelectorAll('.carousel-dot')];
-    const galleryCount = document.querySelector('#gallery-count');
     const galleryLightbox = document.querySelector('#gallery-lightbox');
     const lightboxImage = document.querySelector('#lightbox-image');
     const lightboxLocation = document.querySelector('#lightbox-location');
@@ -4506,9 +4525,6 @@ window.weddingPlaylist = [
     const musicVolume = document.querySelector('#music-volume');
     const cartState = new Map();
     let lastCartTrigger;
-    let galleryCurrentIndex = 0;
-    let isProgrammaticCarouselScroll = false;
-    let carouselScrollTimer;
     let isRsvpProcessing = false;
     let currentGiftCatalog = [];
     let currentClaimToken = '';
@@ -4903,7 +4919,6 @@ window.weddingPlaylist = [
       }
     }
 
-    let galleryItems = [...galleryCarousel.querySelectorAll('.gallery-item')];
     let lastFocusedGalleryItem;
 
     for (let index = 0; index < 16; index += 1) {
@@ -4983,155 +4998,175 @@ window.weddingPlaylist = [
       if (lastFocusedGalleryItem) lastFocusedGalleryItem.focus();
     };
 
-    const updateCarouselControls = (index) => {
-      if (!galleryItems.length) {
-        galleryCount.textContent = '00 / 00';
-        return;
-      }
-      galleryCurrentIndex = index;
-      galleryDots.forEach((dot, dotIndex) => {
-        const isActive = dotIndex === index;
-        dot.classList.toggle('is-active', isActive);
-        dot.setAttribute('aria-selected', String(isActive));
-      });
-      galleryCount.textContent = `${String(index + 1).padStart(2, '0')} / ${String(galleryItems.length).padStart(2, '0')}`;
-    };
+    const initializePhotoAlbum = ({ carouselId, previousId, nextId, dotsId, countId, endpoint, emptyId }) => {
+      const galleryCarousel = document.getElementById(carouselId);
+      const galleryPrevious = document.getElementById(previousId);
+      const galleryNext = document.getElementById(nextId);
+      const galleryCount = document.getElementById(countId);
+      const dotsContainer = document.getElementById(dotsId);
+      const emptyMessage = emptyId ? document.getElementById(emptyId) : null;
+      let galleryItems = [...galleryCarousel.querySelectorAll('.gallery-item')];
+      let galleryDots = [...dotsContainer.querySelectorAll('.carousel-dot')];
+      let galleryCurrentIndex = 0;
+      let isProgrammaticCarouselScroll = false;
+      let carouselScrollTimer;
 
-    const scrollToGalleryItem = (index) => {
-      if (!galleryItems.length) return;
-      const nextIndex = (index + galleryItems.length) % galleryItems.length;
-      const item = galleryItems[nextIndex];
-      isProgrammaticCarouselScroll = true;
-      window.clearTimeout(carouselScrollTimer);
-      galleryCarousel.scrollTo({
-        left: item.offsetLeft - galleryCarousel.offsetLeft,
-        behavior: 'smooth'
-      });
-      updateCarouselControls(nextIndex);
-      carouselScrollTimer = window.setTimeout(() => {
-        isProgrammaticCarouselScroll = false;
-      }, 750);
-    };
-
-    galleryPrevious.addEventListener('click', () => scrollToGalleryItem(galleryCurrentIndex - 1));
-    galleryNext.addEventListener('click', () => scrollToGalleryItem(galleryCurrentIndex + 1));
-
-    galleryCarousel.addEventListener('keydown', (event) => {
-      if (event.key === 'ArrowLeft') scrollToGalleryItem(galleryCurrentIndex - 1);
-      if (event.key === 'ArrowRight') scrollToGalleryItem(galleryCurrentIndex + 1);
-    });
-
-    const carouselObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting && !isProgrammaticCarouselScroll) {
-          const index = galleryItems.indexOf(entry.target);
-          if (index >= 0) updateCarouselControls(index);
+      const updateCarouselControls = (index) => {
+        if (!galleryItems.length) {
+          galleryCount.textContent = '00 / 00';
+          return;
         }
-      });
-    }, { root: galleryCarousel, threshold: 0.65 });
-
-    const applyGalleryFraming = (item) => {
-      const image = item.querySelector('img');
-      if (!image?.naturalWidth || !image.naturalHeight) return;
-      const frame = item.getBoundingClientRect();
-      if (!frame.width || !frame.height) return;
-      const imageRatio = image.naturalWidth / image.naturalHeight;
-      const frameRatio = frame.width / frame.height;
-      const fitWidth = imageRatio > frameRatio ? frame.width : frame.height * imageRatio;
-      const fitHeight = imageRatio > frameRatio ? frame.width / imageRatio : frame.height;
-      const coverZoom = Math.max(frame.width / fitWidth, frame.height / fitHeight);
-      const zoom = Math.min(3, Math.max(1, Number(item.dataset.framingZoom) || 1));
-      const scale = coverZoom * zoom;
-      const maxX = Math.abs(fitWidth * scale - frame.width) / 2;
-      const maxY = Math.abs(fitHeight * scale - frame.height) / 2;
-      const offsetX = Math.min(1, Math.max(-1, Number(item.dataset.framingX) || 0)) * maxX;
-      const offsetY = Math.min(1, Math.max(-1, Number(item.dataset.framingY) || 0)) * maxY;
-      image.style.width = `${fitWidth}px`;
-      image.style.height = `${fitHeight}px`;
-      image.style.left = `calc(50% + ${offsetX}px)`;
-      image.style.top = `calc(50% + ${offsetY}px)`;
-      image.style.marginLeft = `${-fitWidth / 2}px`;
-      image.style.marginTop = `${-fitHeight / 2}px`;
-      image.style.transform = `scale(${scale})`;
-    };
-
-    const galleryFramingObserver = new ResizeObserver((entries) => {
-      entries.forEach(({ target }) => applyGalleryFraming(target));
-    });
-
-    const bindGalleryItems = () => {
-      galleryItems = [...galleryCarousel.querySelectorAll('.gallery-item')];
-      galleryItems.forEach((item, index) => {
-        item.addEventListener('click', () => {
-          updateCarouselControls(index);
-          openGalleryLightbox(item);
+        galleryCurrentIndex = index;
+        galleryDots.forEach((dot, dotIndex) => {
+          const isActive = dotIndex === index;
+          dot.classList.toggle('is-active', isActive);
+          dot.setAttribute('aria-selected', String(isActive));
         });
-        carouselObserver.observe(item);
-      });
-      galleryDots = [...document.querySelectorAll('#gallery-dots .carousel-dot')];
-      galleryDots.forEach((dot, index) => dot.addEventListener('click', () => scrollToGalleryItem(index)));
-      const controls = document.querySelector('.gallery-carousel-controls');
-      controls.hidden = galleryItems.length <= 1;
-      updateCarouselControls(0);
-    };
+        galleryCount.textContent = `${String(index + 1).padStart(2, '0')} / ${String(galleryItems.length).padStart(2, '0')}`;
+      };
 
-    const renderPublicGallery = (photos) => {
-      galleryItems.forEach((item) => {
-        carouselObserver.unobserve(item);
-        galleryFramingObserver.unobserve(item);
+      const scrollToGalleryItem = (index) => {
+        if (!galleryItems.length) return;
+        const nextIndex = (index + galleryItems.length) % galleryItems.length;
+        const item = galleryItems[nextIndex];
+        isProgrammaticCarouselScroll = true;
+        window.clearTimeout(carouselScrollTimer);
+        galleryCarousel.scrollTo({
+          left: item.offsetLeft - galleryCarousel.offsetLeft,
+          behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'
+        });
+        updateCarouselControls(nextIndex);
+        carouselScrollTimer = window.setTimeout(() => {
+          isProgrammaticCarouselScroll = false;
+        }, 750);
+      };
+
+      galleryPrevious.addEventListener('click', () => scrollToGalleryItem(galleryCurrentIndex - 1));
+      galleryNext.addEventListener('click', () => scrollToGalleryItem(galleryCurrentIndex + 1));
+
+      galleryCarousel.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') event.preventDefault();
+        if (event.key === 'ArrowLeft') scrollToGalleryItem(galleryCurrentIndex - 1);
+        if (event.key === 'ArrowRight') scrollToGalleryItem(galleryCurrentIndex + 1);
       });
-      galleryCarousel.replaceChildren();
-      photos.forEach((photo, index) => {
-        const item = document.createElement('button');
-        item.className = `gallery-item gallery-item--framed reveal is-visible reveal-delay-${index % 3 + 1}`;
-        item.type = 'button';
-        item.dataset.location = photo.subtitle || '';
-        item.dataset.title = photo.title;
-        item.dataset.framingZoom = String(photo.framing_zoom ?? 1);
-        item.dataset.framingX = String(photo.framing_x ?? 0);
-        item.dataset.framingY = String(photo.framing_y ?? 0);
-        item.setAttribute('aria-label', `Abrir foto: ${photo.title}`);
-        const image = document.createElement('img');
-        image.src = photo.public_url;
-        image.alt = photo.title;
-        image.loading = 'lazy';
-        image.addEventListener('load', () => applyGalleryFraming(item));
-        const caption = document.createElement('span');
-        caption.className = 'gallery-item__caption';
-        const subtitle = document.createElement('span');
-        subtitle.className = 'gallery-item__location';
-        subtitle.textContent = photo.subtitle || '';
-        subtitle.hidden = !photo.subtitle;
-        const title = document.createElement('strong');
-        title.className = 'gallery-item__title';
-        title.textContent = photo.title;
-        caption.append(subtitle, title);
-        item.append(image, caption);
-        galleryCarousel.appendChild(item);
-        galleryFramingObserver.observe(item);
-        applyGalleryFraming(item);
+
+      const carouselObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !isProgrammaticCarouselScroll) {
+            const index = galleryItems.indexOf(entry.target);
+            if (index >= 0) updateCarouselControls(index);
+          }
+        });
+      }, { root: galleryCarousel, threshold: 0.65 });
+
+      const applyGalleryFraming = (item) => {
+        const image = item.querySelector('img');
+        if (!image?.naturalWidth || !image.naturalHeight) return;
+        const frame = { width: item.clientWidth, height: item.clientHeight };
+        if (!frame.width || !frame.height) return;
+        const imageRatio = image.naturalWidth / image.naturalHeight;
+        const frameRatio = frame.width / frame.height;
+        const fitWidth = imageRatio > frameRatio ? frame.width : frame.height * imageRatio;
+        const fitHeight = imageRatio > frameRatio ? frame.width / imageRatio : frame.height;
+        const coverZoom = Math.max(frame.width / fitWidth, frame.height / fitHeight);
+        const zoom = Math.min(3, Math.max(Math.min(1, 1 / coverZoom), Number(item.dataset.framingZoom) || 1));
+        const scale = coverZoom * zoom;
+        const maxX = Math.abs(fitWidth * scale - frame.width) / 2;
+        const maxY = Math.abs(fitHeight * scale - frame.height) / 2;
+        const offsetX = Math.min(1, Math.max(-1, Number(item.dataset.framingX) || 0)) * maxX;
+        const offsetY = Math.min(1, Math.max(-1, Number(item.dataset.framingY) || 0)) * maxY;
+        image.style.width = `${fitWidth}px`;
+        image.style.height = `${fitHeight}px`;
+        image.style.left = `calc(50% + ${offsetX}px)`;
+        image.style.top = `calc(50% + ${offsetY}px)`;
+        image.style.marginLeft = `${-fitWidth / 2}px`;
+        image.style.marginTop = `${-fitHeight / 2}px`;
+        image.style.transform = `scale(${scale})`;
+      };
+
+      const galleryFramingObserver = new ResizeObserver((entries) => {
+        entries.forEach(({ target }) => applyGalleryFraming(target));
       });
-      const dots = document.querySelector('#gallery-dots');
-      dots.replaceChildren(...photos.map((photo, index) => {
-        const dot = document.createElement('button');
-        dot.className = `carousel-dot${index === 0 ? ' is-active' : ''}`;
-        dot.type = 'button';
-        dot.setAttribute('role', 'tab');
-        dot.setAttribute('aria-label', `Foto ${index + 1} de ${photos.length}`);
-        dot.setAttribute('aria-selected', String(index === 0));
-        return dot;
-      }));
+
+      const bindGalleryItems = () => {
+        galleryItems = [...galleryCarousel.querySelectorAll('.gallery-item')];
+        galleryItems.forEach((item, index) => {
+          item.addEventListener('click', () => {
+            updateCarouselControls(index);
+            openGalleryLightbox(item);
+          });
+          carouselObserver.observe(item);
+        });
+        galleryDots = [...dotsContainer.querySelectorAll('.carousel-dot')];
+        galleryDots.forEach((dot, index) => dot.addEventListener('click', () => scrollToGalleryItem(index)));
+        const controls = galleryCarousel.parentElement.querySelector('.gallery-carousel-controls');
+        controls.hidden = galleryItems.length <= 1;
+        updateCarouselControls(0);
+      };
+
+      const renderPublicGallery = (photos) => {
+        galleryItems.forEach((item) => {
+          carouselObserver.unobserve(item);
+          galleryFramingObserver.unobserve(item);
+        });
+        galleryCarousel.replaceChildren();
+        if (emptyMessage) emptyMessage.hidden = photos.length > 0;
+        galleryCarousel.hidden = photos.length === 0;
+        photos.forEach((photo, index) => {
+          const item = document.createElement('button');
+          item.className = `gallery-item gallery-item--framed reveal is-visible reveal-delay-${index % 3 + 1}`;
+          item.type = 'button';
+          item.dataset.location = photo.subtitle || '';
+          item.dataset.title = photo.title;
+          item.dataset.framingZoom = String(photo.framing_zoom ?? 1);
+          item.dataset.framingX = String(photo.framing_x ?? 0);
+          item.dataset.framingY = String(photo.framing_y ?? 0);
+          item.setAttribute('aria-label', `Abrir foto: ${photo.title}`);
+          const image = document.createElement('img');
+          image.src = photo.public_url;
+          image.alt = photo.title;
+          image.loading = 'lazy';
+          image.addEventListener('load', () => applyGalleryFraming(item));
+          const caption = document.createElement('span');
+          caption.className = 'gallery-item__caption';
+          const subtitle = document.createElement('span');
+          subtitle.className = 'gallery-item__location';
+          subtitle.textContent = photo.subtitle || '';
+          subtitle.hidden = !photo.subtitle;
+          const title = document.createElement('strong');
+          title.className = 'gallery-item__title';
+          title.textContent = photo.title;
+          caption.append(subtitle, title);
+          item.append(image, caption);
+          galleryCarousel.appendChild(item);
+          galleryFramingObserver.observe(item);
+          applyGalleryFraming(item);
+        });
+        const dots = dotsContainer;
+        dots.replaceChildren(...photos.map((photo, index) => {
+          const dot = document.createElement('button');
+          dot.className = `carousel-dot${index === 0 ? ' is-active' : ''}`;
+          dot.type = 'button';
+          dot.setAttribute('role', 'tab');
+          dot.setAttribute('aria-label', `Foto ${index + 1} de ${photos.length}`);
+          dot.setAttribute('aria-selected', String(index === 0));
+          return dot;
+        }));
+        bindGalleryItems();
+        galleryCarousel.scrollLeft = 0;
+      };
+
       bindGalleryItems();
-      galleryCarousel.scrollLeft = 0;
+      fetch(endpoint)
+        .then((response) => response.ok ? response.json() : null)
+        .then((data) => {
+          if (data?.active === true && Array.isArray(data.photos)) renderPublicGallery(data.photos);
+        })
+        .catch(() => {});
     };
 
-    bindGalleryItems();
-    fetch('/api/gallery')
-      .then((response) => response.ok ? response.json() : null)
-      .then((data) => {
-        if (data?.active === true && Array.isArray(data.photos)) renderPublicGallery(data.photos);
-      })
-      .catch(() => {});
+    initializePhotoAlbum({ carouselId: 'gallery-carousel', previousId: 'gallery-prev', nextId: 'gallery-next', dotsId: 'gallery-dots', countId: 'gallery-count', endpoint: '/api/gallery' });
+    initializePhotoAlbum({ carouselId: 'story-carousel', previousId: 'story-prev', nextId: 'story-next', dotsId: 'story-dots', countId: 'story-count', endpoint: '/api/gallery?album=story', emptyId: 'story-album-empty' });
 
     const formatBRL = (amount) => amount.toLocaleString('pt-BR', {
       style: 'currency',
