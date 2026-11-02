@@ -10,6 +10,18 @@ Não há migração de banco: os dois álbuns usam `gallery_photos` e o bucket `
 
 Execute os testes com Node.js 22 ou superior: `node --test tests/*.test.mjs`.
 
+## Listas de presentes
+
+No painel, **Listas de presentes** permite criar listas, mudar nome/descrição, publicar, ocultar, arquivar e ordenar. O link de cada lista é permanente mesmo após renomeá-la. Listas com produtos ou histórico devem ser arquivadas; apenas listas vazias e sem reservas podem ser excluídas.
+
+Cada presente pertence a uma lista. Escolha a lista no formulário ou filtre os cadastros e use **Mover presentes** para mover vários itens juntos. Reservas ativas e pagamentos informados/confirmados bloqueiam a movimentação; se qualquer item da seleção estiver bloqueado, nenhum será movido. Reservas expiradas continuam vinculadas à lista original no histórico.
+
+No convite, o seletor mostra as listas publicadas. Links como `/?lista=casamento#presentes` abrem a lista diretamente. Categorias, contadores e presentes são filtrados pela lista selecionada. Os pagamentos continuam individuais pelo Mercado Pago, com confirmação manual no painel. Uma reserva já criada pode ser retomada nesta sessão ao voltar à sua lista.
+
+Antes de publicar o código, aplique `supabase/migrations/20261102194311_gift_lists.sql`. Ela cria **Casamento** publicada com os produtos existentes e **Chá de cozinha** vazia e oculta. O banco guarda a lista de origem das reservas, bloqueia movimentações incompatíveis e mantém as tabelas acessíveis somente pelo backend autenticado. RSVP e galeria não mudam.
+
+Além dos testes Node, valide a migração e as regras no Postgres local com `npm install --prefix tests/database` e `npm test --prefix tests/database`. O teste usa PGlite, dados fictícios e transação com rollback; não acessa o Supabase de produção.
+
 
 ## Categorias dos presentes
 

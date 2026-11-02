@@ -1,0 +1,3 @@
+node_modules/
+tests/database/node_modules/
+supabase/.temp/

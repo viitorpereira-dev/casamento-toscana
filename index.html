@@ -2170,6 +2170,16 @@
       line-height: 1.8;
     }
 
+    .gift-list-picker { display: grid; gap: 12px; margin-top: 30px; padding: 20px; border: 1px solid var(--line); }
+    .gift-list-picker > label { color: var(--olive-dark); font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    .gift-list-picker .gift-sort { width: 100%; padding: 12px; font-size: .85rem; }
+    .gift-list-picker p { font-size: .8rem; line-height: 1.5; }
+    .gift-list-picker > button { justify-self: start; }
+    .gift-list-notice:empty { display: none; }
+    .gift-list-notice[data-tone="error"] { color: #a33c2e; }
+    .gift-pending-reservation { padding-top: 12px; border-top: 1px solid var(--line); }
+    .gift-pending-reservation button { margin-top: 10px; }
+
     .gift-toolbar {
       display: grid;
       gap: 20px;
@@ -4223,6 +4233,14 @@
           <div>
             <h2>Pe&#xe7;as para a casa que vamos <em>construir.</em></h2>
             <p>Uma sele&#xe7;&#xe3;o de objetos para o nosso primeiro lar: cer&#xe2;mica, linho, luz quente e tudo que deixa um espa&#xe7;o com cara de casa.</p>
+            <div class="gift-list-picker">
+              <label for="gift-list-select">Escolha a lista de presentes</label>
+              <select class="gift-sort" id="gift-list-select" disabled><option>Carregando listas...</option></select>
+              <p id="gift-list-description"></p>
+              <p class="gift-list-notice" id="gift-list-notice" role="status" aria-live="polite"></p>
+              <button class="gift-filter" id="gift-list-retry" type="button">Atualizar presentes</button>
+              <div class="gift-pending-reservation" id="gift-pending-reservation" hidden><p id="gift-pending-text"></p><button class="gift-filter" id="gift-resume-reservation" type="button">Ver minha reserva</button></div>
+            </div>
             <div class="gift-toolbar">
               <div class="gift-toolbar__top">
                 <p class="gift-toolbar__note">curadoria para o nosso lar</p>
@@ -4449,6 +4467,7 @@
   <script src="audio/playlist.js"></script>
   <script type="module">
     import { createGiftCategoryFilters, normalizeGiftCategory } from './gift-categories.js';
+    import { createGiftListSelector } from './gift-lists-public.js';
 
 window.weddingPlaylist = [
   {
@@ -4485,6 +4504,16 @@ window.weddingPlaylist = [
     const scrapbookPages = document.querySelector('#scrapbook-pages');
     let giftRows = [...document.querySelectorAll('.gift-item')];
     const giftList = document.querySelector('#gift-list');
+    const listSelector = createGiftListSelector({
+      select: document.querySelector('#gift-list-select'), description: document.querySelector('#gift-list-description'), notice: document.querySelector('#gift-list-notice'),
+      beforeChange: () => {
+        if (cartState.size && !window.confirm('Trocar de lista vai limpar o presente selecionado. Reservas já feitas serão preservadas. Continuar?')) return false;
+        cartState.clear(); closeCart(); resetPaymentResult(); giftSort.value = 'featured';
+        return true;
+      },
+      onLoading: () => { giftList.inert = true; giftList.setAttribute('aria-busy', 'true'); },
+      onCatalog: ({ gifts }) => { giftList.inert = false; giftList.removeAttribute('aria-busy'); renderGiftCatalog(gifts); renderPendingReservation(); }
+    });
     const categoryFilters = createGiftCategoryFilters({
       buttonContainer: document.querySelector('#gift-category-filters'),
       select: document.querySelector('#gift-category-select'),
@@ -4541,6 +4570,12 @@ window.weddingPlaylist = [
     let isRsvpProcessing = false;
     let currentGiftCatalog = [];
     let currentClaimToken = '';
+    let pendingGiftClaims = {};
+    try {
+      const saved = JSON.parse(sessionStorage.getItem('wedding-pending-gift-claims') || '{}');
+      if (saved && !Array.isArray(saved) && typeof saved === 'object') pendingGiftClaims = Object.fromEntries(Object.entries(saved).filter(([id, item]) => item?.claim?.listId === id && typeof item.claim.claimToken === 'string' && typeof item.claim.giftId === 'string' && item.payment && typeof item.payment.paymentUrl === 'string'));
+    } catch {}
+    const savePendingGiftClaims = () => { try { sessionStorage.setItem('wedding-pending-gift-claims', JSON.stringify(pendingGiftClaims)); } catch {} };
     let musicTracks = Array.isArray(window.weddingPlaylist)
       ? window.weddingPlaylist.filter((track) => track && track.enabled !== false && (track.mp3 || track.ogg))
       : [];
@@ -5221,14 +5256,17 @@ window.weddingPlaylist = [
       renderCart();
     };
 
-    const loadGiftCatalog = async () => {
-      try {
-        const data = await apiRequest('/api/gifts');
-        if (Array.isArray(data.gifts)) renderGiftCatalog(data.gifts);
-      } catch {
-        // Keep the static catalog visible until Supabase is configured.
-      }
+    const renderPendingReservation = () => {
+      const selected = listSelector.currentList;
+      const pending = selected ? pendingGiftClaims[selected.id] : Object.values(pendingGiftClaims).find((item) => item?.claim?.listSlug === listSelector.requestedSlug);
+      const expired = pending?.claim?.status === 'reserved' && new Date(pending.claim.expiresAt).getTime() <= Date.now();
+      const confirmed = currentGiftCatalog.some((gift) => gift.id === pending?.claim?.giftId && gift.status === 'confirmed');
+      if (pending && (expired || confirmed)) { delete pendingGiftClaims[pending.claim.listId]; savePendingGiftClaims(); }
+      document.querySelector('#gift-pending-reservation').hidden = !pending || expired || confirmed;
+      document.querySelector('#gift-pending-text').textContent = pending ? (pending.claim.status === 'payment_reported' ? 'Seu pagamento está em conferência nesta lista.' : 'Você tem um presente reservado nesta lista.') : '';
     };
+
+    const loadGiftCatalog = () => listSelector.load();
 
     const getCartEntries = () => giftRows.map((row) => {
       const id = row.dataset.giftId;
@@ -5373,8 +5411,13 @@ window.weddingPlaylist = [
       currentClaimToken = claim.claimToken;
       reserveGiftButton.disabled = true;
       reserveGiftButton.querySelector('span').textContent = 'Reserva criada';
-      paymentResultTitle.textContent = 'Presente reservado!';
-      paymentResultText.textContent = `A reserva fica ativa por 24 horas. O Mercado Pago foi aberto em uma nova aba. Depois de pagar, avise o casal para que eles possam confirmar o recebimento.`;
+      pendingGiftClaims[claim.listId] = { claim, payment };
+      savePendingGiftClaims(); renderPendingReservation();
+      paymentResultTitle.textContent = 'Presente reservado em ' + claim.listName + '!';
+      checkoutTotal.textContent = formatBRL(Number(payment.amount));
+      reportPaymentButton.disabled = claim.status === 'payment_reported';
+      reportPaymentButton.textContent = claim.status === 'payment_reported' ? 'Pagamento avisado' : 'Avisei que paguei';
+      paymentResultText.textContent = claim.status === 'payment_reported' ? 'Seu pagamento foi informado e aguarda a conferência do casal.' : 'A reserva fica ativa por 24 horas. Use o link do Mercado Pago para pagar e depois avise o casal para que eles possam confirmar o recebimento.';
       openPaymentLink.href = payment.paymentUrl || '#';
       openPaymentLink.hidden = !payment.paymentUrl;
       reportPaymentButton.hidden = false;
@@ -5397,6 +5440,7 @@ window.weddingPlaylist = [
           method: 'POST',
           body: JSON.stringify({
             giftId: row.dataset.giftId,
+            listId: listSelector.currentList?.id,
             name: document.querySelector('#checkout-name').value.trim(),
             email: document.querySelector('#checkout-email').value.trim()
           })
@@ -5424,6 +5468,8 @@ window.weddingPlaylist = [
           method: 'POST',
           body: JSON.stringify({ action: 'paid', claimToken: currentClaimToken, paymentNote: document.querySelector('#payment-note').value.trim() })
         });
+        const pending = Object.values(pendingGiftClaims).find((item) => item?.claim?.claimToken === currentClaimToken);
+        if (pending) { pending.claim.status = 'payment_reported'; savePendingGiftClaims(); renderPendingReservation(); }
         reportPaymentButton.textContent = 'Pagamento avisado';
         showFeedback(fakePaymentMessage, { icon: '\u2713', title: 'Aviso recebido!', text: 'O casal vai conferir o pagamento e atualizar a lista.' });
       } catch (error) {
@@ -5432,6 +5478,15 @@ window.weddingPlaylist = [
       }
     });
 
+    document.querySelector('#gift-list-retry').addEventListener('click', () => loadGiftCatalog());
+    document.querySelector('#gift-resume-reservation').addEventListener('click', () => {
+      const pending = listSelector.currentList ? pendingGiftClaims[listSelector.currentList.id] : Object.values(pendingGiftClaims).find((item) => item?.claim?.listSlug === listSelector.requestedSlug);
+      if (!pending) return;
+      openCart(document.querySelector('#gift-resume-reservation'));
+      setCartDrawerView('checkout');
+      showPaymentResult(pending, null);
+    });
+    renderGiftCatalog([]);
     renderCart();
     loadGiftCatalog();
 
