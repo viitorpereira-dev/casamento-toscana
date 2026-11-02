@@ -12,6 +12,8 @@ beforeEach(async () => {
   globalThis.fetch = async (input, options = {}) => {
     calls.push({ input, options });
     if (options.method === 'POST') return Response.json([JSON.parse(options.body)]);
+    if (new URL(input).pathname.endsWith('/gift_lists')) return Response.json([{id:'00000000-0000-0000-0000-000000000001',slug:'casamento',name:'Casamento',status:'published',position:0}]);
+    if (new URL(input).pathname.endsWith('/gifts') && new URL(input).searchParams.has('id')) return Response.json([]);
     if (new URL(input).pathname.endsWith('/gift_claims')) return Response.json([]);
     return Response.json([
       { id: 'wardrobe', name: 'Guarda-roupa', category: 'moveis', price: 100, available: true },
