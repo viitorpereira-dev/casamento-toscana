@@ -1,3 +1,4 @@
+import { normalizeGiftCategory } from '../../gift-categories.js';
 import {
   handleUnexpectedError,
   json,
@@ -22,7 +23,7 @@ export const onRequestGet = async ({ env }) => {
         return {
           id: gift.id,
           name: gift.name,
-          category: gift.category,
+          category: normalizeGiftCategory(gift.category),
           description: gift.description,
           price: Number(gift.price),
           imageUrl: gift.image_url,
@@ -38,3 +39,4 @@ export const onRequestGet = async ({ env }) => {
     return handleUnexpectedError(error);
   }
 };
+

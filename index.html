@@ -2199,6 +2199,21 @@
       gap: 7px;
     }
 
+    .gift-category-mobile {
+      display: none;
+      width: 100%;
+    }
+
+    .gift-category-mobile span {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--muted);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
     .gift-filter {
       padding: 9px 12px;
       border: 1px solid var(--line);
@@ -2213,7 +2228,7 @@
 
     .gift-filter:hover,
     .gift-filter:focus-visible,
-    .gift-filter[aria-selected="true"] {
+    .gift-filter[aria-pressed="true"] {
       border-color: var(--olive-dark);
       color: var(--paper);
       background: var(--olive-dark);
@@ -3797,15 +3812,11 @@
       }
 
       .gift-filter-list {
-        width: 100%;
-        overflow-x: auto;
-        flex-wrap: nowrap;
-        padding-bottom: 4px;
-        scrollbar-width: none;
+        display: none;
       }
 
-      .gift-filter-list::-webkit-scrollbar {
-        display: none;
+      .gift-category-mobile {
+        display: block;
       }
 
       .gift-sort {
@@ -4222,13 +4233,10 @@
                 </button>
               </div>
               <div class="gift-controls">
-                <div class="gift-filter-list" role="tablist" aria-label="Filtrar presentes por categoria">
-                  <button class="gift-filter" type="button" role="tab" data-filter="todos" aria-selected="true">Todos</button>
-                  <button class="gift-filter" type="button" role="tab" data-filter="cozinha" aria-selected="false">Cozinha</button>
-                  <button class="gift-filter" type="button" role="tab" data-filter="mesa" aria-selected="false">Mesa</button>
-                  <button class="gift-filter" type="button" role="tab" data-filter="quarto" aria-selected="false">Quarto</button>
-                  <button class="gift-filter" type="button" role="tab" data-filter="sala" aria-selected="false">Sala</button>
+                <div class="gift-filter-list" id="gift-category-filters" role="group" aria-label="Filtrar presentes por categoria">
+                  <button class="gift-filter" type="button" data-filter="todos" aria-pressed="true">Todos</button>
                 </div>
+                <label class="gift-category-mobile" for="gift-category-select"><span>Categoria</span><select class="gift-sort" id="gift-category-select"><option value="todos">Todos</option></select></label>
                 <select class="gift-sort" id="gift-sort" aria-label="Ordenar presentes">
                   <option value="featured">Em destaque</option>
                   <option value="price-low">Menor pre&#xe7;o</option>
@@ -4261,22 +4269,22 @@
             <div class="gift-item__content"><h3>Cafeteira italiana para dois</h3><p>O ritual da manh&#xe3;, com caf&#xe9; forte e tempo para contar os sonhos.</p><span class="gift-item__price">R$ 280</span></div>
             <button class="gift-item__add" type="button"><span>Adicionar ao carrinho</span><b>+</b></button>
           </article>
-          <article class="gift-item" data-category="quarto" data-featured="5" data-gift-id="linho" data-gift-name="Jogo de cama em linho" data-gift-price="760">
+          <article class="gift-item" data-category="cama-banho" data-featured="5" data-gift-id="linho" data-gift-name="Jogo de cama em linho" data-gift-price="760">
             <div class="gift-item__media"><img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Quarto claro com cama e roupas de linho" loading="lazy"><span class="gift-item__badge">para o lar</span><span class="gift-item__number">05</span></div>
             <div class="gift-item__content"><h3>Jogo de cama em linho</h3><p>Textura leve para deixar o quarto com cara de manh&#xe3; demorada.</p><span class="gift-item__price">R$ 760</span></div>
             <button class="gift-item__add" type="button"><span>Adicionar ao carrinho</span><b>+</b></button>
           </article>
-          <article class="gift-item" data-category="sala" data-featured="6" data-gift-id="luminaria" data-gift-name="Lumin&#xe1;ria de mesa em cer&#xe2;mica" data-gift-price="520">
+          <article class="gift-item" data-category="decoracao" data-featured="6" data-gift-id="luminaria" data-gift-name="Lumin&#xe1;ria de mesa em cer&#xe2;mica" data-gift-price="520">
             <div class="gift-item__media"><img src="https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Lumin&#xe1;ria acesa em um ambiente acolhedor" loading="lazy"><span class="gift-item__number">06</span></div>
             <div class="gift-item__content"><h3>Lumin&#xe1;ria de mesa em cer&#xe2;mica</h3><p>Uma luz quente para as leituras, conversas e noites de vinho.</p><span class="gift-item__price">R$ 520</span></div>
             <button class="gift-item__add" type="button"><span>Adicionar ao carrinho</span><b>+</b></button>
           </article>
-          <article class="gift-item" data-category="sala" data-featured="7" data-gift-id="manta" data-gift-name="Manta de linho para o sof&#xe1;" data-gift-price="420">
+          <article class="gift-item" data-category="decoracao" data-featured="7" data-gift-id="manta" data-gift-name="Manta de linho para o sof&#xe1;" data-gift-price="420">
             <div class="gift-item__media"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Sala com sof&#xe1; e texturas naturais" loading="lazy"><span class="gift-item__number">07</span></div>
             <div class="gift-item__content"><h3>Manta de linho para o sof&#xe1;</h3><p>Para as tardes de filme, o friozinho e as visitas que ficam at&#xe9; tarde.</p><span class="gift-item__price">R$ 420</span></div>
             <button class="gift-item__add" type="button"><span>Adicionar ao carrinho</span><b>+</b></button>
           </article>
-          <article class="gift-item" data-category="quarto" data-featured="8" data-gift-id="toalhas" data-gift-name="Kit de toalhas de banho" data-gift-price="380">
+          <article class="gift-item" data-category="cama-banho" data-featured="8" data-gift-id="toalhas" data-gift-name="Kit de toalhas de banho" data-gift-price="380">
             <div class="gift-item__media"><img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Toalhas claras em um banheiro elegante" loading="lazy"><span class="gift-item__number">08</span></div>
             <div class="gift-item__content"><h3>Kit de toalhas de banho</h3><p>Um detalhe simples que faz a casa nova come&#xe7;ar com cuidado.</p><span class="gift-item__price">R$ 380</span></div>
             <button class="gift-item__add" type="button"><span>Adicionar ao carrinho</span><b>+</b></button>
@@ -4439,7 +4447,9 @@
   </div>
 
   <script src="audio/playlist.js"></script>
-  <script>
+  <script type="module">
+    import { createGiftCategoryFilters, normalizeGiftCategory } from './gift-categories.js';
+
 window.weddingPlaylist = [
   {
     enabled: true,
@@ -4475,10 +4485,13 @@ window.weddingPlaylist = [
     const scrapbookPages = document.querySelector('#scrapbook-pages');
     let giftRows = [...document.querySelectorAll('.gift-item')];
     const giftList = document.querySelector('#gift-list');
-    const giftFilters = [...document.querySelectorAll('.gift-filter')];
+    const categoryFilters = createGiftCategoryFilters({
+      buttonContainer: document.querySelector('#gift-category-filters'),
+      select: document.querySelector('#gift-category-select'),
+      onChange: () => applyGiftCatalog()
+    });
     const giftSort = document.querySelector('#gift-sort');
     const giftResultsCount = document.querySelector('#gift-results-count');
-    let activeGiftFilter = 'todos';
     const cartDrawer = document.querySelector('#cart-drawer');
     const cartBackdrop = document.querySelector('#cart-backdrop');
     const openCartButton = document.querySelector('#open-cart');
@@ -5187,6 +5200,7 @@ window.weddingPlaylist = [
       if (!gifts.length) {
         giftList.innerHTML = '<p class="gift-catalog-empty">A lista de presentes sera atualizada em breve.</p>';
         giftRows = [];
+        categoryFilters.render([]);
         applyGiftCatalog();
         renderCart();
         return;
@@ -5195,13 +5209,14 @@ window.weddingPlaylist = [
         const status = gift.status || 'available';
         const isAvailable = status === 'available';
         const buttonLabel = isAvailable ? 'Presentear' : giftStatusLabel[status] || 'Indisponivel';
-        return `<article class="gift-item" data-category="${escapeHtml(gift.category)}" data-featured="${Number(gift.featured) || 99}" data-gift-id="${escapeHtml(gift.id)}" data-gift-name="${escapeHtml(gift.name)}" data-gift-price="${Number(gift.price) || 0}" data-gift-status="${escapeHtml(status)}" data-payment-url="${escapeHtml(gift.paymentUrl || '')}" data-expires-at="${escapeHtml(gift.expiresAt || '')}">
+        return `<article class="gift-item" data-category="${escapeHtml(normalizeGiftCategory(gift.category))}" data-featured="${Number(gift.featured) || 99}" data-gift-id="${escapeHtml(gift.id)}" data-gift-name="${escapeHtml(gift.name)}" data-gift-price="${Number(gift.price) || 0}" data-gift-status="${escapeHtml(status)}" data-payment-url="${escapeHtml(gift.paymentUrl || '')}" data-expires-at="${escapeHtml(gift.expiresAt || '')}">
           <div class="gift-item__media"><img src="${escapeHtml(gift.imageUrl || 'image.png')}" alt="${escapeHtml(gift.name)}" loading="lazy">${gift.badge ? `<span class="gift-item__badge">${escapeHtml(gift.badge)}</span>` : ''}<span class="gift-item__number">${String(Number(gift.featured) || 0).padStart(2, '0')}</span></div>
           <div class="gift-item__content"><h3>${escapeHtml(gift.name)}</h3><p>${escapeHtml(gift.description)}</p><span class="gift-item__price">${formatBRL(Number(gift.price) || 0)}</span></div>
           ${isAvailable ? `<button class="gift-item__add" type="button"><span>Presentear</span><b>+</b></button>` : `<p class="gift-item__status">${escapeHtml(buttonLabel)}</p>`}
         </article>`;
       }).join('');
       giftRows = [...giftList.querySelectorAll('.gift-item')];
+      categoryFilters.render(giftRows.map((row) => ({ category: row.dataset.category })));
       applyGiftCatalog();
       renderCart();
     };
@@ -5209,7 +5224,7 @@ window.weddingPlaylist = [
     const loadGiftCatalog = async () => {
       try {
         const data = await apiRequest('/api/gifts');
-        if (data.gifts?.length) renderGiftCatalog(data.gifts);
+        if (Array.isArray(data.gifts)) renderGiftCatalog(data.gifts);
       } catch {
         // Keep the static catalog visible until Supabase is configured.
       }
@@ -5264,7 +5279,7 @@ window.weddingPlaylist = [
       });
 
       orderedRows.forEach((row) => {
-        const matchesFilter = activeGiftFilter === 'todos' || row.dataset.category === activeGiftFilter;
+        const matchesFilter = categoryFilters.value === 'todos' || normalizeGiftCategory(row.dataset.category) === categoryFilters.value;
         row.hidden = !matchesFilter;
         giftList.appendChild(row);
       });
@@ -5273,14 +5288,7 @@ window.weddingPlaylist = [
       giftResultsCount.textContent = `${visibleCount} ${visibleCount === 1 ? 'produto' : 'produtos'}`;
     };
 
-    giftFilters.forEach((filterButton) => {
-      filterButton.addEventListener('click', () => {
-        activeGiftFilter = filterButton.dataset.filter;
-        giftFilters.forEach((button) => button.setAttribute('aria-selected', String(button === filterButton)));
-        applyGiftCatalog();
-      });
-    });
-
+    categoryFilters.render(giftRows.map((row) => ({ category: row.dataset.category })));
     giftSort.addEventListener('change', applyGiftCatalog);
     applyGiftCatalog();
 
@@ -5554,3 +5562,4 @@ window.weddingPlaylist = [
   </script>
 </body>
 </html>
+

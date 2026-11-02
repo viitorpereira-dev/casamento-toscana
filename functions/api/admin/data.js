@@ -1,4 +1,5 @@
 import { albumForPhoto } from '../../_albums.js';
+import { normalizeGiftCategory } from '../../../gift-categories.js';
 import {
   errorResponse,
   handleUnexpectedError,
@@ -26,16 +27,18 @@ const giftPayload = (body) => {
   const name = normalizeText(body.name, 140);
   if (!GIFT_ID_PATTERN.test(id)) throw new Error('O identificador do presente deve usar letras minusculas, numeros e hifens.');
   if (!name) throw new Error('Informe o nome do presente.');
+  const paymentUrl = normalizeText(body.paymentUrl, 1000);
+  if (body.available !== false && !paymentUrl) throw new Error('Informe o link do Mercado Pago para disponibilizar este presente.');
   return {
     id,
     name,
-    category: normalizeText(body.category, 40) || 'outros',
+    category: normalizeGiftCategory(normalizeText(body.category, 40)),
     description: normalizeText(body.description, 500),
     price: Math.max(0, Number(body.price) || 0),
     image_url: normalizeText(body.imageUrl, 1000),
     badge: normalizeText(body.badge, 60),
     featured: Math.max(0, Math.floor(Number(body.featured) || 99)),
-    payment_url: normalizeText(body.paymentUrl, 1000),
+    payment_url: paymentUrl,
     available: body.available !== false
   };
 };
@@ -133,7 +136,7 @@ export const onRequestPost = async ({ request, env }) => {
       case 'delete-all-rsvps':
         await supabaseDelete(env, 'rsvps', '?id=not.is.null');
         return json({ ok: true });
-      case 'upsert-gift': return upsertGift(env, body);
+      case 'upsert-gift': return await upsertGift(env, body);
       case 'delete-gift': return deleteGift(env, body);
       case 'set-global-reopen': return updateSettings(env, body);
       default: return errorResponse('Acao administrativa desconhecida.', 400);
@@ -145,4 +148,5 @@ export const onRequestPost = async ({ request, env }) => {
     return handleUnexpectedError(error);
   }
 };
+
 
